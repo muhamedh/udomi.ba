@@ -13,16 +13,18 @@ class BaseDao{
   public function __construct(){
 
     try {
-
       $this->conn = new PDO("mysql:host=".Config::DB_HOST.";dbname=".Config::DB_SCHEME, Config::DB_USERNAME, Config::DB_PASSWORD);
       $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     } catch(PDOException $e) {
-    
       throw $e;
     }
     }
 
+  public function query_no_params($query){
+    $stmt = $this->conn->query($query);
+    $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $res;
+  }
 }
 
 ?>
