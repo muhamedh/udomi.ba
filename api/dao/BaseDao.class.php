@@ -7,15 +7,18 @@ require_once dirname(__FILE__)."/../config.php";
 
 
 class BaseDao{
-  function __constructor(){
+
+  protected $conn;
+
+  public function __construct(){
 
     try {
-      $conn = new PDO("mysql:host=.Config::DB_HOST.;dbname=Config::DB_SCHEME", Config::DB_USERNAME, Config::DB_PASSWORD);
-      $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      echo "Connected successfully";
+      $this->conn = new PDO("mysql:host=".Config::DB_HOST.";dbname=".Config::DB_SCHEME, Config::DB_USERNAME, Config::DB_PASSWORD);
+      $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     } catch(PDOException $e) {
-      echo "Error";
+    
       throw $e;
     }
     }
