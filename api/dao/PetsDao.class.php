@@ -28,6 +28,11 @@ class PetsDao extends BaseDao{
     */
   }
 
+  public function insert_pet($params){
+    $sql = "INSERT INTO pets (petname, users_user_id, species_species_id, pet_birthdate, vaccinated) VALUES (:petname, :users_user_id, :species_species_id, :pet_birtdate, :vaccinated)";
+    $this->insert($sql,$params);
+  }
+
 }
 
 ?>
