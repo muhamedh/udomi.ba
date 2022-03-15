@@ -8,7 +8,7 @@ require_once dirname(__FILE__)."/dao/PetsDao.class.php";
 
 
 $pet = new PetsDao();
-$res = $pet->get_all_pets();
+$res = $pet->get_pet_by_id(1);
 
 print_r($res);
 

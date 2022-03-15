@@ -25,6 +25,13 @@ class BaseDao{
     $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $res;
   }
+
+  public function query_with_params($query, $params){
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute($params);
+    $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $res;
+  }
 }
 
 ?>
