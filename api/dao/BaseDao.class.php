@@ -19,7 +19,9 @@ class BaseDao{
       throw $e;
     }
     }
-
+  /*
+  * Performs a query which does not have any parameters
+  */
   public function query_no_params($query){
     $stmt = $this->conn->query($query);
     $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
