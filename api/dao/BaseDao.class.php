@@ -30,8 +30,7 @@ class BaseDao{
   public function query_with_params($query, $params){
     $stmt = $this->conn->prepare($query);
     $stmt->execute($params);
-    $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $res;
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function insert($query, $params){
