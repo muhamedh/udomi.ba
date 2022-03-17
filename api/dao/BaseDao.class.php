@@ -24,8 +24,7 @@ class BaseDao{
   */
   public function query_no_params($query){
     $stmt = $this->conn->query($query);
-    $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $res;
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function query_with_params($query, $params){
