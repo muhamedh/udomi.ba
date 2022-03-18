@@ -22,9 +22,14 @@ class SpeciesDao extends BaseDao{
   function get_species_by_id($id){
     return $this->query_with_params("SELECT * FROM species WHERE species_id = :id", [ 'id' => $id ]);
   }
-
+  /*
+  * Return the name of a species with a provided pets_id from pets table
+  */
   function get_species_by_pets_id($pets_id){
-    
+    $sql = "SELECT s.name FROM pets AS p
+            JOIN species AS s ON p.species_id = s.species_id
+            WHERE p.pets_id = :pets_id";
+    return $this->query_with_params($sql, ['pets_id' => $pets_id]);
   }
 
 }
