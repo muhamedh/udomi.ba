@@ -32,6 +32,11 @@ class SpeciesDao extends BaseDao{
     return $this->query_with_params($sql, ['pets_id' => $pets_id]);
   }
 
+  function insert_species($species_name){
+    $sql = "INSERT INTO species (name) VALUES (:name)";
+    $res = $this->conn->prepare($sql);
+    $res->execute(($species_name));
+  }
 }
 
 ?>
