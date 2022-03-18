@@ -24,13 +24,17 @@ print_r($res);
 
 print_r($pet->get_all_pets());
 */
-
+/*
 $species = new SpeciesDao();
+/*
+$spec = $species->get_species_by_pets_id(4);
 
-$spec = $species->get_species_by_id(2);
+print_r($spec);*/
+/*
+$new_species = array(":name" => "Kornjaca");
 
-print_r($spec);
-
+$species->insert_species($new_species);
+*/
 echo "runs";
 
 ?>
