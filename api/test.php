@@ -10,7 +10,7 @@ require_once dirname(__FILE__)."/dao/PetsDao.class.php";
 $pet = new PetsDao();
 
 $new_pet = [
-  "petname" => "Smrdo",
+  "petname" => "Rani",
   "users_user_id" => "1",
   "species_species_id" => "1",
   "pet_birtdate" => "2020-07-24",
@@ -20,6 +20,8 @@ $new_pet = [
 $res = $pet->insert_pet($new_pet);
 
 print_r($res);
+
+print_r($pet->get_all_pets());
 
 echo "runs";
 
