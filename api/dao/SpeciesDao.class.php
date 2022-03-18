@@ -23,6 +23,10 @@ class SpeciesDao extends BaseDao{
     return $this->query_with_params("SELECT * FROM species WHERE species_id = :id", [ 'id' => $id ]);
   }
 
+  function get_species_by_pets_id($pets_id){
+    
+  }
+
 }
 
 ?>
