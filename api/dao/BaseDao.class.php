@@ -11,14 +11,10 @@ class BaseDao{
   protected $conn;
 
   public function __construct(){
-
-    try {
       $this->conn = new PDO("mysql:host=".Config::DB_HOST.";dbname=".Config::DB_SCHEME, Config::DB_USERNAME, Config::DB_PASSWORD);
       $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch(PDOException $e) {
-      throw $e;
     }
-    }
+
   /*
   * Performs a query which does not have any parameters
   */
@@ -26,13 +22,14 @@ class BaseDao{
     $stmt = $this->conn->query($query);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
-
+  //perform query with parameters
   public function query_with_params($query, $params){
     $stmt = $this->conn->prepare($query);
     $stmt->execute($params);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  //insert data into database
   public function insert($query, $params){
     $stmt = $this->conn->prepare($query);
     $stmt -> execute($params);
