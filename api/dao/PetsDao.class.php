@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once dirname(__FILE__)."/BaseDao.class.php";
 
 class PetsDao extends BaseDao{
@@ -22,16 +26,17 @@ class PetsDao extends BaseDao{
     return $this->query_with_params("SELECT * FROM pets WHERE vaccinated = :vaccinated", [ 'vaccinated' => $vaccinated]);
   }
 
+  //get pet based on age
   public function get_pets_by_age($timestamp){
-    /*
-    * To be implemented
-    * TBA : by RANIA
-    */
+    return $this->query_with_params("SELECT * FROM pets WHERE pet_birthdate = :timestamp", ['timestamp' => $timestamp]);
   }
 
+  //insert new pet in database
   public function insert_pet($params){
-    $sql = "INSERT INTO pets (petname, users_user_id, species_species_id, pet_birthdate, vaccinated) VALUES (:petname, :users_user_id, :species_species_id, :pet_birtdate, :vaccinated)";
-    $this->insert($sql,$params);
+    $sql = "INSERT INTO pets (petname, pet_birthdate, vaccinated, owner_id, species_id, photos_url, pets_description) VALUES
+    (:petname, :pet_birthdate, :vaccinated, :owner_id, :species_id, :photos_url, :pets_description)";
+    $res = $this->conn->prepare($sql);
+    $res->exec($params);
   }
 
 }
