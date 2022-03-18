@@ -26,7 +26,12 @@ class PetsDao extends BaseDao{
     /*
     * To be implemented
     */
+    return $this->query_with_params("SELECT * FROM pets WHERE pet_birthdate = :timestamp", ['timestamp' => $timestamp]);
   }
+
+  /*public function getPetBySpecies($species){//gets all froggos or doggos
+    return $this->query_with_params("SELECT * FROM pets WHERE ")
+  }*/
 
   public function insert_pet($params){
     $sql = "INSERT INTO pets (petname, users_user_id, species_species_id, pet_birthdate, vaccinated) VALUES (:petname, :users_user_id, :species_species_id, :pet_birtdate, :vaccinated)";
