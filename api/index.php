@@ -31,7 +31,7 @@ Flight::route('GET /pets/@pet_id', function($pet_id){
 * List pet by vaccine
 */
 
-Flight::route('GET /pets/@vaccinated', function($vaccinated){
+Flight::route('GET /pets/vac/@vaccinated', function($vaccinated){
   Flight::json(Flight::petsdao()->get_pets_by_vaccine($vaccinated));
 });
 
