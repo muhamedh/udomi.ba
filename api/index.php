@@ -64,7 +64,10 @@ Flight::route('POST /pets', function(){
   Flight::json(Flight::petsdao()->insert_pet(Flight::request()->data->getData()));
 });
 
-
+Flight::route('DELETE /pets/@id', function($id){
+  Flight::petsdao()->delete_pet($id);
+  Flight::json(["message" => "deleted"]);
+});
 
 
 Flight::start();
