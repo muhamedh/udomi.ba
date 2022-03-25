@@ -35,6 +35,13 @@ Flight::route('GET /pets/vac/@vaccinated', function($vaccinated){
   Flight::json(Flight::petsdao()->get_pets_by_vaccine($vaccinated));
 });
 
+/*
+* Get female pets
+*/
+Flight::route('GET /pets/gender/@gender', function($gender){
+  Flight::json(Flight::petsdao()->get_by_gender($gender));
+});
+
 /**
 * List all pets which are older than provided date
 */
