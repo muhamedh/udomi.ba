@@ -36,12 +36,19 @@ Flight::route('GET /pets/vac/@vaccinated', function($vaccinated){
 });
 
 /**
-* List pet by age
+* List all pets which are older than provided date
 */
 
-Flight::route('GET /pets/@timestamp', function($timestamp){
-  Flight::json(Flight::petsdao()->get_pets_by_age($timestamp));
+Flight::route('GET /pets/older/@timestamp', function($timestamp){
+  Flight::json(Flight::petsdao()->get_older_pets($timestamp));
 });
+/*
+* List all pets which are younger than provided date
+*/
+Flight::route('GET /pets/younger/@timestamp', function($timestamp){
+  Flight::json(Flight::petsdao()->get_younger_pets($timestamp));
+});
+
 
 /**
 * Add pet
