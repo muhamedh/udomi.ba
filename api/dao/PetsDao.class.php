@@ -17,7 +17,7 @@ class PetsDao extends BaseDao{
   * Returns the pet with the queried id
   */
   public function get_pet_by_id($pet_id){
-    return $this->query_with_params("SELECT * FROM pets WHERE pet_id = :id",[ 'id' => $pet_id ]);
+    return $this->query_with_params("SELECT * FROM pets WHERE pets_id = :id",[ 'id' => $pet_id ]);
   }
   /*
   * Returns all pets which are vaccinated, by calling on query_with_params from BaseDao
