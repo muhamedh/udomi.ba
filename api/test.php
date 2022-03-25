@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 require_once dirname(__FILE__)."/dao/PetsDao.class.php";
 require_once dirname(__FILE__)."/dao/SpeciesDao.class.php";
 
-/*
+
 $pet = new PetsDao();
 
 $new_pet = [
