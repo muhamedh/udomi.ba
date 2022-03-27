@@ -77,5 +77,9 @@ Flight::route('GET /species', function(){
   Flight::json(Flight::speciesdao()->get_all_species());
 });
 
+Flight::route('GET /species/@id', function($id){
+  Flight::json(Flight::speciesdao()->get_species_by_id($id))
+});
+
 Flight::start();
 ?>
