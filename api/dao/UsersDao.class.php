@@ -35,9 +35,12 @@ class UsersDao extends BaseDao{
 
   //insert new user into database
   public function insertUser($params){
-    $query = "INSERT INTO users (username, user_mail, password, phone_number) VALUES (:username, :mail, :password, :phone_number)";
+    $query = "INSERT INTO users (username, user_mail, password, phone_number) VALUES (:username, :user_mail, :password, :phone_number)";
     $res = $this->conn->prepare($query);
-    $res->execute(($params));
+    $res->execute($params);
+    $params['user_id'] = $this->conn->lastInsertId();
+    return $params;
+
   }
 
 }
