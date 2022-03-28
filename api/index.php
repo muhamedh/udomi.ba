@@ -7,10 +7,11 @@ error_reporting(E_ALL);
 require_once  dirname(__FILE__)."../../vendor/autoload.php";
 require_once  dirname(__FILE__)."/dao/BaseDao.class.php";
 require_once  dirname(__FILE__)."/dao/PetsDao.class.php";
+require_once  dirname(__FILE__)."/dao/SpeciesDao.class.php";
 
 Flight::register('basedao', 'BaseDao');
-
 Flight::register('petsdao', 'PetsDao');
+Flight::register('speciesdao', 'SpeciesDao');
 
 
 /**
@@ -56,7 +57,6 @@ Flight::route('GET /pets/younger/@timestamp', function($timestamp){
   Flight::json(Flight::petsdao()->get_younger_pets($timestamp));
 });
 
-
 /**
 * Add pet
 */
@@ -69,6 +69,30 @@ Flight::route('DELETE /pets/@id', function($id){
   Flight::json(["message" => "deleted"]);
 });
 
+/** SPECIES ROUTES **/
+/*
+* Get all species
+*/
+
+Flight::route('GET /species', function(){
+  Flight::json(Flight::speciesdao()->get_all_species());
+});
+
+/*
+* Get species by species_id
+*/
+
+Flight::route('GET /species/@id', function($id){
+  Flight::json(Flight::speciesdao()->get_species_by_id($id));
+});
+
+/*
+* Get species by pets_id
+*/
+
+Flight::route('GET /species/pets/@pets_id', function($pets_id){
+  Flight::json(Flight::speciesdao()->get_species_by_pets_id($pets_id));
+});
 
 Flight::start();
 ?>
