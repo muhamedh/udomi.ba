@@ -67,7 +67,7 @@ Flight::route('POST /pets', function(){
 });
 
 Flight::route('DELETE /pets/@id', function($id){
-  Flight::petsdao()->delete_pet($id);
+  Flight::petsdao()->deletePet($id);
   Flight::json(["message" => "deleted"]);
 });
 
@@ -117,7 +117,14 @@ Flight::route('POST /users', function(){
   Flight::json(Flight::usersdao()->insertUser(Flight::request()->data->getData()));
 });
 
-
+/*
+Flight::route('PUT /users/@id', function($id){
+  $data = Flight::request()->data->getData();
+  $data['id'] = $id;
+  Flight::json(Flight::usersdao()->update($data));
+});
+*/
+//works
 Flight::route('DELETE /users/@id', function($id){
   Flight::usersdao()->deleteUser($id);
   Flight::json(["message" => ";)"]);

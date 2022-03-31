@@ -20,7 +20,7 @@ class UsersDao extends BaseDao{
 
   //get user based on username
   public function getUsername($username){
-    return $this->query_with_params("SELECT * FROM users WHERE username= :username", ['username' => $username]);
+    return $this->query_with_params("SELECT * FROM users WHERE username=:username", ['username' => $username]);
   }
 
   ////get user based on email
@@ -42,6 +42,20 @@ class UsersDao extends BaseDao{
     return $params;
 
   }
+
+  public function deleteUser($id){
+    return $this->query_with_params("DELETE FROM users WHERE user_id = :id", ['id' => $id]);
+  }
+
+  /*
+  public function update($user){
+    //return $this->query_with_params("UPDATE users SET user_mail = :newMail WHERE user_id = :id; ", ['id' => $id] );
+    $stmt = $this->conn->prepare("UPDATE users SET user_mail = :newMail WHERE user_id = :id; ");
+    $stmt->execute($user);
+    return $user;
+  }
+*/
+
 
 }
 
