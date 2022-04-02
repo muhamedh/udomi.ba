@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Udomi.ba</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <script language="JavaScript" type="text/javascript" src="js/carousel.js"></script>
+</head>
+<!--navigation bar-->
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Carousel</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Disabled</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!---->
+  <main>
+    <div class="container marketing" style="margin-top: 100px;">
+      <!-- Three columns of text below the carousel -->
+      <div id="pets-list" class="row">
+        <span>Loads nothing :)</span>
+      </div><!-- /.row -->
+  </main>
+</body>
+
+<script language="JavaScript" type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+
+<script>
+  $.get("api/pets", function (data) {  //NIKAKO pets.html ili bilo šta .html
+
+    $("#pets-list").html("");
+    var html = "";
+    for (let i = 0; i < data.length; i++) {
+      html += `
+      <div class="col-lg-4">
+        <h2>` + data[i].petname + `</h2>
+        <p></p>
+        <p><a class="btn btn-secondary" href="#">View details</a></p>
+      </div> `;
+    }
+    $("#pets-list").html(html);
+    console.log(data);
+    alert("Load was performed.");
+  });</script>
+
+</html>

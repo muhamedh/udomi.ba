@@ -23,7 +23,7 @@ $res = $pet->insert_pet($new_pet);
 print_r($res);
 
 print_r($pet->get_all_pets());
-*/
+
 /*
 $species = new SpeciesDao();
 /*
