@@ -13,9 +13,9 @@
 <body>
   <!--navigation bar-->
   <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success ">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Carousel</a>
+        <a class="navbar-brand" href="#">Udomi.ba</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
           aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -32,9 +32,11 @@
               <a class="nav-link disabled">Disabled</a>
             </li>
           </ul>
-          <form class="d-flex">
+          <form class="d-flex gap-3">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-outline-light" type="submit">Search</button>
+            <button class="btn btn-outline-light btn-sm">Log in</button>
+            <button class="btn btn-light btn-sm">Sign up</button>
           </form>
         </div>
       </div>
@@ -63,8 +65,10 @@
 
 <script language="JavaScript" type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
+
 <script>
-  $.get("api/pets", function (data) {  //NIKAKO pets.html ili bilo šta .html
+  $.get("api/pets", function (data) {
+   
     $("#pets-list").html("");
     var html = "";
     for (let i = 0; i < data.length; i++) {
@@ -73,7 +77,7 @@
         <h2>` + data[i].petname + `</h2>
         <p> ` + data[i].pet_gender + `</p>  
         <p>
-      <button type="button" class="btn btn-success" onclick="showModal(`+ data[i].pet_birthdate + `)">
+      <button type="button" class="btn btn-success dis" onclick="showModal(`+ data[i].pet_birthdate + `)">
         View more
       </button>
       </p>
@@ -85,12 +89,12 @@
   });
 
   function showModal(id) {
-
+    $('.dis').attr('disabled' , true) //so the user can't spam the button
     $.get('api/pets/' + id, function (data) {
       console.log(data);
       $("#exampleModal .modal-body").html(id); //space is important?
       $("#exampleModal").modal("show");
-      
+      $('.dis').attr('disabled' , false)
     })
   }
 
@@ -101,12 +105,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Bad Title!!1!</h5>
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 <!--        <input id="desc" type="text"> -->
-        ...
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -118,4 +121,4 @@
 <!---->
 
 
-</html>
+</html> 
