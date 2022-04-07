@@ -49,5 +49,9 @@ class PetsDao extends BaseDao{
     $params['pets_id'] = $this->conn->lastInsertId();
     return $params;
   }
+
+  public function deletePet($id){
+    return $this->query_with_params("DELETE FROM pets WHERE pets_id = :id", ['id' => $id]);
+  }
 }
 ?>

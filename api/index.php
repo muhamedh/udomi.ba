@@ -8,10 +8,12 @@ require_once  dirname(__FILE__)."../../vendor/autoload.php";
 require_once  dirname(__FILE__)."/dao/BaseDao.class.php";
 require_once  dirname(__FILE__)."/dao/PetsDao.class.php";
 require_once  dirname(__FILE__)."/dao/SpeciesDao.class.php";
+require_once  dirname(__FILE__)."/dao/UsersDao.class.php";
 
 Flight::register('basedao', 'BaseDao');
 Flight::register('petsdao', 'PetsDao');
 Flight::register('speciesdao', 'SpeciesDao');
+Flight::register('usersdao', 'UsersDao');
 
 
 /**
@@ -65,7 +67,7 @@ Flight::route('POST /pets', function(){
 });
 
 Flight::route('DELETE /pets/@id', function($id){
-  Flight::petsdao()->delete_pet($id);
+  Flight::petsdao()->deletePet($id);
   Flight::json(["message" => "deleted"]);
 });
 
@@ -92,6 +94,40 @@ Flight::route('GET /species/@id', function($id){
 
 Flight::route('GET /species/pets/@pets_id', function($pets_id){
   Flight::json(Flight::speciesdao()->get_species_by_pets_id($pets_id));
+});
+
+
+//User routes
+
+
+Flight::route('GET /users', function(){
+  Flight::json(Flight::usersdao()->getAllUsers());
+});
+
+Flight::route('GET /users/@user_id', function($user_id){
+  Flight::json(Flight::usersdao()->getUserById($user_id));
+});
+
+//ne radi
+Flight::route('GET /users/@username', function($username){
+  Flight::json(Flight::usersdao()->getUsername($username));
+});
+
+Flight::route('POST /users', function(){
+  Flight::json(Flight::usersdao()->insertUser(Flight::request()->data->getData()));
+});
+
+/*
+Flight::route('PUT /users/@id', function($id){
+  $data = Flight::request()->data->getData();
+  $data['id'] = $id;
+  Flight::json(Flight::usersdao()->update($data));
+});
+*/
+//works
+Flight::route('DELETE /users/@id', function($id){
+  Flight::usersdao()->deleteUser($id);
+  Flight::json(["message" => ";)"]);
 });
 
 Flight::start();
