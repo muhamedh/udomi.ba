@@ -117,17 +117,18 @@ Flight::route('POST /users', function(){
   Flight::json(Flight::usersdao()->insertUser(Flight::request()->data->getData()));
 });
 
-/*
+
 Flight::route('PUT /users/@id', function($id){
-  $data = Flight::request()->data->getData();
-  $data['id'] = $id;
-  Flight::json(Flight::usersdao()->update($data));
+  $request = Flight::request();
+  $data = $request->data->getData();
+  Flight::json(Flight::usersdao()->update($data['user_mail'], $id));
+  Flight::json(['message' => 'updated']);
 });
-*/
+
 //works
 Flight::route('DELETE /users/@id', function($id){
   Flight::usersdao()->deleteUser($id);
-  Flight::json(["message" => ";)"]);
+  Flight::json(["message" => "deleted"]);
 });
 
 Flight::start();
