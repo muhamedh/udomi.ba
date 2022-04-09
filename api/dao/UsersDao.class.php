@@ -47,15 +47,19 @@ class UsersDao extends BaseDao{
     return $this->query_with_params("DELETE FROM users WHERE user_id = :id", ['id' => $id]);
   }
 
-/*
-  public function update($data, $id){
-    //return $this->query_with_params("UPDATE users SET user_mail = :newMail WHERE user_id = :id; ", ['id' => $id] );
-    $stmt = $this->conn->prepare("UPDATE users SET user_mail =  WHERE user_id = 2", ['user_mail' => $data]);
-    $stmt->execute();
-    return $data;
+
+  public function updateUsername($data,$id){
+    //$data koja ulazi je associative PHP array
+
+    $sql = "UPDATE users SET username = ? WHERE user_id = ?";
+
+    $stmt = $this->conn->prepare($sql);
+
+    $stmt -> execute([$data['username'],$id]);
+
   }
 
-*/
+
 
 }
 
