@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ba" dir="ltr">
 
 <head>
   <meta charset="utf-8">
-  <title>Udomi.ba</title>
+  <title>udomi.ba</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
   <script language="JavaScript" type="text/javascript" src="js/carousel.js"></script>
@@ -13,9 +13,10 @@
 <body>
   <!--navigation bar-->
   <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success ">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Udomi.ba</a>
+        <a class="navbar-brand" href="#">
+    udomi.ba</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
           aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -23,20 +24,13 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
+              <a class="nav-link active" aria-current="page" href="#">Naslovna stranica</a>
             </li>
           </ul>
           <form class="d-flex gap-3">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-light" type="submit">Search</button>
-            <button class="btn btn-outline-light btn-sm">Log in</button>
-            <button class="btn btn-light btn-sm">Sign up</button>
+
+            <button class="btn btn-outline-light btn-sm">Prijavi se</button>
+            <button class="btn btn-outline-light btn-sm">Registruj se</button>
           </form>
         </div>
       </div>
@@ -45,80 +39,23 @@
   <!---->
 
   <main>
+
     <div class="container marketing" style="margin-top: 100px;">
-      <div id="pets-list" class="row">
-        <!--spinner-->
-        <div class="spinner-border text-success" role="status">
-          <span class="sr-only"></span>
-          <!---->
+      <div class="text-center" id = "loading-spinner">
+          <img src="img/dogologo.png" alt="logo of udomi.ba - a drawing of a doggo">
         </div>
+        <div id = "pets-list" class="row row-cols-1 row-cols-md-3 g-4">
       </div>
-
-
-      <!-- Button trigger modal 
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch demo modal
-      </button>-->
 
   </main>
 </body>
 
-<script language="JavaScript" type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src = "js/jquery-3.6.0.min.js"></script>
+<script src = "js/bootstrap.bundle.min.js"></script>
+<script src = "js/PetsService.js"></script>
 
 <script>
-  $.get("api/pets", function (data) {
-   
-    $("#pets-list").html("");
-    var html = "";
-    for (let i = 0; i < data.length; i++) {
-      html += `
-      <div class="col-lg-4">
-        <h2>` + data[i].petname + `</h2>
-        <p> ` + data[i].pet_gender + `</p>  
-        <p>
-      <button type="button" class="btn btn-success dis" onclick="showModal(`+ data[i].pet_birthdate + `)">
-        View more
-      </button>
-      </p>
-      </div> `;
-    }
-    $("#pets-list").html(html);
-    console.log(data);
-    //alert("Load was performed.");
-  });
-
-  function showModal(id) {
-    $('.dis').attr('disabled' , true) //so the user can't spam the button
-    $.get('api/pets/' + id, function (data) {
-      console.log(data);
-      $("#exampleModal .modal-body").html(id); //space is important?
-      $("#exampleModal").modal("show");
-      $('.dis').attr('disabled' , false)
-    })
-  }
-
+PetsService.init();
 </script>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-<!--        <input id="desc" type="text"> -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!---->
-
-
-</html> 
+</html>
