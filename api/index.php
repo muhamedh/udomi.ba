@@ -153,7 +153,7 @@ Flight::route('POST /users', function(){
 /*
 * Sada ako zelimo promjeniti username + email ili samo email kako cemo razlikovati ovo?
 */
-Flight::route('PUT /users/@id', function($id){
+Flight::route('PUT /users/username/@id', function($id){
   $request = Flight::request();
   $data = $request->data->getData();
   Flight::usersdao()->updateUsername($data,$id);
