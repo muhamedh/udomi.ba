@@ -19,11 +19,11 @@ var PetsService = {
         html += `
           <div class="col">
             <div class="card h-100">
-              <img src="img/cat1.jpg" class="card-img-top" alt="A picture of cat">
+              <img src="` + data[i].photos_url + `" class="card-img-top" alt="A picture of cat">
             <div class="card-body">
               <h5 class="card-title fw-bold">` + data[i].petname + `</h5>
               <p class="card-text">` + data[i].pets_description + `</p>
-              <button type="button" class="btn btn-success float-end vise-detalja" onclick="PetsService.showPet(`+data[i].pets_id+`)">Više detalja</button> 
+              <button type="button" class="btn btn-success float-end vise-detalja" onclick="PetsService.showPet(` + data[i].pets_id + `)">Više detalja</button> 
             </div>
           </div>
         </div>
@@ -43,10 +43,10 @@ var PetsService = {
       var html = "";
       for (let i = 0; i < data.length; i++) {
         html += `
-        <section class="py-5">
+        <section>
           <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
-              <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="img/cat1.jpg" alt="..."></div>
+              <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="` + data[i].photos_url + `" alt="..."></div>
               <div class="col-md-6">
                 <h1 class="display-5 fw-bolder">` + data[i].petname + `</h1>
                 <div class="fs-5 mb-2">
