@@ -15,8 +15,7 @@
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-    udomi.ba</a>
+        <a class="navbar-brand" href="#">udomi.ba</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
           aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -24,11 +23,10 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Naslovna stranica</a>
+              <a class="nav-link active" aria-current="page" href="index.html">Naslovna stranica</a>
             </li>
           </ul>
           <form class="d-flex gap-3">
-
             <button class="btn btn-outline-light btn-sm">Prijavi se</button>
             <button class="btn btn-outline-light btn-sm">Registruj se</button>
           </form>
@@ -39,23 +37,24 @@
   <!---->
 
   <main>
-
     <div class="container marketing" style="margin-top: 100px;">
-      <div class="text-center" id = "loading-spinner">
-          <img src="img/dogologo.png" alt="logo of udomi.ba - a drawing of a doggo">
-        </div>
-        <div id = "pets-list" class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="text-center" id="loading-spinner">
+        <img src="img/dogologo.png" alt="logo of udomi.ba - a drawing of a doggo">
       </div>
-
+      <div id="pets-list" class="row row-cols-1 row-cols-md-3 g-4">
+      </div>
+      <div id="individual-pet" class="row gx-4 gx-lg-5 align-items-center">
+      </div>
+    </div>
   </main>
 </body>
 
-<script src = "js/jquery-3.6.0.min.js"></script>
-<script src = "js/bootstrap.bundle.min.js"></script>
-<script src = "js/PetsService.js"></script>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/PetsService.js"></script>
 
 <script>
-PetsService.init();
+  PetsService.init();
 </script>
 
 </html>
