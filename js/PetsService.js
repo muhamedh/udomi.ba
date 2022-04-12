@@ -37,6 +37,16 @@ var PetsService = {
       });
     },
 
+    edit: function(pet_id){
+      $.get('api/pets/' + pet_id, function(data){
+        console.log(data);
+        document.getElementById("dog-logo").style.display = "none";
+        html = "";
+
+        $("#edit-pet").html(html);
+      });
+    },
+
     get: function(id){
       $('.todo-button').attr('disabled', true);
       $.get('rest/todos/'+id, function(data){
