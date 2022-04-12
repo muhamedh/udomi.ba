@@ -147,11 +147,7 @@ Flight::route('POST /users', function(){
 /*
 * Update username
 * W
-* This route is not up to ideal coding practices, this routes should be generalized to the form
-* it does not care how many parameters we want to update, it updates them (might be impossible)
-*/
-/*
-* Sada ako zelimo promjeniti username + email ili samo email kako cemo razlikovati ovo?
+* There is a way in autoresponser/todos
 */
 Flight::route('PUT /users/username/@id', function($id){
   $request = Flight::request();
