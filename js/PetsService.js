@@ -50,7 +50,7 @@ var PetsService = {
               <div class="col-md-6">
                 <h1 class="display-5 fw-bolder">` + data[i].petname + `</h1>
                 <div class="fs-5 mb-2">
-                  <span>` + data[i].pets_gender + `</span>
+                  <span>` + data[i].pet_gender + `</span>
                   <span>` + data[i].pet_birthdate + `</span>
                   <span>` + data[i].vaccinated + `</span>
                 </div>
