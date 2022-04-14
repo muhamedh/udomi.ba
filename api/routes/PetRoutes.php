@@ -26,7 +26,7 @@ Flight::route('GET /pets', function(){
   */
   
   Flight::route('GET /pets/vac/@vaccinated', function($vaccinated){
-    Flight::json(Flight::petsdao()->get_pets_by_vaccine($vaccinated));
+    Flight::json(Flight::petsService()->get_pets_by_vaccine($vaccinated));
   });
   
   /*
@@ -34,7 +34,7 @@ Flight::route('GET /pets', function(){
   * W
   */
   Flight::route('GET /pets/gender/@gender', function($gender){
-    Flight::json(Flight::petsdao()->get_by_gender($gender));
+    Flight::json(Flight::petsService()->get_by_gender($gender));
   });
   
   /**
@@ -42,7 +42,7 @@ Flight::route('GET /pets', function(){
   * W
   */
   Flight::route('GET /pets/older/@timestamp', function($timestamp){
-    Flight::json(Flight::petsdao()->get_older_pets($timestamp));
+    Flight::json(Flight::petsService()->get_older_pets($timestamp));
   });
   
   /*
@@ -50,7 +50,7 @@ Flight::route('GET /pets', function(){
   * W
   */
   Flight::route('GET /pets/younger/@timestamp', function($timestamp){
-    Flight::json(Flight::petsdao()->get_younger_pets($timestamp));
+    Flight::json(Flight::petsService()->get_younger_pets($timestamp));
   });
   
   /**
@@ -58,7 +58,7 @@ Flight::route('GET /pets', function(){
   * W
   */
   Flight::route('POST /pets', function(){
-    Flight::json(Flight::petsdao()->insert_pet(Flight::request()->data->getData()));
+    Flight::json(Flight::petsService()->insert_pet(Flight::request()->data->getData()));
   });
   
   /**
@@ -66,7 +66,7 @@ Flight::route('GET /pets', function(){
   * W
   */
   Flight::route('DELETE /pets/@id', function($id){
-    Flight::petsdao()->deletePet($id);
+    Flight::petsService()->deletePet($id);
     Flight::json(["message" => "deleted"]);
   });
 

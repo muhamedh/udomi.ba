@@ -9,14 +9,14 @@ error_reporting(E_ALL);
 */
 
 Flight::route('GET /users', function(){
-    Flight::json(Flight::usersdao()->getAllUsers());
+    Flight::json(Flight::usersService()->getAllUsers());
   });
   /*
   * Get user by its id
   * W
   */
   Flight::route('GET /users/@user_id', function($user_id){
-    Flight::json(Flight::usersdao()->getUserById($user_id));
+    Flight::json(Flight::usersService()->getUserById($user_id));
   });
   
   /*
@@ -25,14 +25,14 @@ Flight::route('GET /users', function(){
   */
   
   Flight::route('GET /users/@username', function($username){
-    Flight::json(Flight::usersdao()->getUsername($username));
+    Flight::json(Flight::usersService()->getUsername($username));
   });
   /*
   * Insert a new user into the database
   * W
   */
   Flight::route('POST /users', function(){
-    Flight::json(Flight::usersdao()->insertUser(Flight::request()->data->getData()));
+    Flight::json(Flight::usersService()->insertUser(Flight::request()->data->getData()));
   });
   
   /*
@@ -43,7 +43,7 @@ Flight::route('GET /users', function(){
   Flight::route('PUT /users/username/@id', function($id){
     $request = Flight::request();
     $data = $request->data->getData();
-    Flight::usersdao()->updateUsername($data,$id);
+    Flight::usersService()->updateUsername($data,$id);
     Flight::json(['message' => 'updated']);
   });
   
@@ -52,7 +52,7 @@ Flight::route('GET /users', function(){
   * W
   */
   Flight::route('DELETE /users/@id', function($id){
-    Flight::usersdao()->deleteUser($id);
+    Flight::usersService()->deleteUser($id);
     Flight::json(["message" => "deleted"]);
   });
 
