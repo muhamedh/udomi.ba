@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 abstract class BaseService {
 
   protected $dao;
@@ -11,8 +14,8 @@ abstract class BaseService {
     return $this->dao->get_all();
   }
 
-  public function get_by_id($id){
-    return $this->dao->get_by_id($id);
+  public function get_by_id($id, $pk_name){
+    return $this->dao->get_by_id($id, $pk_name);
   }
 
   public function add($entity){

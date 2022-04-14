@@ -7,9 +7,12 @@ require_once dirname(__FILE__)."/../config.php";
 
 
 class BaseDao{
+  /**
+   * EW
+   */
 
   protected $conn;
-  private $table_name;
+  protected $table_name;
 
   public function __construct($table_name){
       $this->conn = new PDO("mysql:host=".Config::DB_HOST.";dbname=".Config::DB_SCHEME, Config::DB_USERNAME, Config::DB_PASSWORD);

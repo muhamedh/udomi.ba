@@ -16,13 +16,16 @@ class PetsDao extends BaseDao{
   * Returns all pets
   */
   public function get_all_pets(){
-    return $this->get_all();
+    //return $this->get_all();
+    return parent::get_all();
+    
   }
   /*
   * Returns the pet with the queried id
   */
   public function get_pet_by_id($pet_id){
-    return $this->get_by_id($pet_id, "pets_id");
+    //return $this->get_by_id($pet_id, "pets_id");
+    return parent::get_by_id($pet_id, "pets_id");
   }
   /*
   * Returns all pets which are vaccinated, by calling on query_with_params from BaseDao

@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 /// ALL PETS TABLE ROUTES
 
 /**
@@ -7,7 +9,7 @@
 * W
 */
 Flight::route('GET /pets', function(){
-    Flight::json(Flight::petsdao()->get_all_pets());
+    Flight::json(Flight::petsService()->get_all());
   });
   
   /**
@@ -15,7 +17,7 @@ Flight::route('GET /pets', function(){
   * W
   */
   Flight::route('GET /pets/@pet_id', function($pet_id){
-    Flight::json(Flight::petsdao()->get_pet_by_id($pet_id));
+    Flight::json(Flight::petsService()->get_by_id($pet_id, "pets_id"));
   });
   
   /**

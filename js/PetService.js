@@ -1,4 +1,4 @@
-var PetsService = {
+var PetService = {
   init: function () {
     /*
     $('#addPet').validate({
@@ -7,7 +7,7 @@ var PetsService = {
         PetService.add(todo);
       }
     });*/
-    PetsService.list();
+    PetService.list();
   },
 
   list: function () {
@@ -23,7 +23,7 @@ var PetsService = {
             <div class="card-body">
               <h5 class="card-title fw-bold">` + data[i].petname + `</h5>
               <p class="card-text">` + data[i].pets_description + `</p>
-              <button type="button" class="btn btn-success float-end vise-detalja" onclick="PetsService.showPet(` + data[i].pets_id + `)">Više detalja</button> 
+              <button type="button" class="btn btn-success float-end vise-detalja" onclick="PetService.showPet(` + data[i].pets_id + `)">Više detalja</button> 
             </div>
           </div>
         </div>
