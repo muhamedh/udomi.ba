@@ -10,15 +10,16 @@ class UsersDao extends BaseDao{
 
   //get all users
   public function getAllUsers(){
-    return $this->query_no_params("SELECT * FROM users");
+    return $this->get_all();
   }
 
   //get user based on id
   public function getUserById($user_id){
-    return $this->query_with_params("SELECT * FROM users WHERE user_id=:id", ['id' => $user_id]);
+    return $this->get_by_id($user_id, "user_id");
   }
 
   //get user based on username
+  //might use query unique
   public function getUsername($username){
     return $this->query_with_params("SELECT * FROM users WHERE username=:username", ['username' => $username]);
   }
@@ -35,27 +36,17 @@ class UsersDao extends BaseDao{
 
   //insert new user into database
   public function insertUser($params){
-    $query = "INSERT INTO users (username, user_mail, password, phone_number) VALUES (:username, :user_mail, :password, :phone_number)";
-    $res = $this->conn->prepare($query);
-    $res->execute($params);
-    $params['user_id'] = $this->conn->lastInsertId();
-    return $params;
+    return $this->add($params);
 
   }
 
   public function deleteUser($id){
-    return $this->query_with_params("DELETE FROM users WHERE user_id = :id", ['id' => $id]);
+    return $this->delete($id, "user_id");
   }
 
 
   public function updateUsername($data,$id){
-    //$data koja ulazi je associative PHP array
-
-    $sql = "UPDATE users SET username = ? WHERE user_id = ?";
-
-    $stmt = $this->conn->prepare($sql);
-
-    $stmt -> execute([$data['username'],$id]);
+    return $this->update($id, $data, "user_id");
 
   }
 

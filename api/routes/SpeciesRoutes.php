@@ -27,4 +27,12 @@ Flight::route('GET /species', function(){
     Flight::json(Flight::speciesdao()->get_species_by_pets_id($pets_id));
   });
 
+  /**
+   * Add species
+   * T
+   */
+  Flight::route('POST /species', function(){
+    Flight::json(Flight::speciesdao()->insert_species(Flight::request()->data->getData()));
+  });
+
 ?>
