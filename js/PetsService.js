@@ -40,7 +40,6 @@ var PetsService = {
     $.get("api/pets/" + id, function (data) {
       $("#pets-list").attr('hidden', true);
       $("#individual-pet").html("");
-      console.log(data[0].pet_gender);
       var html = "";
         html += `
         <section>
