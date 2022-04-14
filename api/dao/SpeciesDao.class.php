@@ -10,17 +10,22 @@ error_reporting(E_ALL);
 require_once dirname(__FILE__)."/BaseDao.class.php";
 
 class SpeciesDao extends BaseDao{
+
+  public function __construct(){
+    parent::__construct("species");
+  }
+
   /*
   * Returns all pets
   */
   function get_all_species(){
-    return $this->query_no_params("SELECT * FROM species");
+    return $this->get_all();
   }
   /*
   * Get species by id
   */
   function get_species_by_id($id){
-    return $this->query_with_params("SELECT * FROM species WHERE species_id = :id", [ 'id' => $id ]);
+    return $this->get_by_id($id, "species_id");
   }
   /*
   * Return the name of a species with a provided pets_id from pets table
@@ -35,9 +40,7 @@ class SpeciesDao extends BaseDao{
 * When we later on use this function to actually insert it, we need to make sure that the parameter $species_name is of type array() so array($species_name)
 */
   function insert_species($species_name){
-    $sql = "INSERT INTO species (name) VALUES (:name)";
-    $res = $this->conn->prepare($sql);
-    $res->execute(($species_name));
+   return $this->add($species_name);
   }
 }
 
