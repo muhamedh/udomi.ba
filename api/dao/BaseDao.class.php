@@ -36,8 +36,8 @@ class BaseDao{
   }
 
   protected function query_unique($query, $params){
-    $results = $this->query($query, $params);
-    return reset($results);
+    $stmt = $this->conn->prepare($query,$params);
+    return reset($stmt);
   }
     /**
     * Method used to read all objects from database
