@@ -16,12 +16,6 @@ class SpeciesDao extends BaseDao{
   }
 
   /*
-  * Returns all pets
-  */
-  function get_all_species(){
-    return $this->get_all();
-  }
-  /*
   * Get species by id
   */
   function get_species_by_id($id){
