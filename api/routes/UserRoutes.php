@@ -42,7 +42,7 @@ Flight::route('POST /users', function () {
 });
 
 /*
-  * Update username
+  * Update user
   * Works
   */
 Flight::route('PUT /users/@id', function ($id) {
