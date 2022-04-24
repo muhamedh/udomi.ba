@@ -11,5 +11,8 @@ class UserService extends BaseService{
     parent::__construct(new UsersDao());
   }
 
+  public function getUsername($username){
+    return $this->dao->getUsername($username);
+  }
 }
 ?>

@@ -38,23 +38,6 @@ class UsersDao extends BaseDao{
     return $this->query_with_params("SELECT * FROM users WHERE phone_number=:number", ['number' => $number]);
   }
 
-  //insert new user into database
-  public function insertUser($params){
-    return $this->add($params);
-
-  }
-
-  public function deleteUser($id){
-    return $this->delete($id, "user_id");
-  }
-
-
-  public function updateUsername($data,$id){
-    return $this->update($id, $data, "user_id");
-
-  }
-
-
 
 }
 

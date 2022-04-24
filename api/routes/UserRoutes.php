@@ -2,58 +2,60 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 /** USERS ROUTES **/
+
 /*
 * Get all users
-* W
+* Works
 */
+Flight::route('GET /users', function () {
+  Flight::json(Flight::usersService()->get_all());
+});
 
-Flight::route('GET /users', function(){
-    Flight::json(Flight::usersService()->get_all());
-  });
-  /*
+/*
   * Get user by its id
-  * W
+  * Works
   */
-  Flight::route('GET /users/@user_id', function($user_id){
-    Flight::json(Flight::usersService()->getUserById($user_id));
-  });
-  
-  /*
-  * Get user by username
-  * L -> assigned Rania
-  */
-  
-  Flight::route('GET /users/@username', function($username){
-    Flight::json(Flight::usersService()->getUsername($username));
-  });
-  /*
-  * Insert a new user into the database
-  * W
-  */
-  Flight::route('POST /users', function(){
-    Flight::json(Flight::usersService()->insertUser(Flight::request()->data->getData()));
-  });
-  
-  /*
-  * Update username
-  * W
-  * There is a way in autoresponser/todos
-  */
-  Flight::route('PUT /users/username/@id', function($id){
-    $request = Flight::request();
-    $data = $request->data->getData();
-    Flight::usersService()->updateUsername($data,$id);
-    Flight::json(['message' => 'updated']);
-  });
-  
-  /*
-  * Delete a user by its id from the database
-  * W
-  */
-  Flight::route('DELETE /users/@id', function($id){
-    Flight::usersService()->deleteUser($id);
-    Flight::json(["message" => "deleted"]);
-  });
 
-?>
+Flight::route('GET /users/@user_id', function ($user_id) {
+  Flight::json(Flight::usersService()->get_by_id($user_id, "user_id"));
+});
+
+/*
+  * Get user by username
+  * Works
+  */
+
+Flight::route('GET /users/username/@username', function ($username) {
+  Flight::json(Flight::usersService()->getUsername($username));
+});
+
+/*
+  * Insert a new user into the database
+  * Works
+  */
+Flight::route('POST /users', function () {
+  $data = Flight::request()->data->getData();
+
+  Flight::json(Flight::usersService()->add($data));
+});
+
+/*
+  * Update username
+  * Works
+  */
+Flight::route('PUT /users/@id', function ($id) {
+  $data = Flight::request()->data->getData();
+  Flight::usersService()->update($id,$data,"user_id");
+  Flight::json(["message" => "updated"]);
+});
+
+/*
+  * Delete a user by its id from the database
+  * Works
+  */
+Flight::route('DELETE /users/@id', function ($id) {
+  Flight::usersService()->delete($id,"user_id");
+  Flight::json(["message" => "deleted"]);
+});
