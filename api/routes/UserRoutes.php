@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 */
 
 Flight::route('GET /users', function(){
-    Flight::json(Flight::usersService()->getAllUsers());
+    Flight::json(Flight::usersService()->get_all());
   });
   /*
   * Get user by its id
