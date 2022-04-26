@@ -14,6 +14,7 @@ class PetsDao extends BaseDao{
 
   /*
   * Returns all pets
+  * could be deleted since it's redundant
   */
   public function get_all_pets(){
     return $this->get_all();
@@ -22,6 +23,7 @@ class PetsDao extends BaseDao{
   }
   /*
   * Returns the pet with the queried id
+  * could be deleted -||-
   */
   public function get_pet_by_id($pet_id){
     return $this->get_by_id($pet_id, "pets_id");
