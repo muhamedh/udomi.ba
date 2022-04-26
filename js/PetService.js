@@ -37,6 +37,9 @@ var PetService = {
   },
 
   showPet: function (id) {
+    // moguca optimizacija -> ne treba nam jos jedan ajax call
+    // kada bi mogli iskoristiti -> objekat iz show all pets-a
+    // showPet(data[i]) perhaps?
     $.get("api/pets/" + id, function (data) {
       $("#pets-list").attr('hidden', true);
       $("#individual-pet").html("");
