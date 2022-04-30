@@ -71,6 +71,16 @@ var PetService = {
                     <label class="form-check-label" for="vaccinatedNo">Nije vakcinisan/a</label>
                   </div>
                </div>
+               <div class="md-3" style="margin-top:10px">
+               <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="radio" name="adopted" id="adoptedYes" value="option1">
+                 <label class="form-check-label" for="vaccinatedYes">Udomljen/a</label>
+               </div>
+               <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="radio" name="adopted" id="adoptedNo" value="option2">
+                 <label class="form-check-label" for="vaccinatedNo">Nije udomljen/a</label>
+               </div>
+            </div>
                
          </div>
          </form>
@@ -82,7 +92,7 @@ var PetService = {
       $("#edit-pet").html(html);
       data.pet_gender ? $("#genderFemale").prop("checked",true) : $("#genderMale").prop("checked",true);
       data.vaccinated ? $("#vaccinatedYes").prop("checked",true) : $("#vaccinatedNo").prop("checked",true);
-
+      data.adopted ? $("#adoptedYes").prop("checked",true) : $("#adoptedNo").prop("checked",true);
     });
   },
 
@@ -150,7 +160,7 @@ var PetService = {
     pet.petname = $('#inputPetName').val();
     ($('#vaccinatedNo').is(':checked')) ? pet.vaccinated = 0 : pet.vaccinated = 1;
     ($('#genderFemale').is(':checked')) ? pet.pet_gender = 1 : pet.pet_gender = 0;
-
+    ($('#adoptedYes').is(':checked')) ? pet.adopted = 1 : pet.adopted = 0;
     $.ajax({
       url: 'api/pets/'+ id,
       type: 'PUT',
