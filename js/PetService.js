@@ -1,22 +1,13 @@
 var PetService = {
   init: function () {
-    /*
-    $('#addPet').validate({
-      submitHandler: function(form) {
-        var todo = Object.fromEntries((new FormData(form)).entries());
-        PetService.add(todo);
-      }
-    });*/
-    //document.getElementById("loading-spinner").style.display = "none";
-    //PetService.showPet(1);
-    //PetService.editPet(1);
+
     PetService.list(); 
-    
+  
   },
 
   list: function () {
     $.get("api/pets", function (data) {
-
+      $("#pets-list").attr('hidden', false);
       $("#pets-list").html("");
       var html = "";
       for (let i = 0; i < data.length; i++) {
@@ -36,13 +27,10 @@ var PetService = {
       //spinner gets hidden
       document.getElementById("loading-spinner").style.display = "none";
       $("#pets-list").html(html);
-      console.log(data);
     });
   },
 
   editPet: function (id) {
-    console.log(id);
-    /*
     $.get("api/pets/" + id, function (data) {
       $("#individual-pet").html("");
       
@@ -65,34 +53,36 @@ var PetService = {
   
                <div class="md-3" style="margin-top:10px">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="genderMale" value="" checked>
-                    <label class="form-check-label" for="genderMale">Muzjak</label>
+                    <input class="form-check-input" type="radio" name="gender" id="genderMale" value="">
+                    <label class="form-check-label" for="genderMale">Mužjak</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="" >
-                    <label class="form-check-label" for="genderFemale">Zenka</label>
+                    <label class="form-check-label" for="genderFemale">Ženka</label>
                   </div>
                </div>
                <div class="md-3" style="margin-top:10px">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="vaccinated" id="vaccinatedYes" value="option1">
-                    <label class="form-check-label" for="vaccinatedYes">Vakcinisan</label>
+                    <label class="form-check-label" for="vaccinatedYes">Vakcinisan/a</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="vaccinated" id="vaccinatedNo" value="option2">
-                    <label class="form-check-label" for="vaccinatedNo">Nije vakcinisan</label>
+                    <label class="form-check-label" for="vaccinatedNo">Nije vakcinisan/a</label>
                   </div>
                </div>
-               <button type="submit" class="btn btn-primary">Sign in</button>
+               
          </div>
-  
          </form>
+         <button class="btn btn-primary" id = "saveButton" onclick = "PetService.update(` + data.pets_id + `)">Spasi promjene</button>
       </div>
       </div>
       </div>`;
+      
       $("#edit-pet").html(html);
-      console.log(data);
-    });*/
+      data.pet_gender ? $("#genderFemale").prop("checked",true) : $("#genderMale").prop("checked",true);
+      data.vaccinated ? $("#vaccinatedYes").prop("checked",true) : $("#vaccinatedNo").prop("checked",true);
+    });
   },
 
   showPet: function (id) {
@@ -111,7 +101,6 @@ var PetService = {
       }else{
         vaccinatedText = "Vakcinisan";
       }
-      var myJSON = JSON.stringify(data);
       var html = "";
         html += `
         <section>
@@ -132,7 +121,7 @@ var PetService = {
                 <p class="lead">` + data.pets_description + `</p>
                 <div class="d-grid gap-2 d-md-block">
                   <button class="btn btn-outline-success flex-shrink-0" type="button">Kontaktirajte vlasnika</button>
-                  <button class="btn btn-danger flex-shrink-0" type="button" onclick="PetService.editPet('`+myJSON+`')" >Uredi ljubimca</button>
+                  <button class="btn btn-danger flex-shrink-0" type="button" onclick="PetService.editPet(` + data.pets_id + `)" >Uredi ljubimca</button>
                 </div>
               </div>
             </div>
@@ -142,10 +131,28 @@ var PetService = {
       
       document.getElementById("loading-spinner").style.display = "none";
       $("#individual-pet").html(html);
-      console.log(myJSON);
     });
   },
 
+  update : function(id){
+    $('#saveButton').attr('disabled',true);
+    console.log(id);
+    var pet = {};
+    pet.petname = $('#inputPetName').val();
+    $.ajax({
+      url: 'api/pets/'+ id,
+      type: 'PUT',
+      data: JSON.stringify(pet),
+      contentType: "application/json",
+      dataType: "json",
+      success: function(result) {
+          PetService.list(); // perf optimization
+      }
+    });
+
+    $('#saveButton').attr('disabled',false);
+    $("#edit-pet").attr('hidden', true);
+  },
 
 
 }
