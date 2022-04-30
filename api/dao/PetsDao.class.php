@@ -11,23 +11,7 @@ class PetsDao extends BaseDao{
   public function __construct(){
     parent::__construct("pets");
   }
-
-  /*
-  * Returns all pets
-  * could be deleted since it's redundant
-  */
-  public function get_all_pets(){
-    return $this->get_all();
-    //return parent::get_all();
-    
-  }
-  /*
-  * Returns the pet with the queried id
-  * could be deleted -||-
-  */
-  public function get_pet_by_id($pet_id){
-    return $this->get_by_id($pet_id, "pets_id");
-  }
+  
   /*
   * Returns all pets which are vaccinated, by calling on query_with_params from BaseDao
   */

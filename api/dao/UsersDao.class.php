@@ -11,17 +11,6 @@ class UsersDao extends BaseDao{
   public function __construct(){
     parent::__construct("users");
   }
-
-  //get all users
-  public function getAllUsers(){
-    return $this->get_all();
-  }
-
-  //get user based on id
-  public function getUserById($user_id){
-    return $this->get_by_id($user_id, "user_id");
-  }
-
   //get user based on username
   //might use query unique
   public function getUsername($username){

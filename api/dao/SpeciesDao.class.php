@@ -14,13 +14,6 @@ class SpeciesDao extends BaseDao{
   public function __construct(){
     parent::__construct("species");
   }
-
-  /*
-  * Get species by id
-  */
-  function get_species_by_id($id){
-    return $this->get_by_id($id, "species_id");
-  }
   /*
   * Return the name of a species with a provided pets_id from pets table
   */
