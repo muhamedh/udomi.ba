@@ -7,7 +7,11 @@ var PetService = {
         PetService.add(todo);
       }
     });*/
-    PetService.list();
+    //document.getElementById("loading-spinner").style.display = "none";
+    //PetService.showPet(1);
+    //PetService.editPet(1);
+    PetService.list(); 
+    
   },
 
   list: function () {
@@ -72,26 +76,72 @@ var PetService = {
                 <p class="lead">` + data.pets_description + `</p>
                 <div class="d-grid gap-2 d-md-block">
                   <button class="btn btn-outline-success flex-shrink-0" type="button">Kontaktirajte vlasnika</button>
-                  <button class="btn btn-danger flex-shrink-0" type="button" onclick="PetService.editPet(` + data.pets_id + `)">Uredi ljubimca</button>
+                  <button class="btn btn-danger flex-shrink-0" type="button" onclick="PetService.editPet()" >Uredi ljubimca</button>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        `
+        `;
       
       document.getElementById("loading-spinner").style.display = "none";
       $("#individual-pet").html(html);
       console.log(data);
+      //PetService.editPet(data);
     });
   },
 
-  editPet: function (id) {
+  editPet: function (data) {
+    console.log(data);
+    /*
     $("#individual-pet").attr('hidden', true);
-   // <div class="container px-4 px-lg-5 my-5"></div>
-    var html = 'hello from edit pet';
     
-    $("#edit-pet").html(html);
-  }
+    var html = `
+    <div class="container">
+    <div class = "row justify-content-md-center">
+       <h3>Uredi ljubimca:</h3>
+    </div>
+    <div class = "row justify-content-md-center">
+       <div class = "col-md-6">
+          <img class="card-img-top mb-5 mb-md-0" src="` + data.photos_url + `" alt="...">
+       </div>
+       <div class = "col-md-6">
+          <form>
+
+             <div class="md-3">
+                <label class="form-label" for="inputPetName">Ime ljubimca: </label>
+                <input type="text" class="form-control" id="inputPetName" placeholder="Ime Vašeg ljubimca" value="`+ data.petname +`">
+             </div>
+
+             <div class="md-3" style="margin-top:10px">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="genderMale" value="" checked>
+                  <label class="form-check-label" for="genderMale">Muzjak</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="" >
+                  <label class="form-check-label" for="genderFemale">Zenka</label>
+                </div>
+             </div>
+             <div class="md-3" style="margin-top:10px">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="vaccinated" id="vaccinatedYes" value="option1">
+                  <label class="form-check-label" for="vaccinatedYes">Vakcinisan</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="vaccinated" id="vaccinatedNo" value="option2">
+                  <label class="form-check-label" for="vaccinatedNo">Nije vakcinisan</label>
+                </div>
+             </div>
+             <button type="submit" class="btn btn-primary">Sign in</button>
+       </div>
+
+       </form>
+    </div>
+    </div>
+    </div>`;
+    
+    $("#edit-pet").html(html);*/
+  },
 
 }
