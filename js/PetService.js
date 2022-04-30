@@ -82,6 +82,7 @@ var PetService = {
       $("#edit-pet").html(html);
       data.pet_gender ? $("#genderFemale").prop("checked",true) : $("#genderMale").prop("checked",true);
       data.vaccinated ? $("#vaccinatedYes").prop("checked",true) : $("#vaccinatedNo").prop("checked",true);
+
     });
   },
 
@@ -97,9 +98,18 @@ var PetService = {
 
       data.pet_gender ? genderText = "Ženka" : genderText = "Mužjak";
       if(genderText == "Ženka"){
-        vaccinatedText = "Vakcinisana";
+        if(data.vaccinated == 1){
+          vaccinatedText = "Vakcinisana";
+        }else{
+          vaccinatedText = "Nije vakcinisana";
+        }
       }else{
-        vaccinatedText = "Vakcinisan";
+        if(data.vaccinated == 1){
+          vaccinatedText = "Vakcinisan";
+        }else{
+          vaccinatedText = "Nije vakcinisan";
+        }
+        
       }
       var html = "";
         html += `
@@ -136,9 +146,11 @@ var PetService = {
 
   update : function(id){
     $('#saveButton').attr('disabled',true);
-    console.log(id);
     var pet = {};
     pet.petname = $('#inputPetName').val();
+    ($('#vaccinatedNo').is(':checked')) ? pet.vaccinated = 0 : pet.vaccinated = 1;
+    ($('#genderFemale').is(':checked')) ? pet.pet_gender = 1 : pet.pet_gender = 0;
+
     $.ajax({
       url: 'api/pets/'+ id,
       type: 'PUT',
