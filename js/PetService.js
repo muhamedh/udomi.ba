@@ -43,6 +43,15 @@ var PetService = {
     $.get("api/pets/" + id, function (data) {
       $("#pets-list").attr('hidden', true);
       $("#individual-pet").html("");
+      var genderText;
+      var vaccinatedText;
+
+      data.pet_gender ? genderText = "Ženka" : genderText = "Mužjak";
+      if(genderText == "Ženka"){
+        vaccinatedText = "Vakcinisana";
+      }else{
+        vaccinatedText = "Vakcinisan";
+      }
       var html = "";
         html += `
         <section>
@@ -52,12 +61,13 @@ var PetService = {
               <div class="col-md-6">
                 <h1 class="display-5 fw-bolder">` + data.petname + `</h1>
                 <div class="fs-5 mb-2">
-                  <span>` + data.pet_gender + `</span>
-                  <span>` + data.pet_birthdate + `</span>
-                  <span>` + data.vaccinated + `</span>
+                  <span><b>Spol:</b> ` + genderText + `<br></span>
+                  <span><b>Vakcinacija:</b> ` + vaccinatedText + `<br></span>
+                  <span><b>Datum rođenja:</b> ` + data.pet_birthdate + `</span>
+
                 </div>
                 <div class="fs-5 mb-2">
-                  <span>ako budemo još info dodavali</span>
+                  <span><b>Opis ljubimca:</b></span>
                 </div>
                 <p class="lead">` + data.pets_description + `</p>
                 <div class="d-flex">
