@@ -18,21 +18,26 @@ class PetsDao extends BaseDao{
   public function get_pets_by_vaccine($vaccinated){
     return $this->query_with_params("SELECT * FROM pets WHERE vaccinated = :vaccinated", [ 'vaccinated' => $vaccinated]);
   }
-
-  //get pets older
+  /**
+   * Get pets older
+   */
+  
   public function get_older_pets($timestamp){
     return $this->query_with_params("SELECT * FROM pets WHERE pet_birthdate < :timestamp", ['timestamp' => $timestamp]);
   }
 
-  //get pets younger
+  /**
+   * Get younger pets
+   */
   public function get_younger_pets($timestamp){
     return $this->query_with_params("SELECT * FROM pets WHERE pet_birthdate > :timestamp", ['timestamp' => $timestamp]);
    }
+  /**
+   * Get by gender
+   */
 
-  // get by gender
   public function get_by_gender($gender){
     return $this->query_with_params("SELECT * FROM pets WHERE pet_gender = :gender", ['gender' => $gender]);
   }
 
 }
-?>
