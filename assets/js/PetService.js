@@ -1,7 +1,6 @@
 var PetService = {
   init: function () {
     PetService.list(); 
-  
   },
 
   list: function () {
@@ -30,7 +29,6 @@ var PetService = {
   },
 
   editPet: function (id) {
-
     EditPetService.editPet(id);
   },
 
