@@ -67,13 +67,22 @@ var EditPetService = {
             </div>`;
             
             $("#edit-pet").html(html);
-            if($("#genderFemale").is(":checked")){
-               
+            if(data.pet_gender == 1){
+               $("#genderFemale").prop("checked",true) 
+            }else if(data.pet_gender == 0){
+               $("#genderMale").prop("checked",true);
             }
-            data.pet_gender ? $("#genderFemale").prop("checked",true) : $("#genderMale").prop("checked",true);
-            data.vaccinated ? $("#vaccinatedYes").prop("checked",true) : $("#vaccinatedNo").prop("checked",true);
-            data.adopted ? $("#adoptedYes").prop("checked",true) : $("#adoptedNo").prop("checked",true);
-            
+            if(data.vaccinated == 1){
+               $("#vaccinatedYes").prop("checked",true)
+            }else if(data.vaccinated == 0){
+               console.log('nije vakcinisan');
+               $("#vaccinatedNo").prop("checked",true);
+            }
+            if(data.adopted == 1){
+               $("#adoptedYes").prop("checked",true);
+            }else if(data.adopted == 0){
+               $("#adoptedNo").prop("checked",true);
+            }
           });
     }
 }
