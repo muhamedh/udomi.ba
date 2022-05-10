@@ -14,7 +14,7 @@ var PetService = {
         html += `
           <div class="col">
             <div class="card h-100">
-              <img src="` + data[i].photos_url + `" class="card-img-top" alt="A picture of cat">
+              <img src="` + "./assets/"+data[i].photos_url + `" class="card-img-top" alt="A picture of cat">
             <div class="card-body">
               <h5 class="card-title fw-bold">` + data[i].petname + `</h5>
               <p class="card-text">` + data[i].pets_description + `</p>
@@ -41,7 +41,7 @@ var PetService = {
       </div>
       <div class = "row justify-content-md-center">
          <div class = "col-md-6">
-            <img class="card-img-top mb-5 mb-md-0" src="` + data.photos_url + `" alt="...">
+            <img class="card-img-top mb-5 mb-md-0" src="` +"./assets/" +data.photos_url + `" alt="...">
          </div>
          <div class = "col-md-6">
             <form>
@@ -126,7 +126,7 @@ var PetService = {
         <section>
           <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
-              <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="` + data.photos_url + `" alt="..."></div>
+              <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="` +"./assets/" + data.photos_url + `" alt="..."></div>
               <div class="col-md-6">
                 <h1 class="display-5 fw-bolder">` + data.petname + `</h1>
                 <div class="fs-5 mb-2">
