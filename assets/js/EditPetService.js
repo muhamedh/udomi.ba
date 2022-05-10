@@ -1,7 +1,16 @@
 var EditPetService = {
     editPet: function(id){
+      
         $.get("api/pets/" + id, function (data) {
-            $("#individual-pet").html("");
+            console.log(data.petname);
+            console.log(data.vaccinated);
+            console.log(data.pet_gender);
+
+            $("#individual-pet").attr('hidden', true);
+            $("#pets-list").attr('hidden', true);
+            $("#edit-pet").html("");
+            $("#edit-pet").attr('hidden', false);
+            
             var html = `
             <div class="container">
             <div class = "row justify-content-md-center">
@@ -58,9 +67,13 @@ var EditPetService = {
             </div>`;
             
             $("#edit-pet").html(html);
+            if($("#genderFemale").is(":checked")){
+               
+            }
             data.pet_gender ? $("#genderFemale").prop("checked",true) : $("#genderMale").prop("checked",true);
             data.vaccinated ? $("#vaccinatedYes").prop("checked",true) : $("#vaccinatedNo").prop("checked",true);
             data.adopted ? $("#adoptedYes").prop("checked",true) : $("#adoptedNo").prop("checked",true);
+            
           });
     }
 }

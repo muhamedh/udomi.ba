@@ -30,6 +30,7 @@ var PetService = {
   },
 
   editPet: function (id) {
+
     EditPetService.editPet(id);
   },
 
@@ -38,12 +39,14 @@ var PetService = {
   },
 
   update : function(id){
+    
     $('#saveButton').attr('disabled',true);
     var pet = {};
     pet.petname = $('#inputPetName').val();
     ($('#vaccinatedNo').is(':checked')) ? pet.vaccinated = 0 : pet.vaccinated = 1;
     ($('#genderFemale').is(':checked')) ? pet.pet_gender = 1 : pet.pet_gender = 0;
     ($('#adoptedYes').is(':checked')) ? pet.adopted = 1 : pet.adopted = 0;
+    console.log(pet);
     $.ajax({
       url: 'api/pets/'+ id,
       type: 'PUT',
@@ -57,7 +60,7 @@ var PetService = {
 
     $('#saveButton').attr('disabled',false);
     $("#edit-pet").attr('hidden', true);
-  },
+  }
 
 
 }

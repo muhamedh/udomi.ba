@@ -5,6 +5,8 @@ var ShowPetService = {
     showPet : function(id){
         $.get("api/pets/" + id, function (data) {
             $("#pets-list").attr('hidden', true);
+            $("#edit-pet").attr('hidden', true);
+            $("#individual-pet").attr('hidden', false);
             $("#individual-pet").html("");
             var genderText;
             var vaccinatedText;
