@@ -7,45 +7,40 @@
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-
 <body>
   <!--navigation bar-->
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">udomi.ba</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <a class="navbar-brand" href="index.html">udomi.ba</a>
+
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="index.html">Naslovna stranica</a>
             </li>
           </ul>
-          <form class="d-flex gap-3">
-            <button class="btn btn-outline-light btn-sm">Prijavi se</button>
-            <button class="btn btn-outline-light btn-sm">Registruj se</button>
-          </form>
+
+          <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;">Prijavi se</button>
+          <button class="btn btn-outline-light btn-sm">Registruj se</button>
         </div>
       </div>
     </nav>
   </header>
   <!---->
-
+ <!--main content SPApp-->
   <main>
     <div class="container marketing" style="margin-top: 100px;">
       <div class="text-center" id="loading-spinner">
-        <img src="./assets/img/dogologo.png" alt="logo of udomi.ba - a drawing of a doggo">
+        <img src="./assets/img/dogologo.png" alt="logo of udomi.ba - a drawing of a dog">
       </div>
-
+      <!--div for all pets-->
       <div id="pets-list" class="row row-cols-1 row-cols-md-3 g-4"></div>
-
+      <!--div for individual pet-->
       <div id="individual-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
-
+      <!--div for edit pet-->
       <div id="edit-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
-      
+
     </div>
   </main>
 </body>
@@ -53,9 +48,9 @@
 <script src="./assets/js/jquery-3.6.0.min.js"></script>
 <script src="./assets/js/bootstrap.bundle.min.js"></script>
 <script src="./assets/js/PetService.js"></script>
-
+<script src="./assets/js/EditPetService.js"></script>
+<script src="./assets/js/ShowPetService.js"></script>
 <script>
   PetService.init();
 </script>
-
 </html>

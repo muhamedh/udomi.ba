@@ -1,7 +1,4 @@
 <?php
-/*
-* Author : Muhamed Hamzic
-*/
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -23,12 +20,10 @@ class SpeciesDao extends BaseDao{
             WHERE p.pets_id = :pets_id";
     return $this->query_with_params($sql, ['pets_id' => $pets_id]);
   }
-/*
-* When we later on use this function to actually insert it, we need to make sure that the parameter $species_name is of type array() so array($species_name)
-*/
+  /*
+  * When we later on use this function to actually insert it, we need to make sure that the parameter $species_name is of type array() so array($species_name)
+  */
   function insert_species($species_name){
    return $this->add($species_name);
   }
 }
-
-?>

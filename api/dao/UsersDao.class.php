@@ -11,23 +11,26 @@ class UsersDao extends BaseDao{
   public function __construct(){
     parent::__construct("users");
   }
-  //get user based on username
-  //might use query unique
+  /**
+   * Get user based on username
+   * TODO:
+   *      might use query unique
+   */
   public function getUsername($username){
     return $this->query_with_params("SELECT * FROM users WHERE username=:username", ['username' => $username]);
   }
-
-  ////get user based on email
+  /**
+   * Get user based on email
+   */
   public function getMail($mail){
     return $this->query_with_params("SELECT * FROM users WHERE user_mail= :mail", ['mail' => $mail]);
   }
-
-  ////get user based on phone number
+  /**
+   * Get user based on phone number
+   */
   public function getPhoneNumber($number){
     return $this->query_with_params("SELECT * FROM users WHERE phone_number=:number", ['number' => $number]);
   }
-
-
-}
+  }
 
  ?>
