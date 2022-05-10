@@ -29,6 +29,9 @@ class PetService extends BaseService{
     return $this->dao->get_younger_pets($timestamp);
   }
 
+  public function get_by_owner($owner_id){
+    return $this->dao->get_by_owner($owner_id);
+  }
   
 }
 
