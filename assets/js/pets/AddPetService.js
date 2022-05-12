@@ -56,13 +56,13 @@ var AddPetService = {
           
           <div class="row justify-content-md-center">
             
-            <div class="col-md-6" id="photo">
+            <div class="col-md-6 col-sm-12" id="photo">
               <button onclick="">
                 <img class="img-fluid" src="./assets/img/addimage.png" alt="plusić">
               </button>
             </div>
           
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-12">
               <form id = "addPetForm">
                 <div class="md-3">
                   <label class="form-label" for="petname">Ime ljubimca: </label>
