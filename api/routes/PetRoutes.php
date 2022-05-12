@@ -85,5 +85,12 @@ Flight::route('PUT /pets/@id', function($id){
   Flight::json(["message" => "updated"]);
 });
 
+/**
+ * Get pet by owner id
+ * Works
+ */
+Flight::route('GET /pets/owner/@owner_id', function($owner_id){
+  Flight::json(Flight::petsService()->get_by_owner($owner_id));
+});
 
 ?>

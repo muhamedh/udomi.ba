@@ -32,12 +32,19 @@ class PetsDao extends BaseDao{
   public function get_younger_pets($timestamp){
     return $this->query_with_params("SELECT * FROM pets WHERE pet_birthdate > :timestamp", ['timestamp' => $timestamp]);
    }
+
   /**
    * Get by gender
    */
-
   public function get_by_gender($gender){
     return $this->query_with_params("SELECT * FROM pets WHERE pet_gender = :gender", ['gender' => $gender]);
   }
 
+  /**
+   * Get pet by owner id
+   * query works
+   */
+  public function get_by_owner($owner_id){
+    return $this->query_with_params("SELECT * FROM pets WHERE owner_id = :owner_id", ['owner_id' => $owner_id]);
+  }
 }

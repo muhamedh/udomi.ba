@@ -74,7 +74,6 @@ var EditPetService = {
             if(data.vaccinated == 1){
                $("#vaccinatedYes").prop("checked",true)
             }else if(data.vaccinated == 0){
-               console.log('nije vakcinisan');
                $("#vaccinatedNo").prop("checked",true);
             }
             if(data.adopted == 1){
@@ -84,4 +83,5 @@ var EditPetService = {
             }
           });
     }
+    // add adopted pet function
 }
