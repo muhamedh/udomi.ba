@@ -31,8 +31,7 @@ var AddPetService = {
     entity.photos_url = "/img/cat1.jpg";
     
 
-     console.log(entity);
-     console.log(JSON.stringify(entity));
+    
 
     $.ajax({
       url: 'api/pets',
@@ -41,6 +40,9 @@ var AddPetService = {
       contentType: "application/json",
       dataType: "json",
       success: function () {
+        /**
+         * ADD A TOASTER
+         */
         console.log('POST ajax call finished')
       }
     });
