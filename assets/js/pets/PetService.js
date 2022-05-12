@@ -10,7 +10,7 @@ var PetService = {
       var html = "";
       for (let i = 0; i < data.length; i++) {
         html += `
-          <div class="col">
+          <div class="col-md-12 col-sm-12 col-lg-4">
             <div class="card h-100">
               <img src="` + "./assets/"+data[i].photos_url + `" class="card-img-top" alt="A picture of cat">
             <div class="card-body">

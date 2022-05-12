@@ -1,61 +1,54 @@
 var AddPetService = {
   init: function () {
+    AddPetService.addPetScreen();
+  },
+  validatePetForm: function(){
     $('#addPetForm').validate({
       submitHandler: function (form) {
         var entity = Object.fromEntries((new FormData(form)).entries());
-        console.log("hi from submit handler");
-        this.addPet(entity);
+        
+        AddPetService.addPet(entity);
       }
     });
   },
   addPet: function (entity) {
-    console.log("addPet" + entity);
-    //$('#addButton').attr('disabled', true);
-    //$('#saveAdd').attr('disabled', false);
-    var pet = {};
-
-    pet.petname = $('#addPetName').val();
-    pet.pet_birthdate = document.getElementById("birthdate").value;
     
     /**
-     * TODO 
-     *  DODATI AJAX CALL DA IZVLACI AUTOMATSKI IZ BAZE SPECIES I STAVLJA IH U DROP DOWN!!!!
+     * GET ALL SPECIES FROM DB
      */
     if (($('#species').val()).localeCompare("Mačka")) {
-      pet.species_id = 7; // HARDCODED!
+      entity.species_id = "7"; // HARDCODED!
     } else if (($('#species').val()).localeCompare("Pas")) {
-      pet.species_id = 8; // HARDCODED!
+      entity.species_id = "8"; // HARDCODED!
     } else if (($('#species').val()).localeCompare("Zec")) {
-      pet.species_id = 9; // HARDCODED!
+      entity.species_id = "9"; // HARDCODED!
     }
-
-    ($('#vaccinatedNo').is(':checked')) ? pet.vaccinated = 0 : pet.vaccinated = 1;
-    ($('#genderFemale').is(':checked')) ? pet.pet_gender = 1 : pet.pet_gender = 0;
-    ($('#adoptedYes').is(':checked')) ? pet.adopted = 1 : pet.adopted = 0;
-    pet.pets_description = $('#addDescription').val();
-    pet.photos_url = $('#addPhoto').val();
-    
-    /**
+        /**
      * KADA BUDEMO IMALI TOKENE U USER TOKENU CE BITI PET OWNERRR!!!!
      */
-    pet.owner_id = 9;
-    console.log(JSON.stringify(pet));
+    entity.owner_id = "9";
+
+    entity.photos_url = "/img/cat1.jpg";
     
+
+     console.log(entity);
+     console.log(JSON.stringify(entity));
+
     $.ajax({
       url: 'api/pets',
       type: 'POST',
-      data: JSON.stringify(pet),
+      data: JSON.stringify(entity),
       contentType: "application/json",
       dataType: "json",
       success: function () {
         console.log('POST ajax call finished')
       }
     });
-    //$('#addButton').attr('disabled', false);
-    //$('#saveAdd').attr('disabled', true);
+
   },
   addPetScreen: function () {
-
+    $("#pets-list").attr('hidden', true);
+    $("#add-pet-button").attr('hidden', true);
     var html = `
           <div class="container">
           
@@ -68,37 +61,38 @@ var AddPetService = {
             </div>
           
             <div class="col-md-6">
-              <form id = "#addPetForm">
+              <form id = "addPetForm">
                 <div class="md-3">
-                  <label class="form-label" for="addPetName">Ime ljubimca: </label>
-                  <input type="text" class="form-control" id="addPetName" placeholder="Ime Vašeg ljubimca" </div>
+                  <label class="form-label" for="petname">Ime ljubimca: </label>
+                  <input name = "petname" type="text" class="form-control required" id="petname" placeholder="Ime Vašeg ljubimca"></div>
                   <div>
-                    <label class="form-label" for="birthdate">Datum rođenja: </label>
-                    <input name="birthdate" type="date" class="form-control required" id = "birthdate">
+                    <label class="form-label" for="pet_birthdate">Datum rođenja: </label>
+                    <input name="pet_birthdate" type="date" class="form-control required" id = "pet_birthdate">
                   </div>
                   <div class="md-3" style="margin-top:10px">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="gender" id="genderMale" value="">
+                      <input class="form-check-input" type="radio" name="gender" id="genderMale" value="0">
                       <label class="form-check-label" for="genderMale">Mužjak</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="">
+                      <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="1">
                       <label class="form-check-label" for="genderFemale">Ženka</label>
                     </div>
                   </div>
                   <div class="md-3" style="margin-top:10px">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="vaccinated" id="vaccinatedYes" value="option1">
+                      <input class="form-check-input" type="radio" name="vaccinated" id="vaccinatedYes" value="1">
                       <label class="form-check-label" for="vaccinatedYes">Vakcinisan/a</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="vaccinated" id="vaccinatedNo" value="option2">
+                      <input class="form-check-input" type="radio" name="vaccinated" id="vaccinatedNo" value="0">
                       <label class="form-check-label" for="vaccinatedNo">Nije vakcinisan/a</label>
                     </div>
                   </div>
                   <div class="md-3" style="margin-top:10px">
-                    <label class="form-label" for="addDescription">Opis:</label>
-                    <input type="text" class="form-control" id="addDescription" placeholder="Vaš opis ljubimca" </div>
+                    <label class="form-label" for="pets_description">Opis:</label>
+                    <input type="text" class="form-control" id="pets_description" placeholder="Vaš opis ljubimca" name = "pets_description"> 
+                    </div>
                     <div class="md-3" style="margin-top:10px">
                       <label for="species" class="form-label">Vrsta</label>
                       <input class="form-control" list="speciesList" id="species"
@@ -114,7 +108,7 @@ var AddPetService = {
                       <input class="form-control" type="file" id="addPhoto">
                     </div>
                     <div cclass="md-3" style="margin-top:10px; margin-bottom:10px;">
-                      <button type = "Submit" value = "Submit" class="submit btn btn-success flex-shrink-0" id="saveAdd" onclick="">Spasi
+                      <button type = "Submit" value = "Submit" class="submit btn btn-success flex-shrink-0" id="saveAdd" onclick="AddPetService.validatePetForm()">Spasi
                         promjene</button>
                     </div>
                   </div>
