@@ -44,12 +44,15 @@ if (!copy($filepath, $newFilepath)) { // Copy the file, returns false if failed
     die("Can't move file.");
 }
 unlink($filepath); // Delete the temp file
+$cloud_name = getenv('CLOUD_NAME');
+$api_key = getenv('API_KEY');
+$api_secret = getenv('API_SECRET');
 
 $cloudinary = new Cloudinary([
     'cloud' => [
-        'cloud_name' => getenv('CLOUD_NAME'),
-        'api_key'    => getenv('API_KEY'),
-        'api_secret' => getenv('API_SECRET'),
+        'cloud_name' => $cloud_name,
+        'api_key'    => $api_key,
+        'api_secret' => $api_secret,
     ],
 ]);
 //$path = "assets/tempimg/";
