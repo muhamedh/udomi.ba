@@ -46,7 +46,6 @@ var ShowPetService = {
                       <p class="lead">` + data.pets_description + `</p>
                       <div class="d-grid gap-2 d-md-block">
                         <button class="btn btn-outline-success flex-shrink-0" type="button">Kontaktirajte vlasnika</button>
-                        <button class="btn btn-danger flex-shrink-0" type="button" onclick="PetService.editPet(` + data.pets_id + `)" >Uredi ljubimca</button>
                       </div>
                     </div>
                   </div>
