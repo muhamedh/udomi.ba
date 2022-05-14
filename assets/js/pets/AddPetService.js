@@ -18,11 +18,11 @@ var AddPetService = {
      * GET ALL SPECIES FROM DB
      */
     if (($('#species').val()).localeCompare("Mačka")) {
-      entity.species_id = "7"; // HARDCODED!
+      entity.species_id = "1"; // HARDCODED!
     } else if (($('#species').val()).localeCompare("Pas")) {
-      entity.species_id = "8"; // HARDCODED!
+      entity.species_id = "2"; // HARDCODED!
     } else if (($('#species').val()).localeCompare("Zec")) {
-      entity.species_id = "9"; // HARDCODED!
+      entity.species_id = "4"; // HARDCODED!
     }
         /**
      * KADA BUDEMO IMALI TOKENE U USER TOKENU CE BITI PET OWNERRR!!!!
