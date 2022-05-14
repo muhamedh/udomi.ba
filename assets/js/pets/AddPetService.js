@@ -118,7 +118,7 @@ var AddPetService = {
                         promjene</button>
                     </div>
                     </form>
-                    <form id = "uploadPictureForm">
+                    <form id = "uploadPictureForm" enctype="multipart/form-data">
                     <div class="md-3" style="margin-top:10px">
                       <label for="addPhoto" class="form-label">Dodajte sliku Vašeg ljubimca</label>
                       <input class="form-control" type="file" id="addPhoto" name = "myFile" >

@@ -1,54 +1,59 @@
 
 var uploadPicture = {
     handleUpload: function () {
-        console.log('initilized');
-            $("#confirmPicture").attr('hidden',true);
-            $("#loadingButton").attr('hidden', false);
-            $("#saveAdd").attr("disabled", true);
-            var ajaxRequest;    
-            
-            /* Stop form from submitting normally   */
-            event.preventDefault();
+        //change visibility of elements
+        $("#confirmPicture").attr('hidden', true);
+        $("#loadingButton").attr('hidden', false);
+        // disable save form button
+        $("#saveAdd").attr("disabled", true);
 
-            /* Get from elements values */
-            
-            var formData = new FormData($('#uploadPictureForm')[0]);
-            formData.append('file', $('input[type=file]')[0].files[0]);
-            
-            
-            ajaxRequest = $.ajax({
-                url: "api/upload.php",
-                type: "post",
-                data: formData,
-                processData: false,
-                contentType: false
-            });
+        /* Stop form from submitting normally   
+           TODO: find a non depricated version*/
+        event.preventDefault();
 
-            /*  Request can be aborted by ajaxRequest.abort() */
+        //get from elements values
 
-            ajaxRequest.done(function (response, textStatus, jqXHR) {
+        var formData = new FormData($('#uploadPictureForm')[0]);
+        formData.append('file', $('input[type=file]')[0].files[0]);
 
-                // Show successfully for submit message TODO
-                //console.log(jqXHR);
-                $('#petPicture').attr('src',jQuery.parseJSON(response).secure_url);
-                $("#confirmPicture").attr('hidden',false);
-                $("#loadingButton").attr('hidden', true);
-                $("#saveAdd").attr("disabled", false);
-                //photo_url = jQuery.parseJSON(response).secure_url;
-                
-                //return response
-            });
 
-            /* On failure of request this function will be called  */
-            ajaxRequest.fail(function () {
-                //console.log(response);
-                $('#petPicture').attr('src',jQuery.parseJSON(response).secure_url);
-                $("#confirmPicture").attr('hidden',false);
-                $("#loadingButton").attr('hidden', true);
-                $("#saveAdd").attr("disabled", false);
-                // Show  toaster error TODO
-                //return response
-            });
-            
+        var ajaxRequest = $.ajax({
+            url: "api/upload.php",
+            type: "post",
+            data: formData,
+            processData: false,
+            contentType: false
+        });
+        //on success of ajax call + on failure of php server side errors
+        ajaxRequest.done(function (response, textStatus, jqXHR) {
+
+            toastr.options.preventDuplicates = true;
+            if (response === "1") {
+                toastr.error('Molim Vas dodajte sliku.', 'Greška!');
+            } else if (response === "2") {
+                toastr.error("Vaša slika je prevelika.", "Greška!");
+
+            } else if (response === "3") {
+                toastr.warning("Dozvoljeni formati slike su: *.png i *.jpg", "Upozerenje:");
+            } else if (response === "4") {
+                toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
+            } else {
+                toastr.success("Slika uspješno dodana.", "Info:");
+                $('#petPicture').attr('src', jQuery.parseJSON(response).secure_url);
+            }
+
+            $("#confirmPicture").attr('hidden', false);
+            $("#loadingButton").attr('hidden', true);
+            $("#saveAdd").attr("disabled", false);
+
+        });
+        // on failure of ajax call
+        ajaxRequest.fail(function () {
+            toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
+            $("#confirmPicture").attr('hidden', false);
+            $("#loadingButton").attr('hidden', true);
+            $("#saveAdd").attr("disabled", false);
+        });
+
     }
 }
