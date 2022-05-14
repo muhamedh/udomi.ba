@@ -7,6 +7,8 @@ error_reporting(E_ALL);
 /*
 * Get all species
 * Works
+* could be used to populate dropdown menu
+* guest
 */
 Flight::route('GET /species', function () {
   Flight::json(Flight::speciesService()->get_all());
@@ -15,6 +17,7 @@ Flight::route('GET /species', function () {
 /*
   * Get species by species_id
   * Works
+  * guest
   */
 
 Flight::route('GET /species/@id', function ($id) {
@@ -24,6 +27,7 @@ Flight::route('GET /species/@id', function ($id) {
 /*
   * Get species by pets_id
   * Works
+  * guest
   */
 
 Flight::route('GET /species/pets/@pets_id', function ($pets_id) {
@@ -34,6 +38,9 @@ Flight::route('GET /species/pets/@pets_id', function ($pets_id) {
 /**
  * Add species
  * Works
+ * ovo će se valjda i izbrisat ako ćemo filovat bazu sami
+ * ako ne
+ * private
  */
 Flight::route('POST /species', function () {
   Flight::json(Flight::speciesService()->add(Flight::request()->data->getData()));
@@ -42,6 +49,8 @@ Flight::route('POST /species', function () {
 /**
  * Delete species by species_id
  * Works
+ * i ovo bi se moglo brisat
+ * private
  */
 Flight::route('DELETE /species/@id', function($id){
   Flight::json(Flight::speciesService()->delete($id,"species_id"));
