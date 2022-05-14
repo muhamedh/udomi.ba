@@ -27,7 +27,7 @@ var AddPetService = {
         /**
      * KADA BUDEMO IMALI TOKENE U USER TOKENU CE BITI PET OWNERRR!!!!
      */
-    entity.owner_id = "9";
+    entity.owner_id = "1";
 
     entity.photos_url = $('#petPicture').prop('src');
     
