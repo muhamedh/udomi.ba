@@ -33,7 +33,7 @@ var AddPetService = {
     
     
   
-    console.log(JSON.stringify(entity));
+    //console.log(JSON.stringify(entity));
     
     
     

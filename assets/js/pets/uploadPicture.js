@@ -29,7 +29,7 @@ var uploadPicture = {
             ajaxRequest.done(function (response, textStatus, jqXHR) {
 
                 // Show successfully for submit message TODO
-                console.log(jqXHR);
+                //console.log(jqXHR);
                 $('#petPicture').attr('src',jQuery.parseJSON(response).secure_url);
                 $("#confirmPicture").attr('hidden',false);
                 $("#loadingButton").attr('hidden', true);
@@ -41,7 +41,7 @@ var uploadPicture = {
 
             /* On failure of request this function will be called  */
             ajaxRequest.fail(function () {
-                console.log(response);
+                //console.log(response);
                 $('#petPicture').attr('src',jQuery.parseJSON(response).secure_url);
                 $("#confirmPicture").attr('hidden',false);
                 $("#loadingButton").attr('hidden', true);
