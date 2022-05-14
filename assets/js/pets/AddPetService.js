@@ -50,6 +50,7 @@ var AddPetService = {
   },
   addPetScreen: function () {
     $("#pets-list").attr('hidden', true);
+    $("#my-pets").attr('hidden', true);
     $("#add-pet-button").attr('hidden', true);
     var html = `
           <div class="container">
@@ -109,7 +110,7 @@ var AddPetService = {
                       <label for="addPhoto" class="form-label">Default file input example</label>
                       <input class="form-control" type="file" id="addPhoto">
                     </div>
-                    <div cclass="md-3" style="margin-top:10px; margin-bottom:10px;">
+                    <div class="md-3" style="margin-top:10px; margin-bottom:10px;">
                       <button type = "Submit" value = "Submit" class="submit btn btn-success flex-shrink-0" id="saveAdd" onclick="AddPetService.validatePetForm()">Spasi
                         promjene</button>
                     </div>
