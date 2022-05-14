@@ -1,4 +1,5 @@
 var AddPetService = {
+
   init: function () {
     AddPetService.addPetScreen();
   },
@@ -6,13 +7,13 @@ var AddPetService = {
     $('#addPetForm').validate({
       submitHandler: function (form) {
         var entity = Object.fromEntries((new FormData(form)).entries());
-        
         AddPetService.addPet(entity);
       }
     });
   },
   addPet: function (entity) {
     
+
     /**
      * GET ALL SPECIES FROM DB
      */
@@ -28,11 +29,16 @@ var AddPetService = {
      */
     entity.owner_id = "9";
 
-    entity.photos_url = "/img/cat1.jpg";
+    entity.photos_url = $('#petPicture').prop('src');
     
-
     
-
+  
+    console.log(JSON.stringify(entity));
+    
+    
+    
+    
+    
     $.ajax({
       url: 'api/pets',
       type: 'POST',
@@ -46,11 +52,12 @@ var AddPetService = {
         console.log('POST ajax call finished')
       }
     });
-
+    
   },
   addPetScreen: function () {
     $("#pets-list").attr('hidden', true);
     $("#add-pet-button").attr('hidden', true);
+    
     var html = `
           <div class="container">
           
@@ -58,7 +65,7 @@ var AddPetService = {
             
             <div class="col-md-6 col-sm-12" id="photo">
               <button onclick="">
-                <img class="img-fluid" src="./assets/img/addimage.png" alt="plusić">
+                <img id = "petPicture"class="img-fluid" src="./assets/img/addimage.png" alt="Slika ljubimca koji ste postavili">
               </button>
             </div>
           
@@ -66,18 +73,18 @@ var AddPetService = {
               <form id = "addPetForm">
                 <div class="md-3">
                   <label class="form-label" for="petname">Ime ljubimca: </label>
-                  <input name = "petname" type="text" class="form-control required" id="petname" placeholder="Ime Vašeg ljubimca"></div>
+                  <input name = "petname" type="text" class="form-control" id="petname" placeholder="Ime Vašeg ljubimca"></div>
                   <div>
                     <label class="form-label" for="pet_birthdate">Datum rođenja: </label>
-                    <input name="pet_birthdate" type="date" class="form-control required" id = "pet_birthdate">
+                    <input name="pet_birthdate" type="date" class="form-control" id = "pet_birthdate">
                   </div>
                   <div class="md-3" style="margin-top:10px">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="gender" id="genderMale" value="0">
+                      <input class="form-check-input" type="radio" name="pet_gender" id="genderMale" value="0">
                       <label class="form-check-label" for="genderMale">Mužjak</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="1">
+                      <input class="form-check-input" type="radio" name="pet_gender" id="genderFemale" value="1">
                       <label class="form-check-label" for="genderFemale">Ženka</label>
                     </div>
                   </div>
@@ -105,22 +112,30 @@ var AddPetService = {
                         <option value="Zec">
                       </datalist>
                     </div>
-                    <div class="md-3" style="margin-top:10px">
-                      <label for="addPhoto" class="form-label">Default file input example</label>
-                      <input class="form-control" type="file" id="addPhoto">
-                    </div>
+                    
                     <div cclass="md-3" style="margin-top:10px; margin-bottom:10px;">
                       <button type = "Submit" value = "Submit" class="submit btn btn-success flex-shrink-0" id="saveAdd" onclick="AddPetService.validatePetForm()">Spasi
                         promjene</button>
                     </div>
+                    </form>
+                    <form id = "uploadPictureForm">
+                    <div class="md-3" style="margin-top:10px">
+                      <label for="addPhoto" class="form-label">Dodajte sliku Vašeg ljubimca</label>
+                      <input class="form-control" type="file" id="addPhoto" name = "myFile" >
+                      <button type = "Submit" value = "Submit" class="submit btn btn-success flex-shrink-0" id="confirmPicture" onclick = "uploadPicture.handleUpload()">Potvrdi sliku</button>
+                      <button class="btn btn-success" type="button" id = "loadingButton" disabled>
+                      <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Učitavanje
+                      </button>
+                      </div>
+                  </form>
                   </div>
                 </div>
-              </form>
             </div>
           </div>
         </div>`;
 
     $("#add-pet").html(html);
+    $("#loadingButton").attr('hidden',true);
   }
 
 }
