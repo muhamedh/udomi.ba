@@ -1,5 +1,6 @@
 {
     "require": {
-        "mikecao/flight": "^2.0"
+        "mikecao/flight": "^2.0",
+        "cloudinary/cloudinary_php": "^2.6"
     }
 }

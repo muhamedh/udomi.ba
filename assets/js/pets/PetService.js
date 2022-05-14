@@ -12,7 +12,7 @@ var PetService = {
         html += `
           <div class="col-md-12 col-sm-12 col-lg-4">
             <div class="card h-100">
-              <img src="` + "./assets/"+data[i].photos_url + `" class="card-img-top" alt="A picture of cat">
+              <img src="` + data[i].photos_url + `" class="card-img-top" alt="A picture of cat">
             <div class="card-body">
               <h5 class="card-title fw-bold">` + data[i].petname + `</h5>
               <p class="card-text">` + data[i].pets_description + `</p>
