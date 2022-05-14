@@ -56,6 +56,7 @@ var AddPetService = {
   },
   addPetScreen: function () {
     $("#pets-list").attr('hidden', true);
+    $("#my-pets").attr('hidden', true);
     $("#add-pet-button").attr('hidden', true);
     
     var html = `

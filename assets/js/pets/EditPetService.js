@@ -7,6 +7,7 @@ var EditPetService = {
             $("#pets-list").attr('hidden', true);
             $("#edit-pet").html("");
             $("#edit-pet").attr('hidden', false);
+            $("#my-pets").attr('hidden', true);
             var html = `
             <div class="row justify-content-md-center">
               <h3>Uredi ljubimca:</h3>
