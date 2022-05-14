@@ -16,14 +16,14 @@ var PetService = {
             <div class="card-body">
               <h5 class="card-title fw-bold">` + data[i].petname + `</h5>
               <p class="card-text">` + data[i].pets_description + `</p>
-              
+              <button type="button" class="btn btn-success float-end vise-detalja" onclick="PetService.showPet(` + data[i].pets_id + `)">Više detalja</button>
             </div>
           </div>
         </div>
       `
       /**
       * gdje je ostavljen red slobodan bi išao ovaj button, ali to nećemo
-      * <button id = "add-pet-button" class="btn btn-warning mb-3" onclick="AddPetService.init()">Dodaj ljubimca</button>
+      * <button class="btn btn-danger flex-shrink-0" type="button" onclick="PetService.editPet(` + data.pets_id + `)" >Uredi ljubimca</button>
       */
       }
       //spinner gets hidden

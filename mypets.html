@@ -22,37 +22,34 @@
             </li>
           </ul>
 
-          <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal" data-bs-target="#loginModal">Prijavi se</button>
-          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal">Registruj se</button>
+          <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;">Odjavi se</button>
         </div>
       </div>
     </nav>
   </header>
   <!---->
-  <!--main content SPApp-->
+ <!--main content SPApp-->
   <main>
-
+    
     <div class="container" style="margin-top: 100px;">
-      <!--
-        ne treba nam na indexu ovo
         <button id = "add-pet-button" class="btn btn-warning mb-3" onclick="AddPetService.init()">Dodaj ljubimca</button>
-      -->
       <div class="text-center" id="loading-spinner">
-
       </div>
       <!--div for all pets-->
+      <!--
       <div id="pets-list" class="row row-cols-1 row-cols-md-3 g-4"></div>
+      -->
       <!--div for individual pet-->
+      <!--
       <div id="individual-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
-
+      -->
+      <!--div to show pets by owner id-->
+      <div id="my-pets" class="row row-cols-1 row-cols-md-3 g-4"></div>
       <!--div for edit pet-->
-      <!--
       <div id="edit-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
-      -->
       <!--div for add pet-->
-      <!--
       <div id="add-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
-      -->
+
     </div>
   </main>
 </body>
@@ -79,8 +76,7 @@
       <div class="modal-body ">
         <form class="needs-validation" novalidate>
           <div class="form-floating mb-3 ">
-            <input type="login-email" class="form-control" id="login-email" placeholder="ime.prezime@example.com"
-              required>
+            <input type="login-email" class="form-control" id="login-email" placeholder="ime.prezime@example.com" required>
             <label for="login-email" class="form-label" id="login-email">Email adresa</label>
             <div class="invalid-feedback">
               Korisnik ne postoji
