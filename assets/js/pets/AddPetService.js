@@ -114,7 +114,7 @@ var AddPetService = {
                       </datalist>
                     </div>
                     
-                    <div cclass="md-3" style="margin-top:10px; margin-bottom:10px;">
+                    <div class="md-3" style="margin-top:10px; margin-bottom:10px;">
                       <button type = "Submit" value = "Submit" class="submit btn btn-success flex-shrink-0" id="saveAdd" onclick="AddPetService.validatePetForm()">Spasi
                         promjene</button>
                     </div>
@@ -122,7 +122,7 @@ var AddPetService = {
                     <form id = "uploadPictureForm" enctype="multipart/form-data">
                     <div class="md-3" style="margin-top:10px">
                       <label for="addPhoto" class="form-label">Dodajte sliku Vašeg ljubimca</label>
-                      <input class="form-control" type="file" id="addPhoto" name = "myFile" >
+                      <input class="form-control" style="margin-bottom:10px" type="file" id="addPhoto" name = "myFile" >
                       <button type = "Submit" value = "Submit" class="submit btn btn-success flex-shrink-0" id="confirmPicture" onclick = "uploadPicture.handleUpload()">Potvrdi sliku</button>
                       <button class="btn btn-success" type="button" id = "loadingButton" disabled>
                       <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Učitavanje
