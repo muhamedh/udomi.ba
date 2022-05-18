@@ -15,7 +15,7 @@ class Config{
     return Config::get_env("DB_SCHEME", "udomidb");
   }
   public static function DB_PORT(){
-    return Config::get_env("DB_PORT", "3306");
+    return Config::get_env("DB_PORT", "3307");
   }
 
   public static function get_env($name, $default){
