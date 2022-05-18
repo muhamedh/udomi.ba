@@ -1,11 +1,9 @@
 
 var uploadPicture = {
-    handleUpload: function () {
+    handleUpload: function (entity) {
         //change visibility of elements
         $("#confirmPicture").attr('hidden', true);
         $("#loadingButton").attr('hidden', false);
-        // disable save form button
-        $("#saveAdd").attr("disabled", true);
 
         /* Stop form from submitting normally   
            TODO: find a non depricated version*/
@@ -13,7 +11,7 @@ var uploadPicture = {
 
         //get from elements values
 
-        var formData = new FormData($('#uploadPictureForm')[0]);
+        var formData = new FormData($('#addPetForm')[0]);
         formData.append('file', $('input[type=file]')[0].files[0]);
 
 
@@ -38,14 +36,15 @@ var uploadPicture = {
             } else if (response === "4") {
                 toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
             } else {
-                toastr.success("Slika uspješno dodana.", "Info:");
-                $('#petPicture').attr('src', jQuery.parseJSON(response).secure_url);
+                
+                entity.photos_url = jQuery.parseJSON(response).secure_url
+                AddPetHandler.addPet(entity);
             }
 
             $("#confirmPicture").attr('hidden', false);
             $("#loadingButton").attr('hidden', true);
             $("#saveAdd").attr("disabled", false);
-
+            
         });
         // on failure of ajax call
         ajaxRequest.fail(function () {
