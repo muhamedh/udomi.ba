@@ -44,21 +44,23 @@
        
       -->
       <button id = "add-pet-button" class="btn btn-warning mb-3" onclick="AddPetHandler.init()">Dodaj ljubimca</button>
-  
-         <div class="text-center" id="loading-spinner"></div>
+      <button id = "user-button" class="btn btn-warning mb-3" onclick="UserService.showUserPage()">MojProfil</button>
+      <div class="text-center" id="loading-spinner"></div>
+
       <!--div for all pets-->
       <div id="pets-list" class="row row-cols-1 row-cols-md-3 g-4"></div>
+
       <!--div for individual pet-->
       <div id="individual-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
 
       <!--div for edit pet-->
-      
       <div id="edit-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
-    
+
       <!--div for add pet-->
-    
       <div id="add-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
     
+      <!--div for user page-->
+      <div id="user-page" class="row gx-4 gx-lg-5 align-items-center"></div>
     </div>
   </main>
 </body>
@@ -67,15 +69,20 @@
 <script src="./assets/js/jquery.validate.min.js"></script>
 <script src="./assets/js/bootstrap.bundle.min.js"></script>
 <script src="./assets/js/toastr.js"></script>
+
 <script src="./assets/js/pets/PetService.js"></script>
-<script src="./assets/js/pets/EditPetService.js"></script>
 <script src="./assets/js/pets/ShowPetService.js"></script>
-<script src="./assets/js/pets/AddPetService.js"></script>
 <script src="./assets/js/pets/AddPetHandler.js"></script>
 <script src="./assets/js/pets/uploadPicture.js"></script>
+<script src="./assets/js/pets/EditPetService.js"></script>
+
+<script src="./assets/js/users/UserService.js"></script>
+
+
 <script>
   $(document).ready(function () {
     PetService.init();
+    UserService.init();
   });
 </script>
 
