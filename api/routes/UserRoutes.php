@@ -1,7 +1,12 @@
 <?php
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 
 /** USERS ROUTES **/
 
@@ -47,9 +52,24 @@ Flight::route('GET /users/username/@username', function ($username) {
   * guest
   */
 Flight::route('POST /users', function () {
-  $data = Flight::request()->data->getData();
+  
+  $login = Flight::request()->data->getData();
+  
+  $user = Flight::usersService()->getMail($login['user_mail']);
 
-  Flight::json(Flight::usersService()->add($data));
+  if(isset($user['user_id'])){
+    if($user['password'] == md5($login['password'])){
+      unset($user['password']);
+      $jwt = JWT::encode($user, Config::JWT_SECRET(), 'HS256');
+      Flight::json(['token' => $jwt]);
+    }else{
+      Flight::json(["message"=> "Wrong password"],404);
+    }
+  }else{
+    Flight::json(array($user),404);
+  }
+
+  //Flight::json(Flight::usersService()->add($data));
 });
 
 /*

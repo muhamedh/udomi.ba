@@ -17,11 +17,13 @@ class Config{
   public static function DB_PORT(){
     return Config::get_env("DB_PORT", "3307");
   }
-
+  public static function JWT_SECRET(){
+    return COnfig::get_env("JWT_SECRET", "bcckLFNegZxUgKFZcceg");
+  }
   public static function get_env($name, $default){
     return isset($_ENV[$name]) && trim($_ENV[$name]) != '' ? $_ENV[$name] : $default;
    }
-
+  
 }
 
 ?>

@@ -48,7 +48,7 @@ class BaseDao
    */
   protected function query_unique($query, $params)
   {
-    $stmt = $this->conn->prepare($query, $params);
+    $stmt = $this->query_with_params($query, $params);
     return reset($stmt);
   }
   /**
