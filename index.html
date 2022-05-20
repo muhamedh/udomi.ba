@@ -78,12 +78,14 @@
 
 <script src="./assets/js/users/UserService.js"></script>
 <script src="./assets/js/users/UserLoginHandler.js"></script>
+<script src="./assets/js/users/UserRegisterHandler.js"></script>
 
 <script>
   $(document).ready(function () {
     PetService.init();
     UserService.init();
     UserLoginHandler.init();
+    UserRegisterHandler.init();
   });
 </script>
 
@@ -136,63 +138,41 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="needs-validation" method="post" novalidate>
+        <form id = "registerForm">
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="email" placeholder="ime.prezime@example.com" required>
+            <input name = "user_mail" type="email" class="form-control" id="email" placeholder="ime.prezime@example.com">
             <label for="email" class="form-label" id="email">Email adresa</label>
-            <div class="invalid-feedback">
-              Unesite email adresu
-            </div>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="username" name="username" placeholder="ime123" required>
+            <input name = "username" type="text" class="form-control" id="username" name="username" placeholder="ime123">
             <label for="username" class="form-label" id="username">Username/Korisničko ime</label>
-            <div class="invalid-feedback">
-              Unesite korisničko ime/username
-            </div>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="password" class="form-control" name="password" id="password" placeholder="Lozinka" required>
+            <input name = "password" type="password" class="form-control" name="password" id="password" placeholder="Lozinka">
             <label for="password" class="form-label" id="password">Lozinka</label>
-            <div class="invalid-feedback">
-              Lozinka može imati 8 do 20 karaktera
-            </div>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="password" class="form-control" name="repeatpassword" id="repeatpassword"
-              placeholder="Ponovite Lozinku" required>
+            <input name = "password2" type="password" class="form-control" name="repeatpassword" id="repeatpassword"
+              placeholder="Ponovite Lozinku" >
             <label for="repeatpassword" class="form-label" id="repeatpassword">Ponovite lozinku</label>
-            <div class="invalid-feedback">
-              Lozinke se ne podudaraju
-            </div>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="tel" class="form-control" name="phonenumber" id="phonenumber" placeholder="061234567" required>
+            <input name = "phone_number" type="tel" class="form-control" name="phonenumber" id="phonenumber" placeholder="061234567">
             <label for="phonenumber" class="form-label">Broj telefona</label>
-            <div class="invalid-feedback">
-              Unesite broj telefona
-            </div>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="search" class="form-control" name="city" id="city" placeholder="Sarajevo" required>
+            <input name = "city" type="search" class="form-control" name="city" id="city" placeholder="Sarajevo">
             <label for="city" class="form-label">Grad</label>
-            <div class="invalid-feedback">
-              Odaberite grad
-            </div>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="search" class="form-control" name="municipality" id="municipality" placeholder="Novi Grad"
-              required>
+            <input name = "municipality" type="search" class="form-control" name="municipality" id="municipality" placeholder="Novi Grad">
             <label for="municipality" class="form-label">Općina</label>
-            <div class="invalid-feedback">
-              Odaberite općinu
-            </div>
             <div class="mt-3 float-end">
               <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Već imate račun?</button>
             </div>
@@ -200,45 +180,11 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
-        <button type="submit" class="btn btn-warning">Registruj se</button>
+        <button type="submit" class="btn btn-warning" id ="register-button">Registruj se</button>
       </div>
       </form>
     </div>
   </div>
 </div>
 
-
-
-
-
-
-<script>
-     
- </script>
- <!--
-  /*
-  * ovo možda u neki service stavit
-  */
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function () {
-    'use strict'
-
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.querySelectorAll('.needs-validation')
-
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-      .forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-
-          form.classList.add('was-validated')
-        }, false)
-      })
-  })()
-</script>
--->
 </html>
