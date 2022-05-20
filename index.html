@@ -77,37 +77,33 @@
 <script src="./assets/js/pets/EditPetService.js"></script>
 
 <script src="./assets/js/users/UserService.js"></script>
-
+<script src="./assets/js/users/UserLoginHandler.js"></script>
 
 <script>
   $(document).ready(function () {
     PetService.init();
     UserService.init();
+    UserLoginHandler.init();
   });
 </script>
 
 
 <div class="modal" tabindex="-1" id="loginModal">
-  <div class="modal-dialog">
+  <div class="modal-dialog" id="loginModal">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Prijava</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="needs-validation" novalidate>
-          <div class="form-floating mb-3 ">
-            <input type="email" class="form-control" id="login-email" placeholder="ime.prezime@example.com"
-              required>
-            <label for="login-email" class="form-label" id="login-email">Email adresa</label>
-            <div class="invalid-feedback">
-              Korisnik ne postoji
-            </div>
+        <form id = "loginForm">
+          <label for="login-email" class="form-label" id="login-email">Email adresa</label>
+          <div class="form-floating mb-3">
+            <input name = "user_mail" type="email" class="form-control required" id="login-email">
           </div>
-
-          <div class="form-floating ">
-            <input type="password" class="form-control" id="login-password" placeholder="Lozinka">
-            <label for="login-password">Lozinka</label>
+          <label for="login-password">Lozinka</label>
+          <div class="form-floating">
+            <input name = "password" type="password" class="form-control required" id="login-password">
           </div>
           <div class="mb-3">
             <button class="btn btn-warning-outline btn-sm">Zaboravili lozinku?</a>
@@ -124,7 +120,7 @@
       </div>
       <div class="modal-footer mt-3">
         <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
-        <button type="submit" class="btn btn-warning">Prijavi se</button>
+        <button type="submit" class="btn btn-warning" id="login-button">Prijavi se</button>
       </div>
       </form>
     </div>
@@ -153,7 +149,7 @@
             <input type="text" class="form-control" id="username" name="username" placeholder="ime123" required>
             <label for="username" class="form-label" id="username">Username/Korisničko ime</label>
             <div class="invalid-feedback">
-              Unseite korisničko ime/username
+              Unesite korisničko ime/username
             </div>
           </div>
 
@@ -216,8 +212,10 @@
 
 
 
-
 <script>
+     
+ </script>
+ <!--
   /*
   * ovo možda u neki service stavit
   */
@@ -242,5 +240,5 @@
       })
   })()
 </script>
-
+-->
 </html>

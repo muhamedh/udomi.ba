@@ -51,7 +51,7 @@ Flight::route('GET /users/username/@username', function ($username) {
   * register
   * guest
   */
-Flight::route('POST /users', function () {
+Flight::route('POST /login', function () {
   
   $login = Flight::request()->data->getData();
   
@@ -68,10 +68,16 @@ Flight::route('POST /users', function () {
   }else{
     Flight::json(array($user),404);
   }
-
-  //Flight::json(Flight::usersService()->add($data));
 });
 
+Flight::route('POST /register', function () {
+
+});
+
+Flight::route('POST /users', function () {
+  $data = Flight::request()->data->getData();
+  Flight::json(Flight::usersService()->add($data));
+});
 /*
   * Update user
   * Works
