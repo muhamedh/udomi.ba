@@ -25,11 +25,14 @@
               <a class="nav-link active" aria-current="page" href="index.html">Naslovna stranica</a>
             </li>
           </ul>
+          <div id = "guest-navbar">
+            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal" data-bs-target="#loginModal">Prijavi se</button>
+            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal">Registruj se</button>
+          </div>
+          <div id = "user-navbar" style="display:none;">
+            <button class="btn btn-outline-light btn-sm" onclick="UserService.init()" >Moj Profil</button>
+          </div>
 
-          <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal"
-            data-bs-target="#loginModal">Prijavi se</button>
-          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal">Registruj
-            se</button>
         </div>
       </div>
     </nav>
@@ -41,10 +44,9 @@
     <div class="container" style="margin-top: 100px;">
       <!--
         ne treba nam na indexu ovo
-       
+             <button id = "add-pet-button" class="btn btn-warning mb-3" onclick="AddPetHandler.init()">Dodaj ljubimca</button>
       -->
-      <button id = "add-pet-button" class="btn btn-warning mb-3" onclick="AddPetHandler.init()">Dodaj ljubimca</button>
-      <button id = "user-button" class="btn btn-warning mb-3" onclick="UserService.showUserPage()">MojProfil</button>
+
       <div class="text-center" id="loading-spinner"></div>
 
       <!--div for all pets-->
@@ -61,6 +63,7 @@
     
       <!--div for user page-->
       <div id="user-page" class="row gx-4 gx-lg-5 align-items-center"></div>
+      
     </div>
   </main>
 </body>
@@ -139,41 +142,41 @@
       </div>
       <div class="modal-body">
         <form id = "registerForm">
+
+          <label for="email" class="form-label">Email adresa</label>
           <div class="form-floating mb-3">
-            <input name = "user_mail" type="email" class="form-control" id="email" placeholder="ime.prezime@example.com">
-            <label for="email" class="form-label" id="email">Email adresa</label>
+            <input name = "user_mail" type="email" class="form-control required" email="true" id="email">
           </div>
 
+          <label for="username" class="form-label">Username/Korisničko ime</label>
           <div class="form-floating mb-3">
-            <input name = "username" type="text" class="form-control" id="username" name="username" placeholder="ime123">
-            <label for="username" class="form-label" id="username">Username/Korisničko ime</label>
+            <input name = "username" type="text" minlength = "3" class="form-control required" id="username" name="username" >
           </div>
 
+          <label for="password" class="form-label">Lozinka</label>
           <div class="form-floating mb-3">
-            <input name = "password" type="password" class="form-control" name="password" id="password" placeholder="Lozinka">
-            <label for="password" class="form-label" id="password">Lozinka</label>
+            <input name = "password" type="password" class="form-control required" name="password" id="password">
           </div>
 
+          <label for="repeatpassword" class="form-label">Ponovite lozinku</label>
           <div class="form-floating mb-3">
-            <input name = "password2" type="password" class="form-control" name="repeatpassword" id="repeatpassword"
-              placeholder="Ponovite Lozinku" >
-            <label for="repeatpassword" class="form-label" id="repeatpassword">Ponovite lozinku</label>
+            <input type="password" class="form-control required" name="repeatpassword" id="repeatpassword" data-rule-equalTo="#password">
           </div>
 
+          <label for="phonenumber" class="form-label">Broj telefona</label>
           <div class="form-floating mb-3">
-            <input name = "phone_number" type="tel" class="form-control" name="phonenumber" id="phonenumber" placeholder="061234567">
-            <label for="phonenumber" class="form-label">Broj telefona</label>
+            <input name = "phone_number" type="tel" class="form-control" name="phonenumber" id="phonenumber">
           </div>
 
+          <label for="city" class="form-label">Grad</label>
           <div class="form-floating mb-3">
-            <input name = "city" type="search" class="form-control" name="city" id="city" placeholder="Sarajevo">
-            <label for="city" class="form-label">Grad</label>
+            <input name = "city" type="search" class="form-control" name="city" id="city">
           </div>
-
+          <label for="municipality" class="form-label">Općina</label>
           <div class="form-floating mb-3">
-            <input name = "municipality" type="search" class="form-control" name="municipality" id="municipality" placeholder="Novi Grad">
-            <label for="municipality" class="form-label">Općina</label>
-            <div class="mt-3 float-end">
+            <input name = "municipality" type="search" class="form-control" name="municipality" id="municipality">
+           
+            <div class="mt-3 float-end"> 
               <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Već imate račun?</button>
             </div>
           </div>

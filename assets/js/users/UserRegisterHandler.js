@@ -5,27 +5,29 @@ var UserRegisterHandler = {
       });
     },
     validateRegisterForm: function(){
+
         $('#registerForm').validate({
           submitHandler: function (form) {
             var entity = Object.fromEntries((new FormData(form)).entries());
-            console.log(entity);
-            /*
+            
+            console.log(JSON.stringify(entity));
+            
             $.ajax({
-              url: 'api/login',
+              url: 'api/register',
               type: 'POST',
               data: JSON.stringify(entity),
               contentType: "application/json",
               dataType: "json",
               success: function (response) {
-                localStorage.setItem("token", response.token);
-                $("#loginModal").modal('hide');
-                toastr.success("Uspješno prijavljeni!", "Informacija:");
+                
+                $("#registerModal").modal('hide');
+                toastr.success("Uspješno registrovani!", "Informacija:");
               },
               error: function(response){
                 toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
               }
             });
-            */
+            
 
           }
         });

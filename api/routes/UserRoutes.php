@@ -71,6 +71,16 @@ Flight::route('POST /login', function () {
 });
 
 Flight::route('POST /register', function () {
+  
+  $data = Flight::request()->data->getData();
+  unset($data['repeatpassword']);
+  $data['password'] = md5($data['password']);
+  
+  $catch = Flight::usersService()->add($data);
+  unset($catch['password']);
+  
+  $jwt = JWT::encode($catch, Config::JWT_SECRET(), 'HS256');
+  Flight::json(['token' => $jwt]);
 
 });
 

@@ -1,6 +1,7 @@
 var UserLoginHandler = {
     init: function(){
       $("#login-button").click(function(){
+        console.log("hi from init");
         UserLoginHandler.validateLoginForm();
       });
     },
@@ -16,9 +17,12 @@ var UserLoginHandler = {
               contentType: "application/json",
               dataType: "json",
               success: function (response) {
+                //$("#guest-navbar").hide();
+                $("#user-navbar").show();
                 localStorage.setItem("token", response.token);
                 $("#loginModal").modal('hide');
-                toastr.success("Uspješno prijavljeni!", "Informacija:");
+                //toastr.success("Uspješno prijavljeni!", "Informacija:");
+                
               },
               error: function(response){
                 toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
