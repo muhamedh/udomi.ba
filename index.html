@@ -6,6 +6,7 @@
   <title>udomi.ba</title>
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="./assets/css/toastr.css" rel="stylesheet">
+  <link href="./assets/css/custom.css" rel="stylesheet">
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -15,14 +16,14 @@
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
       <div class="container-fluid">
-        <a class="navbar-brand" onclick="PetService.list();event.preventDefault();">udomi.ba</a>
+        <a class="navbar-brand clickable" onclick="PetService.list();event.preventDefault();">udomi.ba</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
+              <a class="nav-link active clickable" aria-current="page" onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
             </li>
           </ul>
           <div id = "guest-navbar">

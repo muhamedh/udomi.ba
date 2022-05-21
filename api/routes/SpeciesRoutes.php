@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 * could be used to populate dropdown menu
 * guest
 */
-Flight::route('GET /species', function () {
+Flight::route('GET /public/species', function () {
   Flight::json(Flight::speciesService()->get_all());
 });
 
@@ -20,7 +20,7 @@ Flight::route('GET /species', function () {
   * guest
   */
 
-Flight::route('GET /species/@id', function ($id) {
+Flight::route('GET /public/species/@id', function ($id) {
   Flight::json(Flight::speciesService()->get_by_id($id, "species_id"));
 });
 
@@ -30,7 +30,7 @@ Flight::route('GET /species/@id', function ($id) {
   * guest
   */
 
-Flight::route('GET /species/pets/@pets_id', function ($pets_id) {
+Flight::route('GET /public/species/pets/@pets_id', function ($pets_id) {
   $data = Flight::speciesService()->get_species_by_pets_id($pets_id);
   Flight::json($data[0]);
 });
@@ -42,7 +42,7 @@ Flight::route('GET /species/pets/@pets_id', function ($pets_id) {
  * ako ne
  * private
  */
-Flight::route('POST /species', function () {
+Flight::route('POST /private/species', function () {
   Flight::json(Flight::speciesService()->add(Flight::request()->data->getData()));
 });
 
@@ -52,7 +52,7 @@ Flight::route('POST /species', function () {
  * i ovo bi se moglo brisat
  * private
  */
-Flight::route('DELETE /species/@id', function($id){
+Flight::route('DELETE /private/species/@id', function($id){
   Flight::json(Flight::speciesService()->delete($id,"species_id"));
   Flight::json(["message" => "deleted"]);
 });
