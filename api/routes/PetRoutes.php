@@ -19,7 +19,7 @@ error_reporting(E_ALL);
 * guest
 */
 
-Flight::route('GET /pets', function(){
+Flight::route('GET /public/pets', function(){
     Flight::json(Flight::petsService()->get_all());
 });
   
@@ -29,7 +29,7 @@ Flight::route('GET /pets', function(){
 * guest
 */
 
-Flight::route('GET /pets/@pet_id', function($pet_id){
+Flight::route('GET /public/pets/@pet_id', function($pet_id){
   Flight::json(Flight::petsService()->get_by_id($pet_id, "pets_id"));
 });
   
@@ -39,7 +39,7 @@ Flight::route('GET /pets/@pet_id', function($pet_id){
 * guest
 */
   
-Flight::route('GET /pets/vac/@vaccinated', function($vaccinated){
+Flight::route('GET /public/pets/vac/@vaccinated', function($vaccinated){
   Flight::json(Flight::petsService()->get_pets_by_vaccine($vaccinated));
 });
   
@@ -48,7 +48,7 @@ Flight::route('GET /pets/vac/@vaccinated', function($vaccinated){
 * Works
 * guest
 */
-Flight::route('GET /pets/gender/@gender', function($gender){
+Flight::route('GET /public/pets/gender/@gender', function($gender){
   Flight::json(Flight::petsService()->get_by_gender($gender));
 });
   
@@ -57,7 +57,7 @@ Flight::route('GET /pets/gender/@gender', function($gender){
 * Works
 * guest
 */
-Flight::route('GET /pets/older/@timestamp', function($timestamp){
+Flight::route('GET /public/pets/older/@timestamp', function($timestamp){
   Flight::json(Flight::petsService()->get_older_pets($timestamp));
 });
   
@@ -66,7 +66,7 @@ Flight::route('GET /pets/older/@timestamp', function($timestamp){
 * Works
 * guest
 */
-Flight::route('GET /pets/younger/@timestamp', function($timestamp){
+Flight::route('GET /public/pets/younger/@timestamp', function($timestamp){
   Flight::json(Flight::petsService()->get_younger_pets($timestamp));
 });
   
@@ -75,7 +75,7 @@ Flight::route('GET /pets/younger/@timestamp', function($timestamp){
 * Works
 * private
 */
-Flight::route('POST /pets', function(){
+Flight::route('POST /private/pets', function(){
   Flight::json(Flight::petsService()->add(Flight::request()->data->getData()));
 });
   
@@ -83,7 +83,7 @@ Flight::route('POST /pets', function(){
 * Delete pet by its id
 * Works
 */
-Flight::route('DELETE /pets/@id', function($id){
+Flight::route('DELETE /private/pets/@id', function($id){
   Flight::petsService()->delete($id, "pets_id");
   Flight::json(["message" => "deleted"]);
 });
@@ -93,7 +93,7 @@ Flight::route('DELETE /pets/@id', function($id){
  * Works
  * private
  */
-Flight::route('PUT /pets/@id', function($id){
+Flight::route('PUT /private/pets/@id', function($id){
   $data = Flight::request()->data->getData();
   Flight::petsService()->update($id,$data,"pets_id");
   Flight::json(["message" => "updated"]);
@@ -103,9 +103,9 @@ Flight::route('PUT /pets/@id', function($id){
  * Get pet by owner id
  * Works
  * samo da možeš vidjet svoje pets
- * private
+ * public
  */
-Flight::route('GET /pets/owner/@owner_id', function($owner_id){
+Flight::route('GET /public/pets/owner/@owner_id', function($owner_id){
   Flight::json(Flight::petsService()->get_by_owner($owner_id));
 });
 

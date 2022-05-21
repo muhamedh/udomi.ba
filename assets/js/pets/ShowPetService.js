@@ -3,7 +3,7 @@ var ShowPetService = {
     // kada bi mogli iskoristiti -> objekat iz show all pets-a
     // showPet(data[i]) perhaps?
     showPet : function(id){
-        $.get("api/pets/" + id, function (data) {
+        $.get("api/public/pets/" + id, function (data) {
             $("#pets-list").attr('hidden', true);
             $("#edit-pet").attr('hidden', true);
             $("#individual-pet").attr('hidden', false);

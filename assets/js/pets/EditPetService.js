@@ -1,7 +1,7 @@
 var EditPetService = {
     editPet: function(id){
       
-        $.get("api/pets/" + id, function (data) {
+        $.get("api/public/pets/" + id, function (data) {
 
             $("#individual-pet").attr('hidden', true);
             $("#pets-list").attr('hidden', true);

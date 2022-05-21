@@ -4,7 +4,7 @@ var PetService = {
   },
 
   list: function () {
-    $.get("api/pets", function (data) {
+    $.get("api/public/pets", function (data) {
       $("#pets-list").attr('hidden', false);
       $("#pets-list").html("");
       var html = "";
@@ -52,7 +52,7 @@ var PetService = {
     
     console.log(JSON.stringify(pet));
     $.ajax({
-      url: 'api/pets/'+ id,
+      url: 'api/private/pets/'+ id,
       type: 'PUT',
       data: JSON.stringify(pet),
       contentType: "application/json",
