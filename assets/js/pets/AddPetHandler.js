@@ -57,9 +57,7 @@ var AddPetHandler = {
         
       },
     addPetScreen : function(){
-        $("#pets-list").attr('hidden', true);
-        $("#my-pets").attr('hidden', true);
-        $("#add-pet-button").attr('hidden', true);
+        SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#add-pet");
         
         var html = `
               <div class="container">

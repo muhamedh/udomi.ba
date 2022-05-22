@@ -23,7 +23,8 @@ var UserService = {
       type: "GET",
       success: function(data) {
         //console.log('hi');
-        $("#pets-list").attr('hidden', true);
+        SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#user-page");
+            
         //console.log(data);
         
         var html = "";

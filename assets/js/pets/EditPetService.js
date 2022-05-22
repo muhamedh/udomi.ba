@@ -3,12 +3,9 @@ var EditPetService = {
       
         $.get("api/public/pets/" + id, function (data) {
             //console.log("hi");
-            $("#individual-pet").attr('hidden', true);
-            $("#pets-list").attr('hidden', true);
-            $("#edit-pet").html("");
-            $("#edit-pet").attr('hidden', false);
-            $("#my-pets").attr('hidden', true);
-            $("#user-page").attr('hidden',true);
+            
+            SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#edit-pet");
+            
             var html = `
             <div class="row justify-content-md-center">
               <h3>Uredi ljubimca:</h3>
