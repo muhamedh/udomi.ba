@@ -32,14 +32,10 @@ var AddPetHandler = {
         } else if (($('#species').val()).localeCompare("Zec")) {
           entity.species_id = "4"; // HARDCODED!
         }
-        /**
-         * KADA BUDEMO IMALI TOKENE U USER TOKENU CE BITI PET OWNERRR!!!!
-         */
-        entity.owner_id = "1";
-    
+
+        var payload = UserService.parseJWT(localStorage.getItem("token"));
+        entity.owner_id = payload.user_id;
         delete entity.myFile;
-        
-        //console.log(JSON.stringify(entity));
 
         $.ajax({
           url: 'api/private/pets',
@@ -47,6 +43,9 @@ var AddPetHandler = {
           data: JSON.stringify(entity),
           contentType: "application/json",
           dataType: "json",
+          beforeSend: function(xhr){
+            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+          },
           success: function () {
             toastr.success("Ljubimac uspješno dodan.", "Informacija:");
           },
@@ -57,9 +56,7 @@ var AddPetHandler = {
         
       },
     addPetScreen : function(){
-        $("#pets-list").attr('hidden', true);
-        $("#my-pets").attr('hidden', true);
-        $("#add-pet-button").attr('hidden', true);
+        SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#add-pet");
         
         var html = `
               <div class="container">
@@ -76,10 +73,10 @@ var AddPetHandler = {
                   <form id = "addPetForm">
                     <div class="md-3">
                       <label class="form-label" for="petname">Ime ljubimca: </label>
-                      <input name = "petname" type="text" class="form-control" id="petname" placeholder="Ime Vašeg ljubimca"></div>
+                      <input name = "petname" type="text" class="form-control required" id="petname" placeholder="Ime Vašeg ljubimca"></div>
                       <div>
                         <label class="form-label" for="pet_birthdate">Datum rođenja: </label>
-                        <input name="pet_birthdate" type="date" class="form-control" id = "pet_birthdate">
+                        <input name="pet_birthdate" type="date" class="form-control required" id = "pet_birthdate">
                       </div>
                       <div class="md-3" style="margin-top:10px">
                         <div class="form-check form-check-inline">

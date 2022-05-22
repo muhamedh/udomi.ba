@@ -2,12 +2,10 @@ var ShowPetService = {
     // moguca optimizacija -> ne treba nam jos jedan ajax call
     // kada bi mogli iskoristiti -> objekat iz show all pets-a
     // showPet(data[i]) perhaps?
+
     showPet : function(id){
         $.get("api/public/pets/" + id, function (data) {
-            $("#pets-list").attr('hidden', true);
-            $("#edit-pet").attr('hidden', true);
-            $("#individual-pet").attr('hidden', false);
-            $("#individual-pet").html("");
+            SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#individual-pet");
             var genderText;
             var vaccinatedText;
       

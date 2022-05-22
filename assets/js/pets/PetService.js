@@ -5,8 +5,8 @@ var PetService = {
 
   list: function () {
     $.get("api/public/pets", function (data) {
-      $("#pets-list").attr('hidden', false);
-      $("#pets-list").html("");
+      SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#pets-list");
+            
       var html = "";
       for (let i = 0; i < data.length; i++) {
         html += `

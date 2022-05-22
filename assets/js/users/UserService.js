@@ -23,10 +23,11 @@ var UserService = {
       type: "GET",
       success: function(data) {
         //console.log('hi');
-        $("#pets-list").attr('hidden', true);
+        SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#user-page");
+            
         //console.log(data);
         
-        var html = "";
+        var html = `<button id = "add-pet-button" class="btn btn-warning mb-3" onclick="AddPetHandler.init()">Dodaj ljubimca</button>`;
         for (let i = 0; i < data.length; i++) {
           html += `
             <div class="col-md-12 col-sm-12 col-lg-4">

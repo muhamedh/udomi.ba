@@ -2,14 +2,13 @@
 var uploadPicture = {
     handleUpload: function (entity) {
         //change visibility of elements
-        $("#confirmPicture").attr('hidden', true);
-        $("#loadingButton").attr('hidden', false);
 
         /* Stop form from submitting normally   
            TODO: find a non depricated version*/
         event.preventDefault();
 
         //get from elements values
+        $("#saveAdd").attr("disabled", true);
 
         var formData = new FormData($('#addPetForm')[0]);
         formData.append('file', $('input[type=file]')[0].files[0]);
@@ -17,7 +16,7 @@ var uploadPicture = {
 
         var ajaxRequest = $.ajax({
             url: "api/upload.php",
-            type: "post",
+            type: "POST",
             data: formData,
             processData: false,
             contentType: false
@@ -41,16 +40,12 @@ var uploadPicture = {
                 AddPetHandler.addPet(entity);
             }
 
-            $("#confirmPicture").attr('hidden', false);
-            $("#loadingButton").attr('hidden', true);
             $("#saveAdd").attr("disabled", false);
             
         });
         // on failure of ajax call
         ajaxRequest.fail(function () {
             toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
-            $("#confirmPicture").attr('hidden', false);
-            $("#loadingButton").attr('hidden', true);
             $("#saveAdd").attr("disabled", false);
         });
 
