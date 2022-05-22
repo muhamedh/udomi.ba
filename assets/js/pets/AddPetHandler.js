@@ -47,6 +47,9 @@ var AddPetHandler = {
           data: JSON.stringify(entity),
           contentType: "application/json",
           dataType: "json",
+          beforeSend: function(xhr){
+            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+          },
           success: function () {
             toastr.success("Ljubimac uspješno dodan.", "Informacija:");
           },
