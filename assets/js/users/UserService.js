@@ -15,15 +15,36 @@ var UserService = {
         });
     },
     showUserPage: function(){
-     console.log('hi from show user page');
+     
      var payload = UserService.parseJWT(localStorage.getItem("token"));
-     console.log(payload);
+     //console.log(payload.user_id);
      $.ajax({
       url: "api/public/pets/owner/" + payload.user_id,
       type: "GET",
       success: function(data) {
-        console.log(data);
-      },
+        //console.log('hi');
+        $("#pets-list").attr('hidden', true);
+        //console.log(data);
+        
+        var html = "";
+        for (let i = 0; i < data.length; i++) {
+          html += `
+            <div class="col-md-12 col-sm-12 col-lg-4">
+              <div class="card h-100">
+                <img src="` + data[i].photos_url + `" class="card-img-top" alt="A picture of cat">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">` + data[i].petname + `</h5>
+                <p class="card-text">` + data[i].pets_description + `</p>
+                <button type="button" class="btn btn-success float-end vise-detalja" onclick="PetService.showPet(` + data[i].pets_id + `)">Više detalja</button>
+                <button class="btn btn-warning flex-shrink-0" type="button" onclick="PetService.editPet(` + data[i].pets_id + `)" >Uredi ljubimca</button>
+                <button class="btn btn-danger flex-shrink-0" type="button" onclick="" >Izbriši ljubimca</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      $("#user-page").html(html);
+    },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
         console.log(textStatus);
       }
@@ -37,7 +58,7 @@ var UserService = {
           return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
   
-      return JSON.parse(jsonPayload);
+      return (JSON.parse(jsonPayload));
     },
     logOut: function(){
         localStorage.clear();

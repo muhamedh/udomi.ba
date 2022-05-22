@@ -2,19 +2,20 @@ var EditPetService = {
     editPet: function(id){
       
         $.get("api/public/pets/" + id, function (data) {
-
+            //console.log("hi");
             $("#individual-pet").attr('hidden', true);
             $("#pets-list").attr('hidden', true);
             $("#edit-pet").html("");
             $("#edit-pet").attr('hidden', false);
             $("#my-pets").attr('hidden', true);
+            $("#user-page").attr('hidden',true);
             var html = `
             <div class="row justify-content-md-center">
               <h3>Uredi ljubimca:</h3>
             </div>
             <div class="row justify-content-md-center">
               <div class="col-md-6">
-                <img class="card-img-top mb-5 mb-md-0" src="` + "./assets/" +data.photos_url + `" alt="...">
+                <img class="card-img-top mb-5 mb-md-0" src="` +data.photos_url + `" alt="...">
               </div>
               <div class="col-md-6">
                 <form>
