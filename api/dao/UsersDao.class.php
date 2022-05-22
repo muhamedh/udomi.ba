@@ -17,13 +17,13 @@ class UsersDao extends BaseDao{
    *      might use query unique
    */
   public function getUsername($username){
-    return $this->query_with_params("SELECT * FROM users WHERE username=:username", ['username' => $username]);
+    return $this->query_unique("SELECT * FROM users WHERE username=:username", ['username' => $username]);
   }
   /**
    * Get user based on email
    */
   public function getMail($mail){
-    return $this->query_with_params("SELECT * FROM users WHERE user_mail= :mail", ['mail' => $mail]);
+    return $this->query_unique("SELECT * FROM users WHERE user_mail= :mail", ['mail' => $mail]);
   }
   /**
    * Get user based on phone number

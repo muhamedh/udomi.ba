@@ -14,5 +14,9 @@ class UserService extends BaseService{
   public function getUsername($username){
     return $this->dao->getUsername($username);
   }
+
+  public function getMail($mail){
+    return $this->dao->getMail($mail);
+  }
 }
 ?>

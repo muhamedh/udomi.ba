@@ -4,7 +4,7 @@ var PetService = {
   },
 
   list: function () {
-    $.get("api/pets", function (data) {
+    $.get("api/public/pets", function (data) {
       $("#pets-list").attr('hidden', false);
       $("#pets-list").html("");
       var html = "";
@@ -21,10 +21,6 @@ var PetService = {
           </div>
         </div>
       `
-      /**
-      * gdje je ostavljen red slobodan bi išao ovaj button, ali to nećemo
-      * <button class="btn btn-danger flex-shrink-0" type="button" onclick="PetService.editPet(` + data.pets_id + `)" >Uredi ljubimca</button>
-      */
       }
       //spinner gets hidden
       document.getElementById("loading-spinner").style.display = "none";
@@ -50,15 +46,18 @@ var PetService = {
     ($('#genderFemale').is(':checked')) ? pet.pet_gender = 1 : pet.pet_gender = 0;
     ($('#adoptedYes').is(':checked')) ? pet.adopted = 1 : pet.adopted = 0;
     
-    console.log(JSON.stringify(pet));
+    //console.log(JSON.stringify(pet));
     $.ajax({
-      url: 'api/pets/'+ id,
+      url: 'api/private/pets/'+ id,
       type: 'PUT',
       data: JSON.stringify(pet),
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
       contentType: "application/json",
       dataType: "json",
       success: function(result) {
-          PetService.list(); // perf optimization
+          UserService.showUserPage(); // perf optimization
       }
     });
 

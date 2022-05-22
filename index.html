@@ -6,6 +6,7 @@
   <title>udomi.ba</title>
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="./assets/css/toastr.css" rel="stylesheet">
+  <link href="./assets/css/custom.css" rel="stylesheet">
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -15,21 +16,25 @@
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">udomi.ba</a>
+        <a class="navbar-brand clickable" onclick="PetService.list();event.preventDefault();">udomi.ba</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Naslovna stranica</a>
+              <a class="nav-link active clickable" aria-current="page" onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
             </li>
           </ul>
+          <div id = "guest-navbar">
+            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal" data-bs-target="#loginModal">Prijavi se</button>
+            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal">Registruj se</button>
+          </div>
+          <div id = "user-navbar" style="display:none;">
+            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" onclick="UserService.showUserPage()" >Moj Profil</button>
+            <button class="btn btn-outline-light btn-sm" onclick="UserService.logOut()">Odjavite se</button>
+          </div>
 
-          <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal"
-            data-bs-target="#loginModal">Prijavi se</button>
-          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal">Registruj
-            se</button>
         </div>
       </div>
     </nav>
@@ -41,10 +46,9 @@
     <div class="container" style="margin-top: 100px;">
       <!--
         ne treba nam na indexu ovo
-       
+             <button id = "add-pet-button" class="btn btn-warning mb-3" onclick="AddPetHandler.init()">Dodaj ljubimca</button>
       -->
-      <button id = "add-pet-button" class="btn btn-warning mb-3" onclick="AddPetHandler.init()">Dodaj ljubimca</button>
-      <button id = "user-button" class="btn btn-warning mb-3" onclick="UserService.showUserPage()">MojProfil</button>
+
       <div class="text-center" id="loading-spinner"></div>
 
       <!--div for all pets-->
@@ -61,6 +65,7 @@
     
       <!--div for user page-->
       <div id="user-page" class="row gx-4 gx-lg-5 align-items-center"></div>
+      
     </div>
   </main>
 </body>
@@ -76,38 +81,51 @@
 <script src="./assets/js/pets/uploadPicture.js"></script>
 <script src="./assets/js/pets/EditPetService.js"></script>
 
-<script src="./assets/js/users/UserService.js"></script>
 
+<script src="./assets/js/users/UserService.js"></script>
 
 <script>
   $(document).ready(function () {
-    PetService.init();
+    toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-top-left",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "150",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+  }
     UserService.init();
+    PetService.init();
+
   });
 </script>
 
 
 <div class="modal" tabindex="-1" id="loginModal">
-  <div class="modal-dialog">
+  <div class="modal-dialog" id="loginModal">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Prijava</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="needs-validation" novalidate>
-          <div class="form-floating mb-3 ">
-            <input type="email" class="form-control" id="login-email" placeholder="ime.prezime@example.com"
-              required>
-            <label for="login-email" class="form-label" id="login-email">Email adresa</label>
-            <div class="invalid-feedback">
-              Korisnik ne postoji
-            </div>
+        <form id = "loginForm">
+          <label for="login-email" class="form-label" id="login-email">Email adresa</label>
+          <div class="form-floating mb-3">
+            <input name = "user_mail" type="email" class="form-control required" id="login-email">
           </div>
-
-          <div class="form-floating ">
-            <input type="password" class="form-control" id="login-password" placeholder="Lozinka">
-            <label for="login-password">Lozinka</label>
+          <label for="login-password">Lozinka</label>
+          <div class="form-floating">
+            <input name = "password" type="password" class="form-control required" id="login-password">
           </div>
           <div class="mb-3">
             <button class="btn btn-warning-outline btn-sm">Zaboravili lozinku?</a>
@@ -124,7 +142,7 @@
       </div>
       <div class="modal-footer mt-3">
         <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
-        <button type="submit" class="btn btn-warning">Prijavi se</button>
+        <button type="submit" class="btn btn-warning" id="login-button">Prijavi se</button>
       </div>
       </form>
     </div>
@@ -140,107 +158,53 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="needs-validation" method="post" novalidate>
+        <form id = "registerForm">
+
+          <label for="email" class="form-label">Email adresa</label>
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="email" placeholder="ime.prezime@example.com" required>
-            <label for="email" class="form-label" id="email">Email adresa</label>
-            <div class="invalid-feedback">
-              Unesite email adresu
-            </div>
+            <input name = "user_mail" type="email" class="form-control required" email="true" id="email">
           </div>
 
+          <label for="username" class="form-label">Username/Korisničko ime</label>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="username" name="username" placeholder="ime123" required>
-            <label for="username" class="form-label" id="username">Username/Korisničko ime</label>
-            <div class="invalid-feedback">
-              Unseite korisničko ime/username
-            </div>
+            <input name = "username" type="text" minlength = "3" class="form-control required" id="username" name="username" >
           </div>
 
+          <label for="password" class="form-label">Lozinka</label>
           <div class="form-floating mb-3">
-            <input type="password" class="form-control" name="password" id="password" placeholder="Lozinka" required>
-            <label for="password" class="form-label" id="password">Lozinka</label>
-            <div class="invalid-feedback">
-              Lozinka može imati 8 do 20 karaktera
-            </div>
+            <input name = "password" type="password" class="form-control required" name="password" id="password">
           </div>
 
+          <label for="repeatpassword" class="form-label">Ponovite lozinku</label>
           <div class="form-floating mb-3">
-            <input type="password" class="form-control" name="repeatpassword" id="repeatpassword"
-              placeholder="Ponovite Lozinku" required>
-            <label for="repeatpassword" class="form-label" id="repeatpassword">Ponovite lozinku</label>
-            <div class="invalid-feedback">
-              Lozinke se ne podudaraju
-            </div>
+            <input type="password" class="form-control required" name="repeatpassword" id="repeatpassword" data-rule-equalTo="#password">
           </div>
 
+          <label for="phonenumber" class="form-label">Broj telefona</label>
           <div class="form-floating mb-3">
-            <input type="tel" class="form-control" name="phonenumber" id="phonenumber" placeholder="061234567" required>
-            <label for="phonenumber" class="form-label">Broj telefona</label>
-            <div class="invalid-feedback">
-              Unesite broj telefona
-            </div>
+            <input name = "phone_number" type="tel" class="form-control" name="phonenumber" id="phonenumber">
           </div>
 
+          <label for="city" class="form-label">Grad</label>
           <div class="form-floating mb-3">
-            <input type="search" class="form-control" name="city" id="city" placeholder="Sarajevo" required>
-            <label for="city" class="form-label">Grad</label>
-            <div class="invalid-feedback">
-              Odaberite grad
-            </div>
+            <input name = "city" type="search" class="form-control" name="city" id="city">
           </div>
-
+          <label for="municipality" class="form-label">Općina</label>
           <div class="form-floating mb-3">
-            <input type="search" class="form-control" name="municipality" id="municipality" placeholder="Novi Grad"
-              required>
-            <label for="municipality" class="form-label">Općina</label>
-            <div class="invalid-feedback">
-              Odaberite općinu
-            </div>
-            <div class="mt-3 float-end">
+            <input name = "municipality" type="search" class="form-control" name="municipality" id="municipality">
+           
+            <div class="mt-3 float-end"> 
               <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Već imate račun?</button>
             </div>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
-        <button type="submit" class="btn btn-warning">Registruj se</button>
+        <button type="submit" class="btn btn-warning" id ="register-button">Registruj se</button>
       </div>
       </form>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-<script>
-  /*
-  * ovo možda u neki service stavit
-  */
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function () {
-    'use strict'
-
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.querySelectorAll('.needs-validation')
-
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-      .forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-
-          form.classList.add('was-validated')
-        }, false)
-      })
-  })()
-</script>
 
 </html>

@@ -42,7 +42,7 @@ var AddPetHandler = {
         //console.log(JSON.stringify(entity));
 
         $.ajax({
-          url: 'api/pets',
+          url: 'api/private/pets',
           type: 'POST',
           data: JSON.stringify(entity),
           contentType: "application/json",
