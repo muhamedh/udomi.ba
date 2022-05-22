@@ -21,7 +21,7 @@ error_reporting(E_ALL);
 * treba li i ova ruta?
 * private
 */
-Flight::route('GET /users', function () {
+Flight::route('GET /private/users', function () {
   Flight::json(Flight::usersService()->get_all());
 });
 
@@ -31,7 +31,7 @@ Flight::route('GET /users', function () {
   * private
   */
 
-Flight::route('GET /users/@user_id', function ($user_id) {
+Flight::route('GET /private/users/@user_id', function ($user_id) {
   Flight::json(Flight::usersService()->get_by_id($user_id, "user_id"));
 });
 
@@ -41,7 +41,7 @@ Flight::route('GET /users/@user_id', function ($user_id) {
   * private
   */
 
-Flight::route('GET /users/username/@username', function ($username) {
+Flight::route('GET /private/users/username/@username', function ($username) {
   Flight::json(Flight::usersService()->getUsername($username));
 });
 
@@ -51,7 +51,7 @@ Flight::route('GET /users/username/@username', function ($username) {
   * register
   * guest
   */
-Flight::route('POST /login', function () {
+Flight::route('POST /public/login', function () {
   
   $login = Flight::request()->data->getData();
   
@@ -70,7 +70,7 @@ Flight::route('POST /login', function () {
   }
 });
 
-Flight::route('POST /register', function () {
+Flight::route('POST /public/register', function () {
   
   $data = Flight::request()->data->getData();
   unset($data['repeatpassword']);

@@ -23,12 +23,16 @@ Flight::register('usersService', 'UserService');
 Flight::route('/*',function(){
     //perform JWT decode
     $path = Flight::request()->url;
+    $parsed = (array) preg_match('/^\/public\/.*/', $path, $parsed);
     
-    if(preg_match("/public/.", $path)){
+    if($parsed["0"]){
         return TRUE;
     };
 
-    if($path == '/private/*'){
+    $parsed = (array) preg_match('/^\/private\/.*/', $path, $parsed);
+    
+    if($parsed["0"]){
+        
         $headers = getallheaders();
         if(@!$headers['Authorization']){
             Flight::json(["message" => "Authorization is missing"], 403);

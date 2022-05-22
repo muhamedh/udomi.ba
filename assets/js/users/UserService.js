@@ -15,7 +15,29 @@ var UserService = {
         });
     },
     showUserPage: function(){
-
+     console.log('hi from show user page');
+     var payload = UserService.parseJWT(localStorage.getItem("token"));
+     console.log(payload);
+     $.ajax({
+      url: "api/public/pets/owner/" + payload.user_id,
+      type: "GET",
+      success: function(data) {
+        console.log(data);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+   });
+     
+    },
+    parseJWT: function(token){
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+  
+      return JSON.parse(jsonPayload);
     },
     logOut: function(){
         localStorage.clear();
@@ -27,10 +49,8 @@ var UserService = {
           submitHandler: function (form) {
             var entity = Object.fromEntries((new FormData(form)).entries());
             
-           
-            
             $.ajax({
-              url: 'api/register',
+              url: 'api/public/register',
               type: 'POST',
               data: JSON.stringify(entity),
               contentType: "application/json",
@@ -44,8 +64,7 @@ var UserService = {
                 toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
               }
             });
-            
-
+          
           }
         });
         $('#registerModal').on('hidden.bs.modal', function () {
@@ -58,7 +77,7 @@ var UserService = {
             var entity = Object.fromEntries((new FormData(form)).entries());
 
             $.ajax({
-              url: 'api/login',
+              url: 'api/public/login',
               type: 'POST',
               data: JSON.stringify(entity),
               contentType: "application/json",
