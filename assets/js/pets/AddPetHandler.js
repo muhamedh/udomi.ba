@@ -56,7 +56,7 @@ var AddPetHandler = {
         
       },
     addPetScreen : function(){
-        SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#add-pet");
+        SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page", "#add-pet-button"], "#add-pet");
         
         var html = `
               <div class="container">
@@ -65,7 +65,7 @@ var AddPetHandler = {
                 
                 <div class="col-md-6 col-sm-12" id="photo">
                   <button onclick="">
-                    <img id = "petPicture"class="img-fluid" src="./assets/img/addimage.png" alt="Slika ljubimca koji ste postavili">
+                    <img id = "petPicture"class="img-fluid" src="" alt="Slika ljubimca koji ste postavili">
                   </button>
                 </div>
               

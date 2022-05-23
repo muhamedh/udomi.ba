@@ -4,7 +4,7 @@ var EditPetService = {
         $.get("api/public/pets/" + id, function (data) {
             //console.log("hi");
             
-            SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#edit-pet");
+            SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page", "#add-pet-button"], "#edit-pet");
             
             var html = `
             <div class="row justify-content-md-center">
