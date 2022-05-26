@@ -24,7 +24,9 @@ Flight::route('/*',function(){
     //perform JWT decode
     $path = Flight::request()->url;
     $parsed = (array) preg_match('/^\/public\/.*/', $path, $parsed);
-    
+    if($path == '/docs.json'){
+        return TRUE;
+    }
     if($parsed["0"]){
         return TRUE;
     };
@@ -49,6 +51,14 @@ Flight::route('/*',function(){
         }
     }
 });
+
+Flight::route('GET /docs.json', function(){
+    
+    $openapi = \OpenApi\scan('routes');
+    header('Content-Type: application/json');
+    echo $openapi->toJson();
+});
+
 
 require_once __DIR__.'/routes/PetRoutes.php';
 require_once __DIR__.'/routes/UserRoutes.php';

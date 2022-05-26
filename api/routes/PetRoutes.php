@@ -13,50 +13,55 @@ error_reporting(E_ALL);
   * get pet by not adopted
   */
 
-/**
-* List all pets
-* Works
-* guest
-*/
 
+
+/**
+ * @OA\Get(path="/public/pets", tags={"pets"},
+ *         summary="Return all pets from the API. ",
+ *         @OA\Response( response=200, description="List of pets.")
+ * )
+ */
 Flight::route('GET /public/pets', function(){
     Flight::json(Flight::petsService()->get_all());
 });
-  
-/**
-* List pet by id
-* Works
-* guest
-*/
 
+/**
+* @OA\Get(path="/public/pets/{id}", tags={"pets"},summary="Return pet by ID",
+*     @OA\Parameter(in="path", name="id", example=1, description="Return pet with id"),
+*     @OA\Response(response="200", description="Fetch pet by id")
+* )
+*/
 Flight::route('GET /public/pets/@pet_id', function($pet_id){
   Flight::json(Flight::petsService()->get_by_id($pet_id, "pets_id"));
 });
   
+
 /**
-* List pet by vaccine
-* Works
-* guest
-*/
-  
+* @OA\Get(path="/public/pets/vac/{boolean}", tags={"pets"},summary="Returns pets which are vaccinated or not",
+*     @OA\Parameter(in="path", name="boolean", example=1, description="Return all vaccinated pets if 1 is provided and not vaccinated pets if 0 is provided"),
+*     @OA\Response(response="200", description="Fetch vaccinated/not vaccinated")
+* )
+*/  
 Flight::route('GET /public/pets/vac/@vaccinated', function($vaccinated){
   Flight::json(Flight::petsService()->get_pets_by_vaccine($vaccinated));
 });
   
-/*
-* Get pet by gender
-* Works
-* guest
-*/
+/**
+* @OA\Get(path="/public/pets/gender/{boolean}", tags={"pets"},summary="Returns pets which are female or male",
+*     @OA\Parameter(in="path", name="boolean", example=1, description="Return all female pets if 1 is provided and male pets if 0 is provided"),
+*     @OA\Response(response="200", description="Fetch female/male pets")
+* )
+*/  
 Flight::route('GET /public/pets/gender/@gender', function($gender){
   Flight::json(Flight::petsService()->get_by_gender($gender));
 });
   
 /**
-* List all pets which are older than provided date
-* Works
-* guest
-*/
+* @OA\Get(path="/public/pets/older/{timestamp}", tags={"pets"},summary="Returns pets which are older than the provided date",
+*     @OA\Parameter(in="path", name="boolean", example=1, description="Return all pets that are older than the provided date. Date is of form YYYY-MM-DD"),
+*     @OA\Response(response="200", description="Fetch older pets")
+* )
+*/  
 Flight::route('GET /public/pets/older/@timestamp', function($timestamp){
   Flight::json(Flight::petsService()->get_older_pets($timestamp));
 });
