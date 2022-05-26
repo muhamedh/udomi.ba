@@ -25,6 +25,7 @@ var PetService = {
       //spinner gets hidden
       document.getElementById("loading-spinner").style.display = "none";
       $("#pets-list").html(html);
+      $("#pets-list").data("pets", data);
     });
   },
 
