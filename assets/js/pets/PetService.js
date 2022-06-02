@@ -67,11 +67,10 @@ var PetService = {
   },
 
   deletePet : function(id){
-    var tempVar = '{ "status" : "INACTIVE"}';
     $.ajax({
       url: 'api/private/pets/delete/'+ id,
       type: 'PUT',
-      data: tempVar,
+      data: '{ "status" : "INACTIVE"}',
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },

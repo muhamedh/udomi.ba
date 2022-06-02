@@ -254,13 +254,27 @@ Flight::route('PUT /private/users/@id', function ($id) {
 
 
 });
-// TODO: izbrisati kada se doda soft delete
-/*
-  * Delete a user by its id from the database
-  * Works
-  * private
-  */
-Flight::route('DELETE /users/@id', function ($id) {
-  Flight::usersService()->delete($id,"user_id");
+/** 
+*   @OA\Delete(
+*     path="/private/users/", security={{"ApiKeyAuth": {}}},
+*     description="Hard delete user",
+*     tags={"users"},
+*     @OA\Response(
+*         response=200,
+*         description="User deleted"
+*     ),
+*     @OA\Response(
+*         response=500,
+*         description="Error, may indicate JWT abuse"
+*     )
+* )
+*/
+Flight::route('DELETE /private/users/', function () {
+  $user_to_delete = Flight::get('user');
+  if(!isset($user_to_delete)){
+    throw new Exception("This is hack you will be traced, be prepared :)");
+  }
+
+  Flight::usersService()->delete($user_to_delete['user_id'],"user_id");
   Flight::json(["message" => "deleted"]);
 });

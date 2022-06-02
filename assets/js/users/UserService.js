@@ -30,6 +30,7 @@ var UserService = {
         var html = `
         <div class="container">        
         <button id = "add-pet-button" class="btn btn-warning mb-3" onclick="AddPetHandler.init()">Dodaj ljubimca</button>
+        <button id = "delete-account-button" class="btn btn-danger mb-3" onclick="UserService.deleteUser()">Izbriši nalog</button>
         </div>`;
        
        for (let i = 0; i < data.length; i++) {
@@ -132,5 +133,24 @@ var UserService = {
      showGuestNavbar : function(){
         $("#guest-navbar").show();
         $("#user-navbar").hide();
-     }
+     },
+
+     deleteUser : function(){
+      $.ajax({
+        url: 'api/private/users/',
+        type: 'DELETE',
+        beforeSend: function(xhr){
+          xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+        },
+        contentType: "application/json",
+        dataType: "json",
+        success: function(result) {
+            toastr.success("Raćun uspješno izbrisan!", "Informacija:");
+            localStorage.removeItem('token');
+            UserService.showGuestNavbar();
+            SPApp.handleSectionVisibility(["#individual-pet","#edit-pet","#add-pet","#user-page"], "#pets-list");
+        }
+      });
+    }
+     
 }

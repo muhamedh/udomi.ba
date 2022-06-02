@@ -206,7 +206,7 @@ Flight::route('GET /public/pets/owner/@owner_id', function($owner_id){
 *     @OA\Response(
 *         response=403,
 *         description="JWT token not passed"
-*     )
+*     ),
 *     @OA\Response(
 *         response = 500,
 *         description="May indicate JWT abuse" 
