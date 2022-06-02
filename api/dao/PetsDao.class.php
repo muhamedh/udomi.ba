@@ -45,6 +45,10 @@ class PetsDao extends BaseDao{
    * query works
    */
   public function get_by_owner($owner_id){
-    return $this->query_with_params("SELECT * FROM pets WHERE owner_id = :owner_id", ['owner_id' => $owner_id]);
+    return $this->query_with_params("SELECT * FROM pets WHERE owner_id = :owner_id AND status = 'ACTIVE'", ['owner_id' => $owner_id]);
+  }
+
+  public function get_all(){
+    return $this->query_no_params("SELECT * FROM pets WHERE status = 'ACTIVE'");
   }
 }

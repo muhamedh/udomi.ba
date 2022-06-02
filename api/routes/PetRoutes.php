@@ -124,20 +124,6 @@ Flight::route('POST /private/pets', function(){
 
 });
 
-//TODO: izbrisati kada se doda soft delete
-
-Flight::route('DELETE /private/pets/@id', function($id){
-  $user = Flight::get('user');
-  $pet_to_delete = Flight::petsService()->get_by_id($id, "pets_id");
-  if($user['user_id'] == $pet_to_delete['owner_id']){
-    Flight::petsService()->delete($id, "pets_id");
-    Flight::json(["message" => "deleted"]);
-  }else{
-    throw new Exception("This is hack you will be traced, be prepared :)");
-  }
-
-});
-
 /**
 * @OA\Put(
 *     path="/private/pets/{pets_id}",
@@ -183,9 +169,6 @@ Flight::route('PUT /private/pets/@id', function($id){
     Flight::petsService()->update($id,$data,"pets_id");
     Flight::json(["message" => "updated"]);
   }
-
-
-
 });
 
 /**
@@ -198,4 +181,53 @@ Flight::route('GET /public/pets/owner/@owner_id', function($owner_id){
   Flight::json(Flight::petsService()->get_by_owner($owner_id));
 });
 
+
+/**
+* @OA\Put(
+*     path="/private/pets/delete/{pets_id}",
+*     description="Update pets status",
+*     tags={"pets"},
+*     @OA\Parameter(in="path", name="pets_id", example=1, description="ID of pet we want to update"),
+*     security={{"ApiKeyAuth": {}}},
+*     @OA\RequestBody(description="Update pets status", required=true,
+*       @OA\MediaType(mediaType="application/json",
+*    			@OA\Schema(
+*           @OA\Property(property="status", type="string", example="INACTIVE",	description="Pet status"),
+*        )
+*     )),
+*     @OA\Response(
+*         response=200,
+*         description="Pets object updated"
+*     ),
+*     @OA\Response(
+*         response=404,
+*         description="Unexpected error"
+*     ),
+*     @OA\Response(
+*         response=403,
+*         description="JWT token not passed"
+*     )
+*     @OA\Response(
+*         response = 500,
+*         description="May indicate JWT abuse" 
+*     )
+* )
+*/
+Flight::route('PUT /private/pets/delete/@id', function($id){
+  
+  $user = Flight::get('user');
+  $pet_to_update = Flight::petsService()->get_by_id($id, "pets_id");
+  $data = Flight::request()->data->getData();
+
+  if($pet_to_update['owner_id'] != $user['user_id']){
+  
+    throw new Exception("This is hack you will be traced, be prepared :)");
+  
+  }else{
+  
+    Flight::petsService()->update($id,$data,"pets_id");
+    Flight::json(["message" => "updated"]);
+  
+  }
+});
 ?>

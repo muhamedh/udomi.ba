@@ -15,7 +15,9 @@ var UserService = {
         });
     },
     showUserPage: function(){
-     
+
+     //TODO rijesiti bez toga da parsamo jwt token ovdje.
+
      var payload = UserService.parseJWT(localStorage.getItem("token"));
      $.ajax({
       url: "api/public/pets/owner/" + payload.user_id,
@@ -39,7 +41,7 @@ var UserService = {
                 <h5 class="card-title fw-bold">` + data[i].petname + `</h5>
                 <p class="card-text">` + data[i].pets_description + `</p>
                 <button class="btn btn-warning flex-shrink-0" type="button" onclick="PetService.editPet(` + data[i].pets_id + `)" >Uredi ljubimca</button>
-                <button class="btn btn-danger flex-shrink-0 float-end" type="button" onclick="" >Izbriši ljubimca</button>
+                <button class="btn btn-danger flex-shrink-0 float-end" type="button" onclick="PetService.deletePet(` + data[i].pets_id + `)" >Izbriši ljubimca</button>
               </div>
             </div>
           </div>

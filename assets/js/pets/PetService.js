@@ -64,7 +64,24 @@ var PetService = {
 
     $('#saveButton').attr('disabled',false);
     $("#edit-pet").attr('hidden', true);
-  }
+  },
 
+  deletePet : function(id){
+    var tempVar = '{ "status" : "INACTIVE"}';
+    $.ajax({
+      url: 'api/private/pets/delete/'+ id,
+      type: 'PUT',
+      data: tempVar,
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      contentType: "application/json",
+      dataType: "json",
+      success: function(result) {
+          console.log("succ");
+          UserService.showUserPage(); // perf optimization
+      }
+    });
+  }
 
 }

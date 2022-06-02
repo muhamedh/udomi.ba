@@ -39,6 +39,7 @@ class UsersDao extends BaseDao{
   public function get_all_restricted_users(){
     return $this->query_no_params("SELECT username, user_mail, phone_number, city, municipality FROM users");
   }
+
   }
 
  ?>
