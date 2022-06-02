@@ -62,10 +62,11 @@ Flight::route('GET /public/species/pets/@pets_id', function ($pets_id) {
 *     )
 * )
 */
+//TODO : i ovo nam vjerovatno ne treba
 Flight::route('POST /private/species', function () {
   Flight::json(Flight::speciesService()->add(Flight::request()->data->getData()));
 });
-
+//TODO : izbrisati kada se implementira soft delete
 /**
  * Delete species by species_id
  * Works

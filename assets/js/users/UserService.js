@@ -17,15 +17,12 @@ var UserService = {
     showUserPage: function(){
      
      var payload = UserService.parseJWT(localStorage.getItem("token"));
-     //console.log(payload.user_id);
      $.ajax({
       url: "api/public/pets/owner/" + payload.user_id,
       type: "GET",
       success: function(data) {
-        //console.log('hi');
         SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#user-page");
             
-        //console.log(data);
         var html="";
 
         var html = `

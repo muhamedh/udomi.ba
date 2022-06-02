@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 
 
 /** USERS ROUTES **/
-
+// TODO - ovo nam ne treba?
 
 /**
  * @OA\Get(path="/private/users", 
@@ -35,7 +35,7 @@ error_reporting(E_ALL);
  * )
  */
 Flight::route('GET /private/users', function () {
-  Flight::json(Flight::usersService()->get_all());
+  Flight::json(Flight::usersService()->get_all_restricted_users());
 });
 
 /**
@@ -59,7 +59,14 @@ Flight::route('GET /private/users', function () {
 * )
 */
 Flight::route('GET /private/users/@user_id', function ($user_id) {
-  Flight::json(Flight::usersService()->get_by_id($user_id, "user_id"));
+  $user = Flight::get('user');
+
+  if($user['user_id'] == $user_id){
+    Flight::json(Flight::usersService()->get_restricted_user($user_id));
+  }else{
+    throw new Exception("This is hack you will be traced, be prepared :)");
+  }
+
 });
 
 /**
@@ -166,7 +173,7 @@ Flight::route('POST /public/register', function () {
   Flight::json(['token' => $jwt]);
 
 });
-
+// TODO : I ovo nam ne treba
 /**
 * @OA\Post(
 *     path="/private/users",
@@ -232,11 +239,22 @@ Flight::route('POST /private/users', function () {
 * )
 */
 Flight::route('PUT /private/users/@id', function ($id) {
-  $data = Flight::request()->data->getData();
-  Flight::usersService()->update($id,$data,"user_id");
-  Flight::json(["message" => "updated"]);
-});
+  $user = Flight::get('user');
 
+  if($user['user_id'] == $id){
+    
+    $data = Flight::request()->data->getData();
+    unset($data['password']);
+    Flight::usersService()->update($id,$data,"user_id");
+    Flight::json(["message" => "updated"]);
+
+  }else{
+    throw new Exception("This is hack you will be traced, be prepared :)");
+  }
+
+
+});
+// TODO: izbrisati kada se doda soft delete
 /*
   * Delete a user by its id from the database
   * Works

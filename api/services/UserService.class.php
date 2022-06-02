@@ -18,5 +18,13 @@ class UserService extends BaseService{
   public function getMail($mail){
     return $this->dao->getMail($mail);
   }
+
+  public function get_restricted_user($user_id){
+    return $this->dao->get_restricted_user($user_id);
+  }
+
+  public function get_all_restricted_users(){
+    return $this->dao->get_all_restricted_users();
+  }
 }
 ?>

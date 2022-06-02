@@ -111,14 +111,31 @@ Flight::route('GET /public/pets/younger/@timestamp', function($timestamp){
 * )
 */
 Flight::route('POST /private/pets', function(){
-  Flight::json(Flight::petsService()->add(Flight::request()->data->getData()));
+
+  $data = Flight::request()->data->getData();
+  $user = Flight::get('user');
+
+  if($user['user_id'] == $data['owner_id']){
+    Flight::json(Flight::petsService()->add($data));
+  }else{
+    throw new Exception("This is hack you will be traced, be prepared :)");
+  }
+
+
 });
-/**
- * TO ADD DOCUMENTATION
- */
+
+//TODO: izbrisati kada se doda soft delete
+
 Flight::route('DELETE /private/pets/@id', function($id){
-  Flight::petsService()->delete($id, "pets_id");
-  Flight::json(["message" => "deleted"]);
+  $user = Flight::get('user');
+  $pet_to_delete = Flight::petsService()->get_by_id($id, "pets_id");
+  if($user['user_id'] == $pet_to_delete['owner_id']){
+    Flight::petsService()->delete($id, "pets_id");
+    Flight::json(["message" => "deleted"]);
+  }else{
+    throw new Exception("This is hack you will be traced, be prepared :)");
+  }
+
 });
 
 /**
@@ -157,9 +174,18 @@ Flight::route('DELETE /private/pets/@id', function($id){
 * )
 */
 Flight::route('PUT /private/pets/@id', function($id){
+  $user = Flight::get('user');
+
   $data = Flight::request()->data->getData();
-  Flight::petsService()->update($id,$data,"pets_id");
-  Flight::json(["message" => "updated"]);
+  if(!isset($data['owner_id']) || $data['owner_id'] != $user['user_id']){
+    throw new Exception("This is hack you will be traced, be prepared :)");
+  }else{
+    Flight::petsService()->update($id,$data,"pets_id");
+    Flight::json(["message" => "updated"]);
+  }
+
+
+
 });
 
 /**

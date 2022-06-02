@@ -17,7 +17,7 @@ class UsersDao extends BaseDao{
    *      might use query unique
    */
   public function getUsername($username){
-    return $this->query_unique("SELECT * FROM users WHERE username=:username", ['username' => $username]);
+    return $this->query_unique("SELECT username, user_mail, phone_number, city, municipality FROM users WHERE username=:username", ['username' => $username]);
   }
   /**
    * Get user based on email
@@ -30,6 +30,14 @@ class UsersDao extends BaseDao{
    */
   public function getPhoneNumber($number){
     return $this->query_with_params("SELECT * FROM users WHERE phone_number=:number", ['number' => $number]);
+  }
+
+  public function get_restricted_user($user_id){
+    return $this->query_with_params("SELECT username, user_mail, phone_number, city, municipality FROM users WHERE user_id = :user_id", ['user_id' => $user_id]);
+  }
+
+  public function get_all_restricted_users(){
+    return $this->query_no_params("SELECT username, user_mail, phone_number, city, municipality FROM users");
   }
   }
 
