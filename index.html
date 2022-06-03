@@ -17,21 +17,27 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
       <div class="container-fluid">
         <a class="navbar-brand clickable" onclick="PetService.list();event.preventDefault();">udomi.ba</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active clickable" aria-current="page" onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
+              <a class="nav-link active clickable" aria-current="page"
+                onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
             </li>
           </ul>
-          <div id = "guest-navbar">
-            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal" data-bs-target="#loginModal">Prijavi se</button>
-            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal">Registruj se</button>
+          <div id="guest-navbar">
+            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal"
+              data-bs-target="#loginModal">Prijavi se</button>
+            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal"
+              data-bs-target="#registerModal">Registruj se</button>
           </div>
-          <div id = "user-navbar" style="display:none;">
-            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" onclick="UserService.showUserPage()" >Moj Profil</button>
+          <div id="user-navbar" style="display:none;">
+            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;"
+              onclick="UserService.showUserPage()">Moji ljubimci</button>
+            <button class="btn btn-outline-light btn-sm" onclick="UserService.myProfile()">Moj Profil</button>
             <button class="btn btn-outline-light btn-sm" onclick="UserService.logOut()">Odjavite se</button>
           </div>
 
@@ -58,10 +64,10 @@
 
       <!--div for add pet-->
       <div id="add-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
-    
+
       <!--div for user page-->
       <div id="user-page" class="row gx-4 gx-lg-5 align-items-center"></div>
-      
+
     </div>
   </main>
 </body>
@@ -99,10 +105,17 @@
       "hideEasing": "linear",
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
-  }
+    }
     UserService.init();
     PetService.init();
   });
+
+  function copy() {
+    var copyText = document.getElementById("owner-phone");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+    navigator.clipboard.writeText(copyText.value);
+  }
 </script>
 
 
@@ -114,14 +127,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id = "loginForm">
+        <form id="loginForm">
           <label for="login-email" class="form-label" id="login-email">Email adresa</label>
           <div class="form-floating mb-3">
-            <input name = "user_mail" type="email" class="form-control required" id="login-email">
+            <input name="user_mail" type="email" class="form-control required" id="login-email">
           </div>
           <label for="login-password">Lozinka</label>
           <div class="form-floating">
-            <input name = "password" type="password" class="form-control required" id="login-password">
+            <input name="password" type="password" class="form-control required" id="login-password">
           </div>
           <div class="mb-3">
             <button class="btn btn-warning-outline btn-sm">Zaboravili lozinku?</a>
@@ -154,53 +167,93 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id = "registerForm">
+        <form id="registerForm">
 
           <label for="email" class="form-label">Email adresa</label>
           <div class="form-floating mb-3">
-            <input name = "user_mail" type="email" class="form-control required" email="true" id="email">
+            <input name="user_mail" type="email" class="form-control required" email="true" id="email">
           </div>
 
           <label for="username" class="form-label">Username/Korisničko ime</label>
           <div class="form-floating mb-3">
-            <input name = "username" type="text" minlength = "3" class="form-control required" id="username" name="username" >
+            <input name="username" type="text" minlength="3" class="form-control required" id="username"
+              name="username">
           </div>
 
           <label for="password" class="form-label">Lozinka</label>
           <div class="form-floating mb-3">
-            <input name = "password" type="password" class="form-control required" name="password" id="password">
+            <input name="password" type="password" class="form-control required" name="password" id="password">
           </div>
 
           <label for="repeatpassword" class="form-label">Ponovite lozinku</label>
           <div class="form-floating mb-3">
-            <input type="password" class="form-control required" name="repeatpassword" id="repeatpassword" data-rule-equalTo="#password">
+            <input type="password" class="form-control required" name="repeatpassword" id="repeatpassword"
+              data-rule-equalTo="#password">
           </div>
 
           <label for="phonenumber" class="form-label">Broj telefona</label>
           <div class="form-floating mb-3">
-            <input name = "phone_number" type="tel" class="form-control" name="phonenumber" id="phonenumber">
+            <input name="phone_number" type="tel" class="form-control" name="phonenumber" id="phonenumber">
           </div>
 
           <label for="city" class="form-label">Grad</label>
           <div class="form-floating mb-3">
-            <input name = "city" type="search" class="form-control" name="city" id="city">
+            <input name="city" type="search" class="form-control" name="city" id="city">
           </div>
           <label for="municipality" class="form-label">Općina</label>
           <div class="form-floating mb-3">
-            <input name = "municipality" type="search" class="form-control" name="municipality" id="municipality">
-           
-            <div class="mt-3 float-end"> 
-              <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Već imate račun?</button>
+            <input name="municipality" type="search" class="form-control" name="municipality" id="municipality">
+
+            <div class="mt-3 float-end">
+              <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Već imate
+                račun?</button>
             </div>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
-        <button type="submit" class="btn btn-warning" id ="register-button">Registruj se</button>
+        <button type="submit" class="btn btn-warning" id="register-button">Registruj se</button>
       </div>
       </form>
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="owner-info" aria-hidden="true" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel">petname</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-3">
+          <p class="col-sm-2 col-form-label">Email</p>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="owner-mail" value="">
+            <button type="button" class="btn" onclick="copy()">copy</button>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <p class="col-sm-2 col-form-label">Telefon</p>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" value="" id="owner-phone">
+            <button type="button" class="btn" onclick="copy()">copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 
 </html>
