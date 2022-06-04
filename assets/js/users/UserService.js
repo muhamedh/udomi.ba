@@ -68,6 +68,7 @@ var UserService = {
     logOut: function(){
         localStorage.clear();
         UserService.showGuestNavbar();
+        PetService.list()
     },
     validateRegisterForm: function(){
 
