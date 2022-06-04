@@ -23,7 +23,7 @@ var UserService = {
       url: "api/public/pets/owner/" + payload.user_id,
       type: "GET",
       success: function (data) {
-        SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#user-page"], "#user-page");
+        SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#my-profile", "#edit-profile", "#user-page"], "#user-page");
 
         var html = "";
 
@@ -149,6 +149,7 @@ var UserService = {
         toastr.success("Raćun uspješno izbrisan!", "Informacija:");
         localStorage.removeItem('token');
         UserService.showGuestNavbar();
+        PetService.list()
         SPApp.handleSectionVisibility(["#individual-pet", "#edit-pet", "#add-pet", "#user-page"], "#pets-list");
       }
     });
@@ -162,36 +163,37 @@ var UserService = {
 
   myProfile: function () {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
-    SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#my-profile");
+    
+    
     $.ajax({
-      url: "api/private/users/" + payload.user_id,
+      url: "api/public/users/" + payload.user_id,
       type: "GET",
       success: function (data) {
-        SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#user-page"], "#my-profile");
+        SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page", "#edit-profile", "#my-profile"], "#my-profile");
 
         var html = "";
 
-        var html = `
+        html += `
         <ul class="inline">
           <li class="fs-3 fw-bold list-inline-item">Korisničko ime: </li>
-          <li class="fs-3 list-inline-item">actual username</li>
+          <li class="fs-3 list-inline-item">`+ data[0].username +`</li>
         </ul>
         <ul class="inline">
           <li class="fs-3 fw-bold list-inline-item">Email adresa: </li>
-          <li class="fs-3 list-inline-item">actual email</li>
+          <li class="fs-3 list-inline-item">`+ data[0].user_mail +`</li>
         </ul>
         <ul class="inline">
           <li class="fs-3 fw-bold list-inline-item">Broj telefona: </li>
-          <li class="fs-3 list-inline-item">actual broj</li>
+          <li class="fs-3 list-inline-item">` + data[0].phone_number + `</li>
         </ul>
         <ul class="inline">
           <li class="fs-3 fw-bold list-inline-item">Lokacija: </li>
-          <li class="fs-3 list-inline-item">actual grad, </li>
-          <li class="fs-3 list-inline-item">actual općina</li>
+          <li class="fs-3 list-inline-item">`+ data[0].city +`, </li>
+          <li class="fs-3 list-inline-item">` + data[0].municipality + `</li>
         </ul>
         <div>
-          <button id="edit-account-button" class="btn btn-warning btn-lg float-start" onclick="UserService.edit()">Uredite račun</button>
-          <button id="delete-account-button" class="btn btn-danger btn-lg float-end" onclick="UserService.deleteUser()">Izbrišite račun</button>
+          <button id="edit-account-button" class="btn btn-warning btn-lg " onclick="UserService.edit()">Uredite račun</button>
+          <button id="delete-account-button" class="btn btn-danger btn-lg ms-3" onclick="UserService.deleteUser()">Izbrišite račun</button>
         </div>`;
 
         
@@ -203,8 +205,106 @@ var UserService = {
     });
   },
 
-  edit: function() {
+  edit: function(id) {
+    var payload = UserService.parseJWT(localStorage.getItem("token"));
+      id=payload.user_id;
+    $.get("api/public/users/" + id, function(data){
 
+      
+      SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page", "#add-pet-button", "#my-profile"], "#edit-profile");
+
+      var html="";
+      console.log(id);
+      
+      html+=`
+      <div class="col-md-6">
+          <form>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <label class="form-label" for="inputUsername">Korisničko ime </label>
+                </div>
+                <div class="col mb-3">
+                  <input type="text" class="form-control" id="inputUsername" placeholder="ime123"
+                    value="`+ data[0].username + `">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label class="form-label" for="inputEmail">Email adresa </label>
+                </div>
+                <div class="col mb-3">
+                  <input type="text" class="form-control" id="inputEmail" placeholder="ime.prezime@mail.com"
+                    value="`+ data[0].user_mail + `">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label class="form-label" for="inputPhone">Broj telefona </label>
+                </div>
+                <div class="col mb-3">
+                  <input type="text" class="form-control" id="inputPhone" placeholder="061234567"
+                    value="`+ data[0].phone_number + `">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label class="form-label" for="inputCity">Grad </label>
+                </div>
+                <div class="col mb-3">
+                  <input type="text" class="form-control" id="inputCity" placeholder="Sarajevo"
+                    value="`+ data[0].city + `">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label class="form-label" for="inputMunicipality">Općina </label>
+                </div>
+                <div class="col mb-3">
+                  <input type="text" class="form-control" id="inputMunicipality" placeholder="Novi Grad"
+                    value="`+ data[0].municipality + `">
+                </div>
+              </div>
+
+            </div>
+            <div class="d-grid gap-2 d-md-block" style="margin-top:10px">
+          </form>
+          <button class="btn btn-success flex-shrink-0 " id="saveButton"
+            onclick="UserService.update(` + id + `)">Spasi promjene</button>
+        </div>
+      
+      `;
+
+      $("#edit-profile").html(html);
+    })
+  },
+
+  update: function(id){
+    var user = {};
+    user.username = $("#inputUsername").val();
+    user.user_mail = $("#inputEmail").val();
+    user.phone_number = $("#inputPhone").val();
+    user.city = $("#inputCity").val();
+    user.municipality = $("#inputMunicipality").val();
+    $.ajax({
+      url: 'api/public/users/'+ id,
+      type: 'PUT',
+      data: JSON.stringify(user),
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      contentType: 'application/json',
+      dataType: 'json',
+      success: function() {
+        
+        console.log("yay");
+          UserService.myProfile(); // perf optimization
+      }
+    });
   }
 
 }
