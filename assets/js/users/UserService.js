@@ -85,6 +85,10 @@ var UserService = {
                 
                 $("#registerModal").modal('hide');
                 toastr.success("Uspješno registrovani!", "Informacija:");
+
+                $('#registerModal').on('hidden.bs.modal', function () {
+                  UserService.showUserNavbar();
+                  });
               },
               error: function(response){
                 toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
@@ -93,9 +97,7 @@ var UserService = {
           
           }
         });
-        $('#registerModal').on('hidden.bs.modal', function () {
-        UserService.showUserNavbar();
-        });
+
      },
      validateLoginForm: function(){
         $('#loginForm').validate({
@@ -114,6 +116,9 @@ var UserService = {
                 localStorage.setItem("token", response.token);
                 $("#loginModal").modal('hide');
                 toastr.success("Uspješno prijavljeni!", "Informacija:");
+                $('#loginModal').on('hidden.bs.modal', function () {
+                  UserService.showUserNavbar();
+                });
               },
               error: function(response){
                 toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
@@ -122,9 +127,7 @@ var UserService = {
             
           }
         });
-        $('#loginModal').on('hidden.bs.modal', function () {
-          UserService.showUserNavbar();
-        });
+
      },
      showUserNavbar : function(){
         $("#guest-navbar").hide();
