@@ -40,6 +40,10 @@ class UsersDao extends BaseDao{
     return $this->query_no_params("SELECT username, user_mail, phone_number, city, municipality FROM users");
   }
 
+  public function getMailAndPhone($user_id){
+    return $this->query_with_params("SELECT user_mail, phone_number FROM users WHERE user_id = :user_id", ['user_id' => $user_id]);
+  }
+
   }
 
  ?>

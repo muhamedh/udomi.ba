@@ -6,8 +6,6 @@ var ShowPetService = {
     showPet : function(id){
       var pets = $("#pets-list").data("pets");
       var selected_pet = pets.filter(pets => pets.pets_id == id);
-      console.log(selected_pet);
-      console.log(selected_pet[0].photos_url);
 
       SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#individual-pet");
       var genderText;

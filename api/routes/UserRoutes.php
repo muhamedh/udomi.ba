@@ -278,3 +278,9 @@ Flight::route('DELETE /private/users/', function () {
   Flight::usersService()->delete($user_to_delete['user_id'],"user_id");
   Flight::json(["message" => "deleted"]);
 });
+
+Flight::route('GET /public/users/@id', function($id){
+  Flight::json(Flight::usersService()->getMailAndPhone($id, "user_id"));
+})
+
+?>

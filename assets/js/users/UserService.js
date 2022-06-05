@@ -156,31 +156,80 @@ var UserService = {
   },
 
   showUserContact: function (id) {
-    //zasad ne mora neko biti registrovan da bi vidio contact info
-    //nvm
+    //this stoopid ajax call is not responding and I hate it
+
+    /*$.get('api/public/users/' + id), function (data) {
+      var html1 = "";
+      var html2 = "";
+      html1 += `
+        <p class="col-sm-2 col-form-label">Email</p>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="owner-mail" value="` + data.user_mail + `">
+            <button type="button" class="btn" onclick="copy()">copy</button>
+          </div>
+        `;
+      html2 += `
+        <p class="col-sm-2 col-form-label">Phone</p>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="owner-phone" value="` + data.phone_number + `">
+            <button type="button" class="btn" onclick="copy()">copy</button>
+          </div>
+        `;
+      
+        $("#owner-mail").html(html1);
+        $("#owner-phone").html(html2);
+        $("#owner-info").modal("show");
+    }*/
+    $.ajax({
+      url: "api/public/users/" + id,
+      type: "GET",
+      success: function(data){
+        console.log(data);
+        var html1 = "";
+        var html2 = "";
+        html1 += `
+          <p class="col-sm-2 col-form-label">Email</p>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="owner-mail" value="` + data[0].user_mail + `">
+              <button type="button" class="btn" onclick="copy()">copy</button>
+            </div>
+        `;
+        html2 += `
+          <p class="col-sm-2 col-form-label">Phone</p>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="owner-phone" value="` + data[0].phone_number + `">
+              <button type="button" class="btn" onclick="copy()">copy</button>
+            </div>
+          `;
+      
+        $("#owner-mail").html(html1);
+        $("#owner-phone").html(html2);
+        $("#owner-info").modal("show");
+      }
+    })
 
   },
 
   myProfile: function () {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
-    
+
     
     $.ajax({
-      url: "api/public/users/" + payload.user_id,
+      url: "api/private/users/" + payload.user_id,
       type: "GET",
       success: function (data) {
-        SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page", "#edit-profile", "#my-profile"], "#my-profile");
+        SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#user-page", "#edit-profile", "#my-profile"], "#my-profile");
 
         var html = "";
 
         html += `
         <ul class="inline">
           <li class="fs-3 fw-bold list-inline-item">Korisničko ime: </li>
-          <li class="fs-3 list-inline-item">`+ data[0].username +`</li>
+          <li class="fs-3 list-inline-item">`+ data[0].username + `</li>
         </ul>
         <ul class="inline">
           <li class="fs-3 fw-bold list-inline-item">Email adresa: </li>
-          <li class="fs-3 list-inline-item">`+ data[0].user_mail +`</li>
+          <li class="fs-3 list-inline-item">`+ data[0].user_mail + `</li>
         </ul>
         <ul class="inline">
           <li class="fs-3 fw-bold list-inline-item">Broj telefona: </li>
@@ -188,7 +237,7 @@ var UserService = {
         </ul>
         <ul class="inline">
           <li class="fs-3 fw-bold list-inline-item">Lokacija: </li>
-          <li class="fs-3 list-inline-item">`+ data[0].city +`, </li>
+          <li class="fs-3 list-inline-item">`+ data[0].city + `, </li>
           <li class="fs-3 list-inline-item">` + data[0].municipality + `</li>
         </ul>
         <div>
@@ -196,7 +245,7 @@ var UserService = {
           <button id="delete-account-button" class="btn btn-danger btn-lg ms-3" onclick="UserService.deleteUser()">Izbrišite račun</button>
         </div>`;
 
-        
+
         $("#my-profile").html(html);
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -205,18 +254,18 @@ var UserService = {
     });
   },
 
-  edit: function(id) {
+  edit: function (id) {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
-      id=payload.user_id;
-    $.get("api/public/users/" + id, function(data){
+    id = payload.user_id;
+    $.get("api/public/users/" + id, function (data) {
 
-      
-      SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page", "#add-pet-button", "#my-profile"], "#edit-profile");
 
-      var html="";
+      SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#user-page", "#add-pet-button", "#my-profile"], "#edit-profile");
+
+      var html = "";
       console.log(id);
-      
-      html+=`
+
+      html += `
       <div class="col-md-6">
           <form>
             <div class="container">
@@ -283,7 +332,7 @@ var UserService = {
     })
   },
 
-  update: function(id){
+  update: function (id) {
     var user = {};
     user.username = $("#inputUsername").val();
     user.user_mail = $("#inputEmail").val();
@@ -291,20 +340,27 @@ var UserService = {
     user.city = $("#inputCity").val();
     user.municipality = $("#inputMunicipality").val();
     $.ajax({
-      url: 'api/public/users/'+ id,
+      url: 'api/public/users/' + id,
       type: 'PUT',
       data: JSON.stringify(user),
-      beforeSend: function(xhr){
+      beforeSend: function (xhr) {
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       contentType: 'application/json',
       dataType: 'json',
-      success: function() {
-        
+      success: function () {
+
         console.log("yay");
-          UserService.myProfile(); // perf optimization
+        UserService.myProfile(); // perf optimization
       }
     });
+  },
+  
+  copy: function(){
+    var copyText = document.getElementById("owner-phone");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+    navigator.clipboard.writeText(copyText.value);
   }
 
 }
