@@ -156,30 +156,6 @@ var UserService = {
   },
 
   showUserContact: function (id) {
-    //this stoopid ajax call is not responding and I hate it
-
-    /*$.get('api/public/users/' + id), function (data) {
-      var html1 = "";
-      var html2 = "";
-      html1 += `
-        <p class="col-sm-2 col-form-label">Email</p>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="owner-mail" value="` + data.user_mail + `">
-            <button type="button" class="btn" onclick="copy()">copy</button>
-          </div>
-        `;
-      html2 += `
-        <p class="col-sm-2 col-form-label">Phone</p>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="owner-phone" value="` + data.phone_number + `">
-            <button type="button" class="btn" onclick="copy()">copy</button>
-          </div>
-        `;
-      
-        $("#owner-mail").html(html1);
-        $("#owner-phone").html(html2);
-        $("#owner-info").modal("show");
-    }*/
     $.ajax({
       url: "api/public/users/" + id,
       type: "GET",
@@ -191,14 +167,14 @@ var UserService = {
           <p class="col-sm-2 col-form-label">Email</p>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="owner-mail" value="` + data[0].user_mail + `">
-              <button type="button" class="btn" onclick="copy()">copy</button>
+              <button type="button" class="btn" onclick="UserService.copy()">copy</button>
             </div>
         `;
         html2 += `
           <p class="col-sm-2 col-form-label">Phone</p>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="owner-phone" value="` + data[0].phone_number + `">
-              <button type="button" class="btn" onclick="copy()">copy</button>
+              <button type="button" class="btn" onclick="UserService.copy()">copy</button>
             </div>
           `;
       
@@ -356,11 +332,11 @@ var UserService = {
     });
   },
   
-  copy: function(){
-    var copyText = document.getElementById("owner-phone");
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); /* For mobile devices */
-    navigator.clipboard.writeText(copyText.value);
+   copy: function(){
+      var copyText = $("#owner-phone").val();
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); /* For mobile devices */
+      navigator.clipboard.writeText(copyText.value);
   }
 
 }
