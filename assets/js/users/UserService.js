@@ -70,6 +70,20 @@ var UserService = {
         UserService.showGuestNavbar();
         PetService.list()
     },
+    fillMunicipalities: function(){
+      $.ajax({
+        url: "api/public/municipalities",
+        type: "GET",
+      
+      success: function(data) {
+      console.log('succ');   
+      },
+      
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+      
+      }
+     });
+    },
     validateRegisterForm: function(){
 
         $('#registerForm').validate({

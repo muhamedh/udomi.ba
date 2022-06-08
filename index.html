@@ -28,7 +28,7 @@
           </ul>
           <div id = "guest-navbar">
             <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal" data-bs-target="#loginModal">Prijavi se</button>
-            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal">Registruj se</button>
+            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal" onclick="UserService.fillMunicipalities()" >Registruj se</button>
           </div>
           <div id = "user-navbar" style="display:none;">
             <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" onclick="UserService.showUserPage()" >Moj Profil</button>
@@ -123,12 +123,14 @@
           <div class="form-floating">
             <input name = "password" type="password" class="form-control required" id="login-password">
           </div>
+           <!-- //TODO izbrisati zaboravili lozinku jer nije implementirano -->
           <div class="mb-3">
             <button class="btn btn-warning-outline btn-sm">Zaboravili lozinku?</a>
           </div>
           <div>
             <div class="mt-3 g-2 form-check">
               <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <!-- //TODO izbrisati zapamti me jer nije implementirano -->
               <label class="form-check-label" for="exampleCheck1">Zapamti me</label>
               <button class="btn btn-warning btn-sm float-end" data-bs-toggle="modal"
                 data-bs-target="#registerModal">Nemate
@@ -181,10 +183,6 @@
             <input name = "phone_number" type="tel" class="form-control" name="phonenumber" id="phonenumber">
           </div>
 
-          <label for="city" class="form-label">Grad</label>
-          <div class="form-floating mb-3">
-            <input name = "city" type="search" class="form-control" name="city" id="city">
-          </div>
           <label for="municipality" class="form-label">Općina</label>
           <div class="form-floating mb-3">
             <input name = "municipality" type="search" class="form-control" name="municipality" id="municipality">
