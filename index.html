@@ -7,6 +7,7 @@
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="./assets/css/toastr.css" rel="stylesheet">
   <link href="./assets/css/custom.css" rel="stylesheet">
+  <link href="./assets/css/selectize.css" rel="stylesheet">
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -71,6 +72,7 @@
 <script src="./assets/js/single-page-handler.js"></script>
 <script src="./assets/js/bootstrap.bundle.min.js"></script>
 <script src="./assets/js/toastr.js"></script>
+<script src="./assets/js/selectize.js"></script>
 
 <script src="./assets/js/pets/PetService.js"></script>
 <script src="./assets/js/pets/ShowPetService.js"></script>
@@ -182,20 +184,38 @@
           <div class="form-floating mb-3">
             <input name = "phone_number" type="tel" class="form-control" name="phonenumber" id="phonenumber">
           </div>
-
+          <!-- // TODO clean up
           <label for="municipality" class="form-label">Općina</label>
           <div class="form-floating mb-3">
-            <input name = "municipality" type="search" class="form-control" name="municipality" id="municipality">
-           
+            <input name = "municipality_id" type="search" class="form-control" name = "municipality_id" id="municipality_id">
+          -->
+          <!--
+          <label for="municipality_id" class="form-label">Općina</label>
+          <input class="form-control" list="municipalityList" id="municipality_id" placeholder="Krenite kucati Vašu općinu">
+              <datalist id="municipalityList">
+                 <option id = "1" value="Novi Grad">
+                <option id = "2" value="Stari Grad">
+                <option id = "3" value="Novo Sarajevo"> 
+
+              </datalist> -->
+              <label for="municipalityList">Općina</label>
+              
+                
+                <select id="municipalityList">
+                  
+                </select>
+              
             <div class="mt-3 float-end"> 
               <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Već imate račun?</button>
             </div>
+
+            <div class="mt-3 float-start">
+              <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
+              <button type="submit" class="btn btn-warning" id ="register-button">Registruj se</button>
+            </div>
           </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
-        <button type="submit" class="btn btn-warning" id ="register-button">Registruj se</button>
-      </div>
+
       </form>
     </div>
   </div>
