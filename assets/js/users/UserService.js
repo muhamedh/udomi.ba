@@ -99,10 +99,11 @@ var UserService = {
         $('#registerForm').validate({
           submitHandler: function (form) {
             var entity = Object.fromEntries((new FormData(form)).entries());
-            entity = JSON.stringify(entity);
-
-            entity.municipality_id = $('select[class*="selectize"] option').val();
             
+            entity.municipality_id = $('select[class*="selectize"] option').val();
+            entity = JSON.stringify(entity);
+            
+
             $.ajax({
               url: 'api/public/register',
               type: 'POST',
