@@ -337,6 +337,102 @@ var UserService = {
       copyText.select();
       copyText.setSelectionRange(0, 99999); /* For mobile devices */
       navigator.clipboard.writeText(copyText.value);
-  }
+  },
+    
+    fillMunicipalities: function(){
+      $.ajax({
+        url: "api/public/municipalities",
+        type: "GET",
+      
+      success: function(data) {
+      $("#municipalityList").append("<option value=\"\"></option>");
+      for(let i = 0; i < data.length;i++){
+        $("#municipalityList").append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
+      };
+
+      $("#municipalityList").selectize({
+        create: false,
+        sortField: "text",
+        placeholder: "Unesite Vašu opštinu"
+      });
+
+      },
+      
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
+      }
+     });
+    },
+    validateRegisterForm: function(){
+      // TODO user email should be unique
+        $('#registerForm').validate({
+          submitHandler: function (form) {
+            var entity = Object.fromEntries((new FormData(form)).entries());
+            
+            entity.municipality_id = $('select[class*="selectize"] option').val();
+            entity = JSON.stringify(entity);
+            
+
+            $.ajax({
+              url: 'api/public/register',
+              type: 'POST',
+              data: entity,
+              contentType: "application/json",
+              dataType: "json",
+              success: function (response) {
+                
+                $("#registerModal").modal('hide');
+                toastr.success("Uspješno registrovani!", "Informacija:");
+                UserService.showUserNavbar();
+
+              },
+              error: function(response){
+                console.log(JSON.stringify(entity));
+                console.log(response);
+                toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
+              }
+            });
+          
+          }
+        });
+
+     },
+     validateLoginForm: function(){
+        $('#loginForm').validate({
+          submitHandler: function (form) {
+            var entity = Object.fromEntries((new FormData(form)).entries());
+
+            $.ajax({
+              url: 'api/public/login',
+              type: 'POST',
+              data: JSON.stringify(entity),
+              contentType: "application/json",
+              dataType: "json",
+              success: function (response) {
+                
+                
+                localStorage.setItem("token", response.token);
+                $("#loginModal").modal('hide');
+                toastr.success("Uspješno prijavljeni!", "Informacija:");
+                UserService.showUserNavbar();
+                  
+              },
+              error: function(response){
+                toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
+              }
+            });
+            
+          }
+        });
+
+     },
+     showUserNavbar : function(){
+        $("#guest-navbar").hide();
+        $("#user-navbar").show();
+     },
+     showGuestNavbar : function(){
+        $("#guest-navbar").show();
+        $("#user-navbar").hide();
+     },
 
 }
