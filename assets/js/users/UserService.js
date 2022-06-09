@@ -193,6 +193,9 @@ var UserService = {
     $.ajax({
       url: "api/private/users/" + payload.user_id,
       type: "GET",
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
       success: function (data) {
         SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#user-page", "#edit-profile", "#my-profile"], "#my-profile");
 
@@ -213,8 +216,7 @@ var UserService = {
         </ul>
         <ul class="inline">
           <li class="fs-3 fw-bold list-inline-item">Lokacija: </li>
-          <li class="fs-3 list-inline-item">`+ data[0].city + `, </li>
-          <li class="fs-3 list-inline-item">` + data[0].municipality + `</li>
+          <li class="fs-3 list-inline-item">` + data[0].municipality_id + `</li>
         </ul>
         <div>
           <button id="edit-account-button" class="btn btn-warning btn-lg " onclick="UserService.edit()">Uredite račun</button>
@@ -233,13 +235,18 @@ var UserService = {
   edit: function (id) {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
     id = payload.user_id;
-    $.get("api/public/users/" + id, function (data) {
 
-
-      SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#user-page", "#add-pet-button", "#my-profile"], "#edit-profile");
+    $.ajax({
+      url: "api/private/users/" + id,
+      type: "GET",
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function (data){
+        SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#user-page", "#add-pet-button", "#my-profile"], "#edit-profile");
 
       var html = "";
-      console.log(id);
+      console.log(data);
 
       html += `
       <div class="col-md-6">
@@ -277,11 +284,7 @@ var UserService = {
 
               <div class="row">
                 <div class="col">
-                  <label class="form-label" for="inputCity">Grad </label>
-                </div>
-                <div class="col mb-3">
-                  <input type="text" class="form-control" id="inputCity" placeholder="Sarajevo"
-                    value="`+ data[0].city + `">
+                  
                 </div>
               </div>
 
@@ -291,7 +294,7 @@ var UserService = {
                 </div>
                 <div class="col mb-3">
                   <input type="text" class="form-control" id="inputMunicipality" placeholder="Novi Grad"
-                    value="`+ data[0].municipality + `">
+                    value="`+ data[0].municipality_id + `">
                 </div>
               </div>
 
@@ -305,7 +308,9 @@ var UserService = {
       `;
 
       $("#edit-profile").html(html);
-    })
+      }
+    });
+    
   },
 
   update: function (id) {
@@ -314,9 +319,9 @@ var UserService = {
     user.user_mail = $("#inputEmail").val();
     user.phone_number = $("#inputPhone").val();
     user.city = $("#inputCity").val();
-    user.municipality = $("#inputMunicipality").val();
+    user.municipality_id = $("#inputMunicipality").val();
     $.ajax({
-      url: 'api/public/users/' + id,
+      url: 'api/private/users/' + id,
       type: 'PUT',
       data: JSON.stringify(user),
       beforeSend: function (xhr) {

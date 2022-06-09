@@ -24,22 +24,22 @@ var AddPetHandler = {
     
         /**
          * GET ALL SPECIES FROM DB
-         
+         */
         if (($('#species').val()).localeCompare("Mačka")) {
           entity.species_id = "1"; // HARDCODED!
         } else if (($('#species').val()).localeCompare("Pas")) {
           entity.species_id = "2"; // HARDCODED!
         } else if (($('#species').val()).localeCompare("Zec")) {
           entity.species_id = "4"; // HARDCODED!
-        }*/
+        }
 
-        $('#species').val()
+        /*$('#species').val()
         entity.species_id = this.getSpecies();
-        console.log(entity.species_id);
+        console.log(entity.species_id);*/
         var payload = UserService.parseJWT(localStorage.getItem("token"));
         entity.owner_id = payload.user_id;
         delete entity.myFile;
-
+        console.log(entity);
         $.ajax({
           url: 'api/private/pets',
           type: 'POST',
