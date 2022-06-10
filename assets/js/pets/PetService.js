@@ -5,7 +5,7 @@ var PetService = {
 
   list: function () {
     $.get("api/public/pets", function (data) {
-      SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page", "#add-pet-button"], "#pets-list");
+      SPApp.handleSectionVisibility("#pets-list");
             
       var html = "";
       for (let i = 0; i < data.length; i++) {
@@ -47,7 +47,7 @@ var PetService = {
     ($('#genderFemale').is(':checked')) ? pet.pet_gender = 1 : pet.pet_gender = 0;
     ($('#adoptedYes').is(':checked')) ? pet.adopted = 1 : pet.adopted = 0;
     
-    //console.log(JSON.stringify(pet));
+    
     $.ajax({
       url: 'api/private/pets/'+ id,
       type: 'PUT',
@@ -77,7 +77,7 @@ var PetService = {
       contentType: "application/json",
       dataType: "json",
       success: function(result) {
-          console.log("succ");
+          
           UserService.showUserPage(); // perf optimization
       }
     });

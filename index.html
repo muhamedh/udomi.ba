@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>udomi.ba</title>
+  <!-- Import the necessary CSS files -->
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="./assets/css/toastr.css" rel="stylesheet">
   <link href="./assets/css/custom.css" rel="stylesheet">
@@ -13,7 +14,7 @@
 </head>
 
 <body>
-  <!--navigation bar-->
+  <!-- Navigation bar -->
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
       <div class="container-fluid">
@@ -29,9 +30,11 @@
                 onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
             </li>
           </ul>
-          <div id = "guest-navbar">
-            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal" data-bs-target="#loginModal">Prijavi se</button>
-            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal" onclick="UserService.fillMunicipalities()" >Registruj se</button>
+          <div id="guest-navbar">
+            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal"
+              data-bs-target="#loginModal">Prijavi se</button>
+            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal"
+              onclick="UserService.fillMunicipalities('#municipalityList')">Registruj se</button>
           </div>
           <div id="user-navbar" style="display:none;">
             <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;"
@@ -39,12 +42,11 @@
             <button class="btn btn-outline-light btn-sm" onclick="UserService.myProfile()">Moj Profil</button>
             <button class="btn btn-outline-light btn-sm" onclick="UserService.logOut()">Odjavite se</button>
           </div>
-
         </div>
       </div>
     </nav>
   </header>
-  <!---->
+
   <!--main content SPApp-->
   <main>
 
@@ -76,6 +78,7 @@
   </main>
 </body>
 
+<!-- Import all the needed JS libraries -->
 <script src="./assets/js/jquery-3.6.0.min.js"></script>
 <script src="./assets/js/jquery.validate.min.js"></script>
 <script src="./assets/js/single-page-handler.js"></script>
@@ -83,17 +86,18 @@
 <script src="./assets/js/toastr.js"></script>
 <script src="./assets/js/selectize.js"></script>
 
+<!-- Import all the needed JS services -->
 <script src="./assets/js/pets/PetService.js"></script>
 <script src="./assets/js/pets/ShowPetService.js"></script>
 <script src="./assets/js/pets/AddPetHandler.js"></script>
 <script src="./assets/js/pets/uploadPicture.js"></script>
 <script src="./assets/js/pets/EditPetService.js"></script>
 
-
 <script src="./assets/js/users/UserService.js"></script>
 
 <script>
   $(document).ready(function () {
+    /* Set the toastr options when the document is ready */
     toastr.options = {
       "closeButton": true,
       "debug": false,
@@ -111,12 +115,14 @@
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
     }
+    /* Start the user and pet services */
     UserService.init();
     PetService.init();
   });
 
 </script>
 
+<!-- HTML for login modal -->
 
 <div class="modal" tabindex="-1" id="loginModal">
   <div class="modal-dialog" id="loginModal">
@@ -135,20 +141,6 @@
           <div class="form-floating">
             <input name="password" type="password" class="form-control required" id="login-password">
           </div>
-           <!-- //TODO izbrisati zaboravili lozinku jer nije implementirano -->
-          <div class="mb-3">
-            <button class="btn btn-warning-outline btn-sm">Zaboravili lozinku?</a>
-          </div>
-          <div>
-            <div class="mt-3 g-2 form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <!-- //TODO izbrisati zapamti me jer nije implementirano -->
-              <label class="form-check-label" for="exampleCheck1">Zapamti me</label>
-              <button class="btn btn-warning btn-sm float-end" data-bs-toggle="modal"
-                data-bs-target="#registerModal">Nemate
-                račun?</button>
-            </div>
-          </div>
       </div>
       <div class="modal-footer mt-3">
         <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
@@ -159,7 +151,7 @@
   </div>
 </div>
 
-
+<!-- HTML for register modal -->
 <div class="modal" tabindex="-1" id="registerModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -196,52 +188,39 @@
           <div class="form-floating mb-3">
             <input name="phone_number" type="tel" class="form-control" name="phonenumber" id="phonenumber">
           </div>
-          <!-- // TODO clean up
-          <label for="municipality" class="form-label">Općina</label>
-          <div class="form-floating mb-3">
-            <input name = "municipality_id" type="search" class="form-control" name = "municipality_id" id="municipality_id">
-          -->
-          <!--
-          <label for="municipality_id" class="form-label">Općina</label>
-          <input class="form-control" list="municipalityList" id="municipality_id" placeholder="Krenite kucati Vašu općinu">
-              <datalist id="municipalityList">
-                 <option id = "1" value="Novi Grad">
-                <option id = "2" value="Stari Grad">
-                <option id = "3" value="Novo Sarajevo"> 
+          <label for="municipalityList">Općina</label>
+          <select id="municipalityList">
+          </select>
 
-              </datalist> -->
-              <label for="municipalityList">Općina</label>
-                <select id="municipalityList">
-                </select>
-            <div class="mt-3 float-end"> 
-              <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Već imate račun?</button>
-            </div>
 
-            <div class="mt-3 float-start">
-              <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
-              <button type="submit" class="btn btn-warning" id ="register-button">Registruj se</button>
-            </div>
+          <div class="mt-3 float-start">
+            <button type="button" class="btn btn-warning-outline" data-bs-dismiss="modal">Odustani</button>
+          </div>
+          <div class="mt-3 float-end">
+
+            <button type="submit" class="btn btn-warning" id="register-button">Registruj se</button>
           </div>
       </div>
       </form>
     </div>
   </div>
 </div>
+</div>
 
-
+<!-- HTML for showing owner info -->
 <div class="modal fade" id="owner-info" aria-hidden="true" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalToggleLabel">petname</h5>
+        <h5 class="modal-title" id = "petname-on-contact">Ljubimac</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" id="owner-aaa">
+      <div class="modal-body" id="owner-wrapper">
         <div class="row mb-3" id="owner-mail">
-          
+
         </div>
         <div class="row mb-3" id="owner-phone">
-          
+
         </div>
       </div>
       <div class="modal-footer">
@@ -250,11 +229,4 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
 </html>

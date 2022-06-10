@@ -2,6 +2,7 @@ var AddPetHandler = {
     init: function(){
         AddPetHandler.addPetScreen();
     },
+
     validatePetForm: function(){
         $('#addPetForm').validate({
           submitHandler: function (form) {
@@ -10,6 +11,7 @@ var AddPetHandler = {
           }
         });
      },
+
     handleTempImgPreview : function(event){
 
         var output = document.getElementById('petPicture');
@@ -41,7 +43,7 @@ var AddPetHandler = {
         var payload = UserService.parseJWT(localStorage.getItem("token"));
         entity.owner_id = payload.user_id;
         delete entity.myFile;
-        console.log(entity);
+        
         $.ajax({
           url: 'api/private/pets',
           type: 'POST',
@@ -61,7 +63,7 @@ var AddPetHandler = {
         
       },
     addPetScreen : function(){
-        SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page", "#add-pet-button"], "#add-pet");
+        SPApp.handleSectionVisibility("#add-pet");
         
         var html = `
               <div class="container">

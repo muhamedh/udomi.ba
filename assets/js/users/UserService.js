@@ -23,7 +23,7 @@ var UserService = {
       url: "api/public/pets/owner/" + payload.user_id,
       type: "GET",
       success: function (data) {
-        SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#my-profile", "#edit-profile", "#user-page"], "#user-page");
+        SPApp.handleSectionVisibility("#user-page");
 
         var html = "";
 
@@ -83,7 +83,7 @@ var UserService = {
           contentType: "application/json",
           dataType: "json",
           success: function (response) {
-
+            localStorage.setItem("token", response.token);
             $("#registerModal").modal('hide');
             toastr.success("Uspješno registrovani!", "Informacija:");
           },
@@ -146,44 +146,53 @@ var UserService = {
       contentType: "application/json",
       dataType: "json",
       success: function (result) {
-        toastr.success("Raćun uspješno izbrisan!", "Informacija:");
+        toastr.success("Račun uspješno izbrisan!", "Informacija:");
         localStorage.removeItem('token');
         UserService.showGuestNavbar();
         PetService.list()
-        SPApp.handleSectionVisibility(["#individual-pet", "#edit-pet", "#add-pet", "#user-page"], "#pets-list");
+        SPApp.handleSectionVisibility("#pets-list");
       }
     });
   },
 
-  showUserContact: function (id) {
+  showUserContact: function (id, petname) {
+
     $.ajax({
       url: "api/public/users/" + id,
       type: "GET",
       success: function (data) {
-        console.log(data);
         var html1 = "";
         var html2 = "";
         html1 += `
           <p class="col-sm-2 col-form-label">Email</p>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="owner-mail" value="` + data[0].user_mail + `">
-              <button type="button" class="btn" onclick="UserService.copy()">copy</button>
+              <input type="text" class="form-control" id="owner-mail-input" value="` + data[0].user_mail + `">
+              <button type="button" class="btn-warning" onclick="UserService.copy('owner-mail-input')" style = "margin-top:10px">Kopiraj email</button>
             </div>
         `;
         html2 += `
-          <p class="col-sm-2 col-form-label">Phone</p>
+          <p class="col-sm-2 col-form-label">Telefon</p>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="owner-phone" value="` + data[0].phone_number + `">
-              <button type="button" class="btn" onclick="UserService.copy()">copy</button>
+              <input type="text" class="form-control" id="owner-phone-input" value="` + data[0].phone_number + `">
+              <button type="button" class="btn-warning" onclick="UserService.copy('owner-phone-input')" style = "margin-top:10px">Kopiraj broj telefona</button>
             </div>
           `;
 
         $("#owner-mail").html(html1);
         $("#owner-phone").html(html2);
+        $("#petname-on-contact").html(petname);
         $("#owner-info").modal("show");
+
       }
     })
 
+  },
+  copy: function (element) {
+    var copyText = document.getElementById(element);
+    console.log(copyText);
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+    navigator.clipboard.writeText(copyText.value);
   },
 
   myProfile: function () {
@@ -197,7 +206,7 @@ var UserService = {
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function (data) {
-        SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#user-page", "#edit-profile", "#my-profile"], "#my-profile");
+        SPApp.handleSectionVisibility("#my-profile");
 
         var html = "";
 
@@ -232,7 +241,7 @@ var UserService = {
     });
   },
 
-  edit: function (id) {
+  edit: function () {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
     id = payload.user_id;
 
@@ -243,10 +252,9 @@ var UserService = {
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function (data) {
-        SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#user-page", "#add-pet-button", "#my-profile"], "#edit-profile");
+        SPApp.handleSectionVisibility("#edit-profile");
 
         var html = "";
-        console.log(data);
 
         html += `
       <div class="col-md-6">
@@ -292,9 +300,9 @@ var UserService = {
                 <div class="col">
                   <label class="form-label" for="inputMunicipality">Općina </label>
                 </div>
-                <div class="col mb-3">
-                  <input type="text" class="form-control" id="inputMunicipality" placeholder="Novi Grad"
-                    value="`+ data[0].name + `">
+                <div class="col">
+                  <select id="inputMunicipality">
+                  </select>
                 </div>
               </div>
 
@@ -306,7 +314,7 @@ var UserService = {
         </div>
       
       `;
-
+        UserService.fillMunicipalities('#inputMunicipality');
         $("#edit-profile").html(html);
       }
     });
@@ -318,44 +326,46 @@ var UserService = {
     user.username = $("#inputUsername").val();
     user.user_mail = $("#inputEmail").val();
     user.phone_number = $("#inputPhone").val();
-    user.city = $("#inputCity").val();
-    user.municipality_id = $("#inputMunicipality").val();
+    if($("#inputMunicipality").val()){
+      user.municipality_id = $("#inputMunicipality").val();  
+    }
+    
     $.ajax({
       url: 'api/private/users/' + id,
       type: 'PUT',
       data: JSON.stringify(user),
+      contentType: 'application/json',
+      dataType: 'json',
       beforeSend: function (xhr) {
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
-      contentType: 'application/json',
-      dataType: 'json',
-      success: function () {
 
-        console.log("yay");
-        UserService.myProfile(); // perf optimization
+      success: function () {
+        // ajax put request forsira reload stranice na ?
+        // TODO nema potrebe za reload
+        toastr.success("Podaci uspješno promjenjeni", "Informacija:");
+        //UserService.myProfile(); // perf optimization
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        console.log(errorThrown);
       }
     });
   },
 
-  copy: function () {
-    var copyText = $("#owner-phone").val();
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); /* For mobile devices */
-    navigator.clipboard.writeText(copyText.value);
-  },
 
-  fillMunicipalities: function () {
+
+  fillMunicipalities: function (list) {
     $.ajax({
       url: "api/public/municipalities",
       type: "GET",
 
       success: function (data) {
-        $("#municipalityList").append("<option value=\"\"></option>");
+        $(list).append("<option value=\"\"></option>");
         for (let i = 0; i < data.length; i++) {
-          $("#municipalityList").append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
+          $(list).append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
         };
 
-        $("#municipalityList").selectize({
+        $(list).selectize({
           create: false,
           sortField: "text",
           placeholder: "Unesite Vašu opštinu"
@@ -385,15 +395,14 @@ var UserService = {
           contentType: "application/json",
           dataType: "json",
           success: function (response) {
-
+            localStorage.setItem("token", response.token);
             $("#registerModal").modal('hide');
             toastr.success("Uspješno registrovani!", "Informacija:");
             UserService.showUserNavbar();
 
           },
           error: function (response) {
-            console.log(JSON.stringify(entity));
-            console.log(response);
+
             toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
           }
         });
