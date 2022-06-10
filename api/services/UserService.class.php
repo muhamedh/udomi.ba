@@ -26,5 +26,9 @@ class UserService extends BaseService{
   public function get_all_restricted_users(){
     return $this->dao->get_all_restricted_users();
   }
+
+  public function getMailAndPhone($user_id){
+    return $this->dao->getMailAndPhone($user_id);
+  }
 }
 ?>

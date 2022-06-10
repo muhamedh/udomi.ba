@@ -6,8 +6,6 @@ var ShowPetService = {
     showPet : function(id){
       var pets = $("#pets-list").data("pets");
       var selected_pet = pets.filter(pets => pets.pets_id == id);
-      console.log(selected_pet);
-      console.log(selected_pet[0].photos_url);
 
       SPApp.handleSectionVisibility(["#pets-list","#individual-pet","#edit-pet","#add-pet","#user-page"], "#individual-pet");
       var genderText;
@@ -47,7 +45,7 @@ var ShowPetService = {
                 </div>
                 <p class="lead">` + selected_pet[0].pets_description + `</p>
                 <div class="d-grid gap-2 d-md-block">
-                  <button class="btn btn-outline-success flex-shrink-0" type="button">Udomi!</button>
+                  <button class="btn btn-outline-success flex-shrink-0" type="button" onclick="UserService.showUserContact(` + selected_pet[0].owner_id + `)">Udomi!</button>
                 </div>
               </div>
             </div>

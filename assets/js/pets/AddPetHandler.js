@@ -33,10 +33,13 @@ var AddPetHandler = {
           entity.species_id = "4"; // HARDCODED!
         }
 
+        /*$('#species').val()
+        entity.species_id = this.getSpecies();
+        console.log(entity.species_id);*/
         var payload = UserService.parseJWT(localStorage.getItem("token"));
         entity.owner_id = payload.user_id;
         delete entity.myFile;
-
+        console.log(entity);
         $.ajax({
           url: 'api/private/pets',
           type: 'POST',
@@ -105,11 +108,10 @@ var AddPetHandler = {
                         <div class="md-3" style="margin-top:10px">
                           <label for="species" class="form-label">Vrsta</label>
                           <input class="form-control" list="speciesList" id="species"
-                            placeholder="Type to search...">
+                            placeholder="Type to search..." oninput="AddPetHandler.getSpecies()" />
                           <datalist id="speciesList">
-                            <option value="Mačka">
-                            <option value="Pas">
-                            <option value="Zec">
+                            
+
                           </datalist>
                         </div>
                         
@@ -132,5 +134,31 @@ var AddPetHandler = {
     
         $("#add-pet").html(html);
         $("#loadingButton").attr('hidden',true);
+    },
+
+    getSpecies: function(){
+      $.get("api/public/species"), function(data){
+        ("#speciesList").childNodes = data;
+        var html = "";
+        for(let i = 0; i<data.length; i++){
+          html+=`
+          <option value="` + data[i].name + `"></option>
+          `;
+          var spId=data[i].species_id;
+          
+        }
+        $("#speciesList").html(html);
+        return(spId);
+      }
+     
+
+      /*
+      var opts = [];
+      opts = ("#speciesList").childNodes;
+      console.log(opts);
+      for(let i = 0; i<10; i++){
+        console.log(opts[i].value);
+        break;
+      }*/
     }
 }
