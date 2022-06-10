@@ -36,13 +36,16 @@ var AddPetHandler = {
         }*/
 
         entity.species_id = $('select[class*="selectize"] option').val();
+        
 
         /*$('#species').val()
         entity.species_id = this.getSpecies();
         console.log(entity.species_id);*/
+        
         var payload = UserService.parseJWT(localStorage.getItem("token"));
         entity.owner_id = payload.user_id;
         delete entity.myFile;
+        console.log(entity);
         
         $.ajax({
           url: 'api/private/pets',
@@ -72,7 +75,7 @@ var AddPetHandler = {
                 
                 <div class="col-md-6 col-sm-12" id="photo">
                   <button onclick="">
-                    <img id = "petPicture"class="img-fluid" src="" alt="Slika ljubimca koji ste postavili">
+                    <img id = "petPicture"class="img-fluid" src="./assets/img/addimage.png" alt="Slika ljubimca koji ste postavili">
                   </button>
                 </div>
               
@@ -133,6 +136,7 @@ var AddPetHandler = {
     
         $("#add-pet").html(html);
         $("#loadingButton").attr('hidden',true);
+        AddPetHandler.getSpecies();
     },
 
     getSpecies: function(){
@@ -153,15 +157,18 @@ var AddPetHandler = {
           url: "api/public/species",
           type: "GET",
           success: function(data){
-            ("#speciesList").append("option value=\"\"><option ")
-            for (let i = 0; i < array.length; i++) {
-              $("#speciesLIst").append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
-            }
+
+          console.log(data);
+            $("#speciesList").append("<option value=\"\"><option>");
+            for (let i = 0; i < data.length; i++) {
+              $("#speciesList").append("<option value='" + data[i].species_id + "'>" + data[i].name + "</option>");
+            };
+
             $("#speciesList").selectize({
               create: false,
               sortField: "text",
               placeholder: "Vrsta ljubimca"
-            })
+            });
           }
         });
       }

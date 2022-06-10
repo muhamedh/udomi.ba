@@ -18,11 +18,15 @@ error_reporting(E_ALL);
 /**
  * @OA\Get(path="/public/pets", tags={"pets"},
  *         summary="Return all pets from the API. ",
+ *         @OA\Parameter(in="query", name="search", description="Search criteria"),
  *         @OA\Response( response=200, description="List of pets.")
  * )
  */
 Flight::route('GET /public/pets', function(){
-    Flight::json(Flight::petsService()->get_all());
+
+    $search = Flight::query('name');
+
+    Flight::json(Flight::petsService()->get_all_filtered($search));
 });
 
 /**

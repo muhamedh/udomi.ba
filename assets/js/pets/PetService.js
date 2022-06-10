@@ -4,7 +4,7 @@ var PetService = {
   },
 
   list: function () {
-    $.get("api/public/pets", function (data) {
+    $.get("api/public/pets/", function (data) {
       SPApp.handleSectionVisibility("#pets-list");
             
       var html = "";
