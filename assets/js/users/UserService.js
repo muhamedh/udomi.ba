@@ -159,7 +159,7 @@ var UserService = {
     $.ajax({
       url: "api/public/users/" + id,
       type: "GET",
-      success: function(data){
+      success: function (data) {
         console.log(data);
         var html1 = "";
         var html2 = "";
@@ -177,7 +177,7 @@ var UserService = {
               <button type="button" class="btn" onclick="UserService.copy()">copy</button>
             </div>
           `;
-      
+
         $("#owner-mail").html(html1);
         $("#owner-phone").html(html2);
         $("#owner-info").modal("show");
@@ -189,7 +189,7 @@ var UserService = {
   myProfile: function () {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
 
-    
+
     $.ajax({
       url: "api/private/users/" + payload.user_id,
       type: "GET",
@@ -216,7 +216,7 @@ var UserService = {
         </ul>
         <ul class="inline">
           <li class="fs-3 fw-bold list-inline-item">Lokacija: </li>
-          <li class="fs-3 list-inline-item">` + data[0].municipality_id + `</li>
+          <li class="fs-3 list-inline-item">` + data[0].name + `</li>
         </ul>
         <div>
           <button id="edit-account-button" class="btn btn-warning btn-lg " onclick="UserService.edit()">Uredite račun</button>
@@ -242,13 +242,13 @@ var UserService = {
       beforeSend: function (xhr) {
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
-      success: function (data){
+      success: function (data) {
         SPApp.handleSectionVisibility(["#pets-list", "#individual-pet", "#edit-pet", "#add-pet", "#user-page", "#add-pet-button", "#my-profile"], "#edit-profile");
 
-      var html = "";
-      console.log(data);
+        var html = "";
+        console.log(data);
 
-      html += `
+        html += `
       <div class="col-md-6">
           <form>
             <div class="container">
@@ -294,7 +294,7 @@ var UserService = {
                 </div>
                 <div class="col mb-3">
                   <input type="text" class="form-control" id="inputMunicipality" placeholder="Novi Grad"
-                    value="`+ data[0].municipality_id + `">
+                    value="`+ data[0].name + `">
                 </div>
               </div>
 
@@ -307,10 +307,10 @@ var UserService = {
       
       `;
 
-      $("#edit-profile").html(html);
+        $("#edit-profile").html(html);
       }
     });
-    
+
   },
 
   update: function (id) {
@@ -336,108 +336,108 @@ var UserService = {
       }
     });
   },
-  
-   copy: function(){
-      var copyText = $("#owner-phone").val();
-      copyText.select();
-      copyText.setSelectionRange(0, 99999); /* For mobile devices */
-      navigator.clipboard.writeText(copyText.value);
-  },
-    
-    fillMunicipalities: function(){
-      $.ajax({
-        url: "api/public/municipalities",
-        type: "GET",
-      
-      success: function(data) {
-      $("#municipalityList").append("<option value=\"\"></option>");
-      for(let i = 0; i < data.length;i++){
-        $("#municipalityList").append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
-      };
 
-      $("#municipalityList").selectize({
-        create: false,
-        sortField: "text",
-        placeholder: "Unesite Vašu opštinu"
-      });
+  copy: function () {
+    var copyText = $("#owner-phone").val();
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+    navigator.clipboard.writeText(copyText.value);
+  },
+
+  fillMunicipalities: function () {
+    $.ajax({
+      url: "api/public/municipalities",
+      type: "GET",
+
+      success: function (data) {
+        $("#municipalityList").append("<option value=\"\"></option>");
+        for (let i = 0; i < data.length; i++) {
+          $("#municipalityList").append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
+        };
+
+        $("#municipalityList").selectize({
+          create: false,
+          sortField: "text",
+          placeholder: "Unesite Vašu opštinu"
+        });
 
       },
-      
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
         toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
       }
-     });
-    },
-    validateRegisterForm: function(){
-      // TODO user email should be unique
-        $('#registerForm').validate({
-          submitHandler: function (form) {
-            var entity = Object.fromEntries((new FormData(form)).entries());
-            
-            entity.municipality_id = $('select[class*="selectize"] option').val();
-            entity = JSON.stringify(entity);
-            
+    });
+  },
+  validateRegisterForm: function () {
+    // TODO user email should be unique
+    $('#registerForm').validate({
+      submitHandler: function (form) {
+        var entity = Object.fromEntries((new FormData(form)).entries());
 
-            $.ajax({
-              url: 'api/public/register',
-              type: 'POST',
-              data: entity,
-              contentType: "application/json",
-              dataType: "json",
-              success: function (response) {
-                
-                $("#registerModal").modal('hide');
-                toastr.success("Uspješno registrovani!", "Informacija:");
-                UserService.showUserNavbar();
+        entity.municipality_id = $('select[class*="selectize"] option').val();
+        entity = JSON.stringify(entity);
 
-              },
-              error: function(response){
-                console.log(JSON.stringify(entity));
-                console.log(response);
-                toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
-              }
-            });
-          
+
+        $.ajax({
+          url: 'api/public/register',
+          type: 'POST',
+          data: entity,
+          contentType: "application/json",
+          dataType: "json",
+          success: function (response) {
+
+            $("#registerModal").modal('hide');
+            toastr.success("Uspješno registrovani!", "Informacija:");
+            UserService.showUserNavbar();
+
+          },
+          error: function (response) {
+            console.log(JSON.stringify(entity));
+            console.log(response);
+            toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
           }
         });
 
-     },
-     validateLoginForm: function(){
-        $('#loginForm').validate({
-          submitHandler: function (form) {
-            var entity = Object.fromEntries((new FormData(form)).entries());
+      }
+    });
 
-            $.ajax({
-              url: 'api/public/login',
-              type: 'POST',
-              data: JSON.stringify(entity),
-              contentType: "application/json",
-              dataType: "json",
-              success: function (response) {
-                
-                
-                localStorage.setItem("token", response.token);
-                $("#loginModal").modal('hide');
-                toastr.success("Uspješno prijavljeni!", "Informacija:");
-                UserService.showUserNavbar();
-                  
-              },
-              error: function(response){
-                toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
-              }
-            });
-            
+  },
+  validateLoginForm: function () {
+    $('#loginForm').validate({
+      submitHandler: function (form) {
+        var entity = Object.fromEntries((new FormData(form)).entries());
+
+        $.ajax({
+          url: 'api/public/login',
+          type: 'POST',
+          data: JSON.stringify(entity),
+          contentType: "application/json",
+          dataType: "json",
+          success: function (response) {
+
+
+            localStorage.setItem("token", response.token);
+            $("#loginModal").modal('hide');
+            toastr.success("Uspješno prijavljeni!", "Informacija:");
+            UserService.showUserNavbar();
+
+          },
+          error: function (response) {
+            toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
           }
         });
 
-     },
-     showUserNavbar : function(){
-        $("#guest-navbar").hide();
-        $("#user-navbar").show();
-     },
-     showGuestNavbar : function(){
-        $("#guest-navbar").show();
-        $("#user-navbar").hide();
-     },
+      }
+    });
+
+  },
+  showUserNavbar: function () {
+    $("#guest-navbar").hide();
+    $("#user-navbar").show();
+  },
+  showGuestNavbar: function () {
+    $("#guest-navbar").show();
+    $("#user-navbar").hide();
+  },
 
 }
