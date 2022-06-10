@@ -24,14 +24,16 @@ var AddPetHandler = {
     
         /**
          * GET ALL SPECIES FROM DB
-         */
+         
         if (($('#species').val()).localeCompare("Mačka")) {
           entity.species_id = "1"; // HARDCODED!
         } else if (($('#species').val()).localeCompare("Pas")) {
           entity.species_id = "2"; // HARDCODED!
         } else if (($('#species').val()).localeCompare("Zec")) {
           entity.species_id = "4"; // HARDCODED!
-        }
+        }*/
+
+        entity.species_id = $('select[class*="selectize"] option').val();
 
         /*$('#species').val()
         entity.species_id = this.getSpecies();
@@ -106,13 +108,8 @@ var AddPetHandler = {
                         <input type="text" class="form-control" id="pets_description" placeholder="Vaš opis ljubimca" name = "pets_description"> 
                         </div>
                         <div class="md-3" style="margin-top:10px">
-                          <label for="species" class="form-label">Vrsta</label>
-                          <input class="form-control" list="speciesList" id="species"
-                            placeholder="Type to search..." oninput="AddPetHandler.getSpecies()" />
-                          <datalist id="speciesList">
-                            
-
-                          </datalist>
+                          <select id="speciesList">
+                          </select>
                         </div>
                         
                         
@@ -137,7 +134,7 @@ var AddPetHandler = {
     },
 
     getSpecies: function(){
-      $.get("api/public/species"), function(data){
+      /*$.get("api/public/species"), function(data){
         ("#speciesList").childNodes = data;
         var html = "";
         for(let i = 0; i<data.length; i++){
@@ -148,7 +145,23 @@ var AddPetHandler = {
           
         }
         $("#speciesList").html(html);
-        return(spId);
+        return(spId);*/
+
+        $.ajax({
+          url: "api/public/species",
+          type: "GET",
+          success: function(data){
+            ("#speciesList").append("option value=\"\"><option ")
+            for (let i = 0; i < array.length; i++) {
+              $("#speciesLIst").append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
+            }
+            $("#speciesList").selectize({
+              create: false,
+              sortField: "text",
+              placeholder: "Vrsta ljubimca"
+            })
+          }
+        });
       }
      
 
@@ -160,5 +173,5 @@ var AddPetHandler = {
         console.log(opts[i].value);
         break;
       }*/
-    }
+    
 }
