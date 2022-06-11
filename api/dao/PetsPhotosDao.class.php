@@ -19,6 +19,8 @@ class PetsPhotosDao extends BaseDao{
     }
     $query = substr($query, 0, -1);
     $query .= ";";
+    
+
     $this->query_no_params($query);
     
   }

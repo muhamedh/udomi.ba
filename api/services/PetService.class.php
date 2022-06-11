@@ -43,7 +43,8 @@ class PetService extends BaseService{
      unset($data['photos']);
 
      $catch = ($this->dao->add($data));
-    
+
+     
      Flight::petsPhotosService()->add_photos($photos, $catch['id']);
      
      return Flight::json($catch);

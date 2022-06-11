@@ -93,6 +93,7 @@ var AddPetHandler = {
     entity.owner_id = payload.user_id;
     delete entity.myFile;
     entity.photos = photos;
+    
     console.log(entity);
     
     $.ajax({
@@ -105,10 +106,11 @@ var AddPetHandler = {
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function (response) {
-        console.log(response);
+        
         toastr.success("Ljubimac uspješno dodan.", "Informacija:");
       },
-      error: function () {
+      error: function (response) {
+        
         toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
       }
     });

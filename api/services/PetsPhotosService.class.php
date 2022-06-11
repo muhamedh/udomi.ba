@@ -14,6 +14,7 @@ class PetsPhotosService extends BaseService{
   }
 
   public function add_photos($photos, $pets_id){
+    
     return $this->dao->add_photo_batch($photos,$pets_id);
   }
 }
