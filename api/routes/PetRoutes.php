@@ -120,7 +120,8 @@ Flight::route('POST /private/pets', function(){
   $user = Flight::get('user');
 
   if($user['user_id'] == $data['owner_id']){
-    Flight::json(Flight::petsService()->add($data));
+    //Flight::json
+    (Flight::petsService()->pet_pets_photos_add($data));
   }else{
     throw new Exception("This is hack you will be traced, be prepared :)");
   }

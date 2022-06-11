@@ -6,13 +6,14 @@ var PetService = {
   list: function () {
     $.get("api/public/pets/", function (data) {
       SPApp.handleSectionVisibility("#pets-list");
-            
+      var photos;
       var html = "";
       for (let i = 0; i < data.length; i++) {
+        photos = data[i].photos.split(",");
         html += `
           <div class="col-md-12 col-sm-12 col-lg-4">
             <div class="card h-100">
-              <img src="` + data[i].photos_url + `" class="card-img-top" alt="A picture of cat">
+              <img src="` + photos[0] + `" class="card-img-top" alt="A picture of cat">
             <div class="card-body">
               <h5 class="card-title fw-bold">` + data[i].petname + `</h5>
               <p class="card-text">` + data[i].pets_description + `</p>

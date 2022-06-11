@@ -45,20 +45,49 @@ class PetsDao extends BaseDao{
    * query works
    */
   public function get_by_owner($owner_id){
-    return $this->query_with_params("SELECT * FROM pets WHERE owner_id = :owner_id AND status = 'ACTIVE'", ['owner_id' => $owner_id]);
+    //return $this->query_with_params("SELECT * FROM pets WHERE owner_id = :owner_id AND status = 'ACTIVE'", ['owner_id' => $owner_id]);
+    $query = "
+    SELECT p.pets_id,
+           p.petname,
+           p.pet_birthdate,
+           p.vaccinated,
+           p.owner_id,
+           p.pets_description,
+           p.pet_gender,
+           p.adopted,
+           p.species_id,
+           GROUP_CONCAT(pp.url) AS photos
+    FROM pets p
+    JOIN pets_photos pp ON p.pets_id = pp.pet_id
+    WHERE p.status = 'ACTIVE' AND p.owner_id = :owner_id
+    ";
+    return $this->query_with_params($query, ['owner_id' => $owner_id]);
+    
   }
 
   public function get_all_filtered($search = NULL){
-    //TODO delete
-    // return $this->query_no_params("SELECT * FROM pets WHERE status = 'ACTIVE'");
 
     $query = "
-    SELECT * FROM pets WHERE status = 'ACTIVE'";
+    SELECT p.pets_id,
+           p.petname,
+           p.pet_birthdate,
+           p.vaccinated,
+           p.owner_id,
+           p.pets_description,
+           p.pet_gender,
+           p.adopted,
+           s.name,
+           GROUP_CONCAT(pp.url) AS photos
+    FROM pets p
+    JOIN species s ON p.species_id = s.species_id
+    JOIN pets_photos pp ON p.pets_id = pp.pet_id
+    WHERE p.status = 'ACTIVE'";
     if(isset($search)){
-      $query .= " AND petname LIKE '%".$search."%' ";
+      $query .= " AND p.petname LIKE '%".$search."%' ";
     }
-
+    $query .= "GROUP BY p.pets_id";
     
     return $this->query_no_params($query);
+   
   }
 }

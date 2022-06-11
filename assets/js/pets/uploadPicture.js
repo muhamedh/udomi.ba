@@ -7,13 +7,16 @@ var uploadPicture = {
            TODO: find a non depricated version*/
         event.preventDefault();
 
-        //get from elements values
         $("#saveAdd").attr("disabled", true);
 
-        var formData = new FormData($('#addPetForm')[0]);
-        formData.append('file', $('input[type=file]')[0].files[0]);
+        var myFiles = $('#addPhoto').prop('files');
+        var formData = new FormData();
+        
+        for( let i = 0; i < myFiles.length;i++){
+            formData.append(''.concat('file[]'), myFiles[i]);
+        }
 
-
+        
         var ajaxRequest = $.ajax({
             url: "api/upload.php",
             type: "POST",
@@ -23,7 +26,9 @@ var uploadPicture = {
         });
         //on success of ajax call + on failure of php server side errors
         ajaxRequest.done(function (response, textStatus, jqXHR) {
+            //console.log(jQuery.parseJSON(response));
 
+            
             toastr.options.preventDuplicates = true;
             if (response === "1") {
                 toastr.error('Molim Vas dodajte sliku.', 'Greška!');
@@ -34,10 +39,10 @@ var uploadPicture = {
                 toastr.warning("Dozvoljeni formati slike su: *.png i *.jpg", "Upozerenje:");
             } else if (response === "4") {
                 toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
-            } else {
-                
-                entity.photos_url = jQuery.parseJSON(response).secure_url
-                AddPetHandler.addPet(entity);
+            } else if (response === "5"){
+                toastr.error("Maksimalan broj slika je 5", "Greška!");
+            }else {
+                AddPetHandler.addPet(entity,  jQuery.parseJSON(response));
             }
 
             $("#saveAdd").attr("disabled", false);
@@ -48,6 +53,6 @@ var uploadPicture = {
             toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
             $("#saveAdd").attr("disabled", false);
         });
-
-    }
+        
+    }   
 }

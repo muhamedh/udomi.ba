@@ -24,20 +24,21 @@ var UserService = {
       type: "GET",
       success: function (data) {
         SPApp.handleSectionVisibility("#user-page");
-
+        var photos;
         var html = "";
-
+        
         var html = `
         <div class="container">        
         <button id = "add-pet-button" class="btn btn-warning mb-3" onclick="AddPetHandler.init()">Dodaj ljubimca</button>
         <button id = "delete-account-button" class="btn btn-danger mb-3" onclick="UserService.deleteUser()">Izbriši nalog</button>
         </div>`;
-
+        
         for (let i = 0; i < data.length; i++) {
+          photos = data[i].photos.split(',');
           html += `
           <div class="col-md-12 col-sm-12 col-lg-4">
               <div class="card h-100">
-                <img src="` + data[i].photos_url + `" class="card-img-top" alt="A picture of cat">
+                <img src="` + photos[0] + `" class="card-img-top" alt="A picture of cat">
               <div class="card-body">
                 <h5 class="card-title fw-bold">` + data[i].petname + `</h5>
                 <p class="card-text">` + data[i].pets_description + `</p>
@@ -163,18 +164,19 @@ var UserService = {
       success: function (data) {
         var html1 = "";
         var html2 = "";
+        
         html1 += `
           <p class="col-sm-2 col-form-label">Email</p>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="owner-mail-input" value="` + data[0].user_mail + `">
-              <button type="button" class="btn-warning" onclick="UserService.copy('owner-mail-input')" style = "margin-top:10px">Kopiraj email</button>
+              <button type="button" class="btn btn-warning" onclick="UserService.copy('owner-mail-input')" style = "margin-top:10px">Kopiraj email</button>
             </div>
         `;
         html2 += `
           <p class="col-sm-2 col-form-label">Telefon</p>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="owner-phone-input" value="` + data[0].phone_number + `">
-              <button type="button" class="btn-warning" onclick="UserService.copy('owner-phone-input')" style = "margin-top:10px">Kopiraj broj telefona</button>
+              <button type="button" class="btn btn-warning" onclick="UserService.copy('owner-phone-input')" style = "margin-top:10px">Kopiraj broj telefona</button>
             </div>
           `;
 

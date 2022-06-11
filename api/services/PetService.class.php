@@ -33,12 +33,22 @@ class PetService extends BaseService{
     return $this->dao->get_by_owner($owner_id);
   }
 
-  public function get_all_filtered($search)
-  {
-
+  public function get_all_filtered($search){
     return $this->dao->get_all_filtered($search);
   }
   
+  public function pet_pets_photos_add($data){
+
+     $photos = $data['photos'];
+     unset($data['photos']);
+
+     $catch = ($this->dao->add($data));
+    
+     Flight::petsPhotosService()->add_photos($photos, $catch['id']);
+     
+     return Flight::json($catch);
+  }
+
 }
 
 ?>

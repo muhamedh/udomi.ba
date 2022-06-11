@@ -1,92 +1,156 @@
 var AddPetHandler = {
-    init: function(){
-        AddPetHandler.addPetScreen();
-    },
 
-    validatePetForm: function(){
-        $('#addPetForm').validate({
-          submitHandler: function (form) {
-            var entity = Object.fromEntries((new FormData(form)).entries());
-            uploadPicture.handleUpload(entity);
-          }
-        });
-     },
+  init: function () {
+    AddPetHandler.addPetScreen();
+  },
 
-    handleTempImgPreview : function(event){
+  validatePetForm: function () {
+    $('#addPetForm').validate({
+      submitHandler: function (form) {
+        var entity = Object.fromEntries((new FormData(form)).entries());
+        uploadPicture.handleUpload(entity);
+      }
+    });
+  },
 
-        var output = document.getElementById('petPicture');
-        output.src = URL.createObjectURL(event.target.files[0]);
-        
-        output.onload = function() {
-            URL.revokeObjectURL(output.src) // free memory
-        }
+  handleTempImgPreview: function (event) {
 
-    },
-    addPet: function (entity) {
+    $("#photo-wrapper").empty();
+
+    var temp_photos = [];
+    var temp_events = [];
+    var temp_outputs = [];
+    for( let i = 0; i < event.target.files.length; i++){
+      temp_events[i] = event.target.files[i];
+      temp_photos[i] = URL.createObjectURL(temp_events[i]);
+    }
+
+    for( let i = 0; i < temp_photos.length;i++){
+      $("#photo-wrapper").append('<img id = "petPictureX" class="img-fluid" src="" alt="Slika ljubimca koju ste postavili"></img>');
+      $("#petPictureX").attr("id", ''.concat("petPicture", i));
+      if(i > 0){
+        $(''.concat("#petPicture",i)).hide();
+      }
+      temp_outputs[i] = document.getElementById(''.concat('petPicture', i));
+      temp_outputs[i].src = URL.createObjectURL(temp_events[i]);
+    }
     
-        /**
-         * GET ALL SPECIES FROM DB
-         
-        if (($('#species').val()).localeCompare("Mačka")) {
-          entity.species_id = "1"; // HARDCODED!
-        } else if (($('#species').val()).localeCompare("Pas")) {
-          entity.species_id = "2"; // HARDCODED!
-        } else if (($('#species').val()).localeCompare("Zec")) {
-          entity.species_id = "4"; // HARDCODED!
-        }*/
+    temp_outputs[temp_outputs.length -1].onload = function(){
+      for( let i = 0; i < temp_outputs.length;i++){
+        URL.revokeObjectURL(temp_outputs[i].src);
+      }
+    }
+    $("#previous-button").attr('hidden', false);
+    $("#next-button").attr('hidden', false);
+    $("#delete-current-button").attr('hidden', false);
+    $("#photo-wrapper").data("current_photo_id", 0);
+    $("#photo-wrapper").data("number_of_photos", temp_photos.length);
+  },
+  onPrev : function(){
+    var index = $("#photo-wrapper").data("current_photo_id");
+    var length = $("#photo-wrapper").data("number_of_photos");
+    
 
-        entity.species_id = $('select[class*="selectize"] option').val();
-        
+    $(''.concat("#petPicture",index)).hide();    
 
-        /*$('#species').val()
-        entity.species_id = this.getSpecies();
-        console.log(entity.species_id);*/
-        
-        var payload = UserService.parseJWT(localStorage.getItem("token"));
-        entity.owner_id = payload.user_id;
-        delete entity.myFile;
-        console.log(entity);
-        
-        $.ajax({
-          url: 'api/private/pets',
-          type: 'POST',
-          data: JSON.stringify(entity),
-          contentType: "application/json",
-          dataType: "json",
-          beforeSend: function(xhr){
-            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-          },
-          success: function () {
-            toastr.success("Ljubimac uspješno dodan.", "Informacija:");
-          },
-          error: function(){
-            toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
-          }
-        });
-        
+    if(index - 1 < 0){
+      index = length - 1;
+    }else{
+      index--;
+    }
+
+    $(''.concat("#petPicture",index)).show(); 
+
+    $("#photo-wrapper").data("current_photo_id", index);
+  },
+  onNext : function(){
+    var index = $("#photo-wrapper").data("current_photo_id");
+    var length = $("#photo-wrapper").data("number_of_photos");
+
+    $(''.concat("#petPicture",index)).hide();  
+
+    if(index + 1 > length - 1){
+      index = 0;
+    }else{
+      index++;
+    }
+
+    $(''.concat("#petPicture",index)).show(); 
+
+    $("#photo-wrapper").data("current_photo_id", index);
+  },
+  //TODO mozda implementovati
+  onDelete : function(){
+    var id = $("#photo-wrapper").data("current_photo_id");
+    console.log(id);
+  },
+  addPet: function (entity, photos) {
+    //console.log(photos);
+    
+    entity.species_id = $('select[class*="selectize"] option').val();
+
+    var payload = UserService.parseJWT(localStorage.getItem("token"));
+    entity.owner_id = payload.user_id;
+    delete entity.myFile;
+    entity.photos = photos;
+    console.log(entity);
+    
+    $.ajax({
+      url: 'api/private/pets',
+      type: 'POST',
+      data: JSON.stringify(entity),
+      contentType: "application/json",
+      dataType: "json",
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
-    addPetScreen : function(){
-        SPApp.handleSectionVisibility("#add-pet");
-        
-        var html = `
+      success: function (response) {
+        console.log(response);
+        toastr.success("Ljubimac uspješno dodan.", "Informacija:");
+      },
+      error: function () {
+        toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
+      }
+    });
+
+  },
+  addPetScreen: function () {
+    SPApp.handleSectionVisibility("#add-pet");
+
+    var html = `
               <div class="container">
               
               <div class="row justify-content-md-center">
                 
                 <div class="col-md-6 col-sm-12" id="photo">
-                  <button onclick="">
-                    <img id = "petPicture"class="img-fluid" src="./assets/img/addimage.png" alt="Slika ljubimca koji ste postavili">
-                  </button>
+                  <div id = "photo-wrapper">
+                    <!-- <img id = "petPicture" class="img-fluid" src="./assets/img/addimage.png" alt="Slika ljubimca koji ste postavili"> -->
+                  </div>
+
+                  <div class = "controls-wrapper">
+                    <div id = "previous-button" class="mt-3 float-start" style = "margin-right: 10px;">
+                      <button class="btn btn-warning" onclick="AddPetHandler.onPrev()">Prethodna fotografija</button>
+                    </div>
+                    <!-- //TODO potamaniti
+                    <div id = "delete-current-button" class="mt-3 float-start" style = "margin-right: 10px;">
+                      <button class="btn btn-warning" onclick="AddPetHandler.onDelete()">Izbriši fotografiju</button>
+                    </div> -->
+                    <div id = "next-button" class="mt-3 float-start" style = "margin-right: 10px;">
+                      <button class="btn btn-warning" onclick="AddPetHandler.onNext()">Naredna fotografija</button>
+                    </div>
+                  </div>
                 </div>
               
                 <div class="col-md-6 col-sm-12">
                   <form id = "addPetForm">
                     <div class="md-3">
                       <label class="form-label" for="petname">Ime ljubimca: </label>
-                      <input name = "petname" type="text" class="form-control required" id="petname" placeholder="Ime Vašeg ljubimca"></div>
+                      <!-- TODO izbrisati value -->
+                      <input value = "test" name = "petname" type="text" class="form-control required" id="petname" placeholder="Ime Vašeg ljubimca"></div>
                       <div>
                         <label class="form-label" for="pet_birthdate">Datum rođenja: </label>
-                        <input name="pet_birthdate" type="date" class="form-control required" id = "pet_birthdate">
+                        <!--TODO ne treba biti required tbh -->
+                        <input name="pet_birthdate" type="date" class="form-control " id = "pet_birthdate">
                       </div>
                       <div class="md-3" style="margin-top:10px">
                         <div class="form-check form-check-inline">
@@ -120,7 +184,7 @@ var AddPetHandler = {
                         
                         <div class="md-3" style="margin-top:10px">
                             <label for="addPhoto" class="form-label">Dodajte sliku Vašeg ljubimca</label>
-                            <input class="form-control" style="margin-bottom:10px" type="file" id="addPhoto" name = "myFile" onchange="AddPetHandler.handleTempImgPreview(event)" >
+                            <input class="form-control" style="margin-bottom:10px" type="file" id="addPhoto" name = "myFile" onchange="AddPetHandler.handleTempImgPreview(event)" multiple >
                             
                         
                         </div>
@@ -133,54 +197,34 @@ var AddPetHandler = {
                 </div>
               </div>
             </div>`;
+
+    $("#add-pet").html(html);
+    $("#previous-button").attr('hidden',true);
+    $("#next-button").attr('hidden',true);
+    $("#delete-current-button").attr('hidden',true);
     
-        $("#add-pet").html(html);
-        $("#loadingButton").attr('hidden',true);
-        AddPetHandler.getSpecies();
-    },
+    $("#loadingButton").attr('hidden', true);
+    AddPetHandler.getSpecies();
+  },
 
-    getSpecies: function(){
-      /*$.get("api/public/species"), function(data){
-        ("#speciesList").childNodes = data;
-        var html = "";
-        for(let i = 0; i<data.length; i++){
-          html+=`
-          <option value="` + data[i].name + `"></option>
-          `;
-          var spId=data[i].species_id;
-          
-        }
-        $("#speciesList").html(html);
-        return(spId);*/
+  getSpecies: function () {
+    $.ajax({
+      url: "api/public/species",
+      type: "GET",
+      success: function (data) {
 
-        $.ajax({
-          url: "api/public/species",
-          type: "GET",
-          success: function(data){
 
-          console.log(data);
-            $("#speciesList").append("<option value=\"\"><option>");
-            for (let i = 0; i < data.length; i++) {
-              $("#speciesList").append("<option value='" + data[i].species_id + "'>" + data[i].name + "</option>");
-            };
+        $("#speciesList").append("<option value=\"\"><option>");
+        for (let i = 0; i < data.length; i++) {
+          $("#speciesList").append("<option value='" + data[i].species_id + "'>" + data[i].name + "</option>");
+        };
 
-            $("#speciesList").selectize({
-              create: false,
-              sortField: "text",
-              placeholder: "Vrsta ljubimca"
-            });
-          }
+        $("#speciesList").selectize({
+          create: false,
+          sortField: "text",
+          placeholder: "Vrsta ljubimca"
         });
       }
-     
-
-      /*
-      var opts = [];
-      opts = ("#speciesList").childNodes;
-      console.log(opts);
-      for(let i = 0; i<10; i++){
-        console.log(opts[i].value);
-        break;
-      }*/
-    
+    });
+  }
 }
