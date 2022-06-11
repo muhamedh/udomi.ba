@@ -1,17 +1,83 @@
 var EditPetService = {
-    editPet: function(id){
-      
-        $.get("api/public/pets/" + id, function (data) {
-            
-            SPApp.handleSectionVisibility("#edit-pet");
-            
-            var html = `
+  //TODO create utility biblioteku
+  imageGallery: function (photos) {
+
+    $("#photo-edit-wrapper").empty();
+
+    for (let i = 0; i < photos.length; i++) {
+
+      $("#photo-edit-wrapper").append('<img id = "petEditPictureY" class="img-fluid" src="" alt="Slika ljubimca koju ste postavili"></img>');
+      $("#petEditPictureY").attr("id", ''.concat("petEditPicture", i));
+      $(''.concat("#petEditPicture", i)).attr("src", photos[i]);
+      if (i > 0) {
+        $(''.concat("#petEditPicture", i)).hide();
+      }
+
+    }
+
+    $("#previous-button").attr('hidden', false);
+    $("#next-button").attr('hidden', false);
+
+    $("#photo-edit-wrapper").data("current_photo_id", 0);
+    $("#photo-edit-wrapper").data("number_of_photos", photos.length);
+  },
+  onPrevPic: function () {
+    var index = $("#photo-edit-wrapper").data("current_photo_id");
+    var length = $("#photo-edit-wrapper").data("number_of_photos");
+
+    $(''.concat("#petEditPicture", index)).hide();
+
+    if (index - 1 < 0) {
+      index = length - 1;
+    } else {
+      index--;
+    }
+
+    $(''.concat("#petEditPicture", index)).show();
+
+    $("#photo-edit-wrapper").data("current_photo_id", index);
+  },
+  onNextPic: function () {
+    var index = $("#photo-edit-wrapper").data("current_photo_id");
+    var length = $("#photo-edit-wrapper").data("number_of_photos");
+
+    $(''.concat("#petEditPicture", index)).hide();
+
+    if (index + 1 > length - 1) {
+      index = 0;
+    } else {
+      index++;
+    }
+
+    $(''.concat("#petEditPicture", index)).show();
+
+    $("#photo-edit-wrapper").data("current_photo_id", index);
+  },
+  editPet: function (id) {
+
+
+    $.get("api/public/pets/" + id, function (data) {
+
+      SPApp.handleSectionVisibility("#edit-pet");
+      console.log(data);
+      var html = `
             <div class="row justify-content-md-center">
               <h3>Uredi ljubimca:</h3>
             </div>
             <div class="row justify-content-md-center">
               <div class="col-md-6">
-                <img class="card-img-top mb-5 mb-md-0" src="` +data.photos_url + `" alt="...">
+              <div id = "photo-edit-wrapper">
+                    
+              </div>
+
+                  <div class = "controls-wrapper">
+                    <div id = "previous-button" class="mt-3 float-start" style = "margin-right: 10px;">
+                      <button class="btn btn-warning" onclick="EditPetService.onPrevPic()">Prethodna fotografija</button>
+                    </div>
+                    <div id = "next-button" class="mt-3 float-start" style = "margin-right: 10px;">
+                      <button class="btn btn-warning" onclick="EditPetService.onNextPic()">Naredna fotografija</button>
+                    </div>
+                  </div>
               </div>
               <div class="col-md-6">
                 <form>
@@ -62,24 +128,25 @@ var EditPetService = {
              
             </div>
             `;
-            
-            $("#edit-pet").html(html);
-            if(data.pet_gender == 1){
-               $("#genderFemale").prop("checked",true) 
-            }else if(data.pet_gender == 0){
-               $("#genderMale").prop("checked",true);
-            }
-            if(data.vaccinated == 1){
-               $("#vaccinatedYes").prop("checked",true)
-            }else if(data.vaccinated == 0){
-               $("#vaccinatedNo").prop("checked",true);
-            }
-            if(data.adopted == 1){
-               $("#adoptedYes").prop("checked",true);
-            }else if(data.adopted == 0){
-               $("#adoptedNo").prop("checked",true);
-            }
-          });
-    }
-    // add adopted pet function
+      
+      $("#edit-pet").html(html);
+      if (data.pet_gender == 1) {
+        $("#genderFemale").prop("checked", true)
+      } else if (data.pet_gender == 0) {
+        $("#genderMale").prop("checked", true);
+      }
+      if (data.vaccinated == 1) {
+        $("#vaccinatedYes").prop("checked", true)
+      } else if (data.vaccinated == 0) {
+        $("#vaccinatedNo").prop("checked", true);
+      }
+      if (data.adopted == 1) {
+        $("#adoptedYes").prop("checked", true);
+      } else if (data.adopted == 0) {
+        $("#adoptedNo").prop("checked", true);
+      }
+      EditPetService.imageGallery(data.photos.split(","));
+    });
+  }
+  // add adopted pet function
 }

@@ -1,5 +1,5 @@
 var ShowPetService = {
-
+    //TODO creating utility biblioteki
     imageGallery: function (photos) {
 
       $("#photo-gallery-wrapper").empty();

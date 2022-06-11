@@ -49,6 +49,10 @@ class PetService extends BaseService{
      return Flight::json($catch);
   }
 
+  public function get_pet_by_id($pets_id){
+    return $this->dao->get_pet_by_id($pets_id);
+  }
+
 }
 
 ?>

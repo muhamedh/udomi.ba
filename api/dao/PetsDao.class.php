@@ -60,9 +60,10 @@ class PetsDao extends BaseDao{
     FROM pets p
     JOIN pets_photos pp ON p.pets_id = pp.pet_id
     WHERE p.status = 'ACTIVE' AND p.owner_id = :owner_id
+    GROUP BY (p.pets_id)
     ";
     return $this->query_with_params($query, ['owner_id' => $owner_id]);
-    
+
   }
 
   public function get_all_filtered($search = NULL){
@@ -89,5 +90,23 @@ class PetsDao extends BaseDao{
     
     return $this->query_no_params($query);
    
+  }
+
+  public function get_pet_by_id($pets_id){
+    $query = "
+    SELECT p.pets_id,
+           p.petname,
+           p.pet_birthdate,
+           p.vaccinated,
+           p.owner_id,
+           p.pets_description,
+           p.pet_gender,
+           p.adopted,
+           GROUP_CONCAT(pp.url) AS photos
+    FROM pets p
+    JOIN pets_photos pp ON p.pets_id = pp.pet_id
+    WHERE p.status = 'ACTIVE' AND p.pets_id = :pets_id
+    ";
+    return $this->query_unique($query,["pets_id" => $pets_id]);
   }
 }

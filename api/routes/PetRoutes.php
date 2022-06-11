@@ -36,7 +36,7 @@ Flight::route('GET /public/pets', function(){
 * )
 */
 Flight::route('GET /public/pets/@pet_id', function($pet_id){
-  Flight::json(Flight::petsService()->get_by_id($pet_id, "pets_id"));
+  Flight::json(Flight::petsService()->get_pet_by_id($pet_id));
 });
   
 
