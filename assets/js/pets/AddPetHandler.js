@@ -35,6 +35,7 @@ var AddPetHandler = {
       temp_outputs[i].src = URL.createObjectURL(temp_events[i]);
     }
     
+    //fancy optimization
     temp_outputs[temp_outputs.length -1].onload = function(){
       for( let i = 0; i < temp_outputs.length;i++){
         URL.revokeObjectURL(temp_outputs[i].src);
