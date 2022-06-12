@@ -1,10 +1,18 @@
 var PetService = {
   init: function () {
+
+    $('#search-params').keypress(function(event){
+      if(event.keyCode == 13){
+        console.log("from keypress : " + $('#search-params').val());
+        PetService.list($('#search-params').val());
+      }
+    
+    });
     PetService.list(); 
   },
 
   list: function (param = null) {
-    
+    console.log(param);
     $.get("api/public/pets/" + (param != null ? "?search=" + param : ""), function (data) {
       SPApp.handleSectionVisibility("#pets-list");
       var photos;

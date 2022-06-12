@@ -36,7 +36,7 @@
             <input class="form-control me-2" type="Search" placeholder="Pronađi ljubimca po imenu" id = "search-params" aria-label="Search">
             
           </form>
-          <button class="btn btn-warning btn-sm" type="Submit" value="Submit" style="margin-right:10px;" onclick="PetService.list($('#search-params').val())">Pretraži</button>
+          <button id="search-button" class="btn btn-warning btn-sm" type="Submit" value="Submit" style="margin-right:10px;" onclick="PetService.list($('#search-params').val())">Pretraži</button>
           <div id="guest-navbar">
             <button class="btn btn-outline-light btn-sm" style="margin-right: 10px !important;" data-bs-toggle="modal"
               data-bs-target="#loginModal">Prijavi se</button>
