@@ -259,7 +259,7 @@ var UserService = {
   edit: function () {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
     id = payload.user_id;
-
+    
     $.ajax({
       url: "api/private/users/" + id,
       type: "GET",
@@ -268,12 +268,12 @@ var UserService = {
       },
       success: function (data) {
         SPApp.handleSectionVisibility("#edit-profile");
-
+        console.log(data);
         var html = "";
 
         html += `
       <div class="col-md-6">
-          <form>
+          <form method="post">
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -329,8 +329,10 @@ var UserService = {
         </div>
       
       `;
-        UserService.fillMunicipalities('#inputMunicipality');
+        
         $("#edit-profile").html(html);
+        
+        UserService.fillMunicipalities('#inputMunicipality',  data[0].municipality_id );
       }
     });
 
@@ -367,7 +369,9 @@ var UserService = {
     });
   },
 
-  fillMunicipalities: function (list) {
+  fillMunicipalities: function (list, mun_id = null) {
+    console.log(mun_id);
+
     $.ajax({
       url: "api/public/municipalities",
       type: "GET",
@@ -385,7 +389,13 @@ var UserService = {
         });
 
         var selectize = $select[0].selectize;
-        selectize.setValue('1000',1);
+        if(mun_id != null){
+          selectize.setValue(mun_id);
+        }else{
+          selectize.setValue('1000');
+        }
+        
+        
 
         //$('.selectize')[0].selectize.setValue('1000');
       },

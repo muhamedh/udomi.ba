@@ -80,7 +80,7 @@ var EditPetService = {
                   </div>
               </div>
               <div class="col-md-6">
-                <form>
+                <form method="post">
                   <div class="md-3">
                     <label class="form-label" for="inputPetName">Ime ljubimca: </label>
                     <input type="text" class="form-control" id="inputPetName" placeholder="Ime Vašeg ljubimca" value="`+ data.petname + `">

@@ -33,7 +33,7 @@ class UsersDao extends BaseDao{
   }
 
   public function get_restricted_user($user_id){
-    return $this->query_with_params("SELECT u.username, u.user_mail, u.phone_number, m.name 
+    return $this->query_with_params("SELECT u.username, u.user_mail, u.phone_number, m.id AS 'municipality_id', m.name 
                                      FROM users u
                                      JOIN municipalities m ON u.municipality_id = m.id
                                      WHERE u.user_id = :user_id", ['user_id' => $user_id]);

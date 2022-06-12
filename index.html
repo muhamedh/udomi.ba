@@ -33,17 +33,18 @@
             </li>
           </ul>
           <form class="d-flex">
-            <input class="form-control me-2" type="Search" placeholder="Pronađi ljubimca po imenu" aria-label="Search">
-            <button class="btn btn-warning btn-sm" type="Submit" value="Submit" style="margin-right:10px;">Pretraži</button>
+            <input class="form-control me-2" type="Search" placeholder="Pronađi ljubimca po imenu" id = "search-params" aria-label="Search">
+            
           </form>
+          <button class="btn btn-warning btn-sm" type="Submit" value="Submit" style="margin-right:10px;" onclick="PetService.list($('#search-params').val())">Pretraži</button>
           <div id="guest-navbar">
-            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important;" data-bs-toggle="modal"
+            <button class="btn btn-outline-light btn-sm" style="margin-right: 10px !important;" data-bs-toggle="modal"
               data-bs-target="#loginModal">Prijavi se</button>
             <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal"
               onclick="UserService.fillMunicipalities('#municipalityList')">Registruj se</button>
           </div>
           <div id="user-navbar" style="display:none;">
-            <button class="btn btn-outline-light btn-sm" style="margin-right: 5px !important; margin-top:5px;"
+            <button class="btn btn-outline-light btn-sm" style="margin-right: 10px !important; margin-top:5px;"
               onclick="UserService.showUserPage()">Moji ljubimci</button>
             <button class="btn btn-outline-light btn-sm" onclick="UserService.myProfile()" style="margin-top:5px;">Moj Profil</button>
             <button class="btn btn-outline-light btn-sm" onclick="UserService.logOut()" style = "margin-top:5px;">Odjavite se</button>
@@ -138,7 +139,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="loginForm">
+        <form id="loginForm" method="post">
           <label for="login-email" class="form-label" id="login-email">Email adresa</label>
           <div class="form-floating mb-3">
             <input name="user_mail" type="email" class="form-control required" id="login-email">
@@ -166,7 +167,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="registerForm">
+        <form id="registerForm" method="post">
 
           <label for="email" class="form-label">Email adresa</label>
           <div class="form-floating mb-3">

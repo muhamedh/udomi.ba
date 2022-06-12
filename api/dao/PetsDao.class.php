@@ -67,7 +67,7 @@ class PetsDao extends BaseDao{
   }
 
   public function get_all_filtered($search = NULL){
-
+    
     $query = "
     SELECT p.pets_id,
            p.petname,

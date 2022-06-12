@@ -22,21 +22,23 @@ Flight::register('usersService', 'UserService');
 Flight::register('municipalitiesService', 'MunicipalitiesService');
 Flight::register('petsPhotosService', 'PetsPhotosService');
 
-Flight::map('query', function($name, $default_value = ""){
-        
-    $request = Flight::request();
-    
-    $query_param = @$request->query->getData()[$name];
-    
-    $query_param = $query_param ? $query_param : $default_value;
-    
-    return urldecode($query_param);
-}); 
 
 
 Flight::route('/*',function(){
-    //perform JWT decode
 
+    Flight::map('query', function($name, $default_value = ""){
+
+        $request = Flight::request();
+        
+        $query_param = @$request->query->getData()[$name];
+        
+        $query_param = $query_param ? $query_param : $default_value;
+        
+        return urldecode($query_param);
+    }); 
+    
+
+    //perform JWT decode
 
     $path = Flight::request()->url;
     $parsed = (array) preg_match('/^\/public\/.*/', $path, $parsed);

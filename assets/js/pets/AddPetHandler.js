@@ -140,7 +140,7 @@ var AddPetHandler = {
                 </div>
               
                 <div class="col-md-6 col-sm-12">
-                  <form id = "addPetForm">
+                  <form id = "addPetForm" method="post">
                     <div class="md-3">
                       <label class="form-label" for="petname">Ime ljubimca: </label>
                       <!-- TODO izbrisati value -->

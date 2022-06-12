@@ -3,8 +3,9 @@ var PetService = {
     PetService.list(); 
   },
 
-  list: function () {
-    $.get("api/public/pets/", function (data) {
+  list: function (param = null) {
+    
+    $.get("api/public/pets/" + (param != null ? "?search=" + param : ""), function (data) {
       SPApp.handleSectionVisibility("#pets-list");
       var photos;
       var html = "";

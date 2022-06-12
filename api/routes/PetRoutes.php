@@ -24,7 +24,7 @@ error_reporting(E_ALL);
  */
 Flight::route('GET /public/pets', function(){
 
-    $search = Flight::query('name');
+    $search = Flight::query('search');
 
     Flight::json(Flight::petsService()->get_all_filtered($search));
 });
