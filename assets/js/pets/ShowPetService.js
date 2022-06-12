@@ -3,7 +3,7 @@ var ShowPetService = {
     imageGallery: function (photos) {
 
       $("#photo-gallery-wrapper").empty();
-  
+
       for( let i = 0; i < photos.length;i++){
         
         $("#photo-gallery-wrapper").append('<img id = "petGalleryPictureY" class="img-fluid" src="" alt="Slika ljubimca koju ste postavili"></img>');
@@ -20,6 +20,11 @@ var ShowPetService = {
 
       $("#photo-gallery-wrapper").data("current_photo_id", 0);
       $("#photo-gallery-wrapper").data("number_of_photos", photos.length);
+      
+      if(photos.length <= 1){
+        $("#previous-button").attr('hidden', true);
+        $("#next-button").attr('hidden', true);
+      }
     },
     onPrevPic : function(){
       var index = $("#photo-gallery-wrapper").data("current_photo_id");
@@ -79,6 +84,8 @@ var ShowPetService = {
         }
         
       }
+      console.log(selected_pet);
+
       var html = "";
         html += `
         <section>
@@ -89,7 +96,6 @@ var ShowPetService = {
               <div id = "photo-gallery-wrapper">
                     
               </div>
-
                   <div class = "controls-wrapper">
                     <div id = "previous-button" class="mt-3 float-start" style = "margin-right: 10px;">
                       <button class="btn btn-warning" onclick="ShowPetService.onPrevPic()">Prethodna fotografija</button>
@@ -102,11 +108,11 @@ var ShowPetService = {
               <div class="col-md-6">
                 <h1 class="display-5 fw-bolder">` + selected_pet[0].petname + `</h1>
                 <div class="fs-5 mb-2">
-                  <span><b>Spol:</b> ` + genderText + `<br></span>
-                  <span><b>Vrsta</b> ` + selected_pet[0].name + `<br></span>
-                  <span><b>Vakcinacija:</b> ` + vaccinatedText + `<br></span>
-                  <span><b>Datum rođenja:</b> ` + selected_pet[0].pet_birthdate + `</span>
-                  
+                  <span><b>Spol: </b> ` + genderText + `<br></span>
+                  <span><b>Vrsta: </b> ` + selected_pet[0].species_name + `<br></span> 
+                  <span><b>Vakcinacija: </b> ` + vaccinatedText + `<br></span>
+                  <span><b>Datum rođenja: </b> ` + selected_pet[0].pet_birthdate + `<br></span>
+                  <span><b>Lokacija: </b> ` + selected_pet[0].name + `</span>
                 </div>
                 <div class="fs-5 mb-2">
                   <span><b>Opis ljubimca:</b></span>

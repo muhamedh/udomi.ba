@@ -19,7 +19,8 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
       <div class="container-fluid">
         <a class="navbar-brand clickable" onclick="PetService.list();event.preventDefault();">udomi.ba</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+        <button 
+          class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
           aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -27,7 +28,8 @@
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
               <a class="nav-link active clickable" aria-current="page"
-                onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
+                 
+                 onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -190,7 +192,7 @@
 
           <label for="phonenumber" class="form-label">Broj telefona</label>
           <div class="form-floating mb-3">
-            <input name="phone_number" type="tel" class="form-control" name="phonenumber" id="phonenumber">
+            <input name="phone_number" type="tel" class="form-control required" name="phonenumber" id="phonenumber">
           </div>
           <label for="municipalityList">Općina</label>
           <select id="municipalityList">

@@ -14,10 +14,109 @@ var UserService = {
       UserService.validateLoginForm();
     });
   },
+
+  parseJWT: function (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return (JSON.parse(jsonPayload));
+  },
+
+  validateRegisterForm: function () {
+    // TODO user email should be unique
+
+
+    $('#registerForm').validate({
+
+      
+      submitHandler: function (form) {
+        var entity = Object.fromEntries((new FormData(form)).entries());
+
+        entity.municipality_id = $('select[class*="selectize"] option').val();
+        entity = JSON.stringify(entity);
+
+
+        $.ajax({
+          url: 'api/public/register',
+          type: 'POST',
+          data: entity,
+          contentType: "application/json",
+          dataType: "json",
+          success: function (response) {
+            localStorage.setItem("token", response.token);
+            $("#registerModal").modal('hide');
+            toastr.success("Uspješno registrovani!", "Informacija:");
+            UserService.showUserNavbar();
+
+          },
+          error: function (response) {
+
+            toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
+          }
+        });
+
+      }
+    });
+  },
+
+  validateLoginForm: function () {
+    $('#loginForm').validate({
+      submitHandler: function (form) {
+        var entity = Object.fromEntries((new FormData(form)).entries());
+
+        $.ajax({
+          url: 'api/public/login',
+          type: 'POST',
+          data: JSON.stringify(entity),
+          contentType: "application/json",
+          dataType: "json",
+          success: function (response) {
+
+
+            localStorage.setItem("token", response.token);
+            $("#loginModal").modal('hide');
+            toastr.success("Uspješno prijavljeni!", "Informacija:");
+            UserService.showUserNavbar();
+
+          },
+          error: function (response) {
+            toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
+          }
+        });
+
+      }
+    });
+  },
+
+  showUserNavbar: function () {
+    $("#guest-navbar").hide();
+    $("#user-navbar").show();
+  },
+
+  showGuestNavbar: function () {
+    $("#guest-navbar").show();
+    $("#user-navbar").hide();
+  },
+
+  logOut: function () {
+    localStorage.clear();
+    UserService.showGuestNavbar();
+    PetService.list()
+  },
+
+  copy: function (element) {
+    var copyText = document.getElementById(element);
+
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+    navigator.clipboard.writeText(copyText.value);
+  },
+
   showUserPage: function () {
-
-    //TODO rijesiti bez toga da parsamo jwt token ovdje.
-
+    
     var payload = UserService.parseJWT(localStorage.getItem("token"));
     $.ajax({
       url: "api/public/pets/owner/" + payload.user_id,
@@ -52,89 +151,10 @@ var UserService = {
         $("#user-page").html(html);
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
-        console.log(textStatus);
+        toastr.error(textStatus, "Greška");
       }
     });
 
-  },
-  parseJWT: function (token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return (JSON.parse(jsonPayload));
-  },
-  logOut: function () {
-    localStorage.clear();
-    UserService.showGuestNavbar();
-    PetService.list()
-  },
-  validateRegisterForm: function () {
-
-    $('#registerForm').validate({
-      submitHandler: function (form) {
-        var entity = Object.fromEntries((new FormData(form)).entries());
-
-        $.ajax({
-          url: 'api/public/register',
-          type: 'POST',
-          data: JSON.stringify(entity),
-          contentType: "application/json",
-          dataType: "json",
-          success: function (response) {
-            localStorage.setItem("token", response.token);
-            $("#registerModal").modal('hide');
-            toastr.success("Uspješno registrovani!", "Informacija:");
-          },
-          error: function (response) {
-            toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
-          }
-        });
-
-      }
-    });
-    $('#registerModal').on('hidden.bs.modal', function () {
-      UserService.showUserNavbar();
-    });
-  },
-  validateLoginForm: function () {
-    $('#loginForm').validate({
-      submitHandler: function (form) {
-        var entity = Object.fromEntries((new FormData(form)).entries());
-
-        $.ajax({
-          url: 'api/public/login',
-          type: 'POST',
-          data: JSON.stringify(entity),
-          contentType: "application/json",
-          dataType: "json",
-          success: function (response) {
-
-
-            localStorage.setItem("token", response.token);
-            $("#loginModal").modal('hide');
-            toastr.success("Uspješno prijavljeni!", "Informacija:");
-          },
-          error: function (response) {
-            toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
-          }
-        });
-
-      }
-    });
-    $('#loginModal').on('hidden.bs.modal', function () {
-      UserService.showUserNavbar();
-    });
-  },
-  showUserNavbar: function () {
-    $("#guest-navbar").hide();
-    $("#user-navbar").show();
-  },
-  showGuestNavbar: function () {
-    $("#guest-navbar").show();
-    $("#user-navbar").hide();
   },
 
   deleteUser: function () {
@@ -188,13 +208,6 @@ var UserService = {
       }
     })
 
-  },
-  copy: function (element) {
-    var copyText = document.getElementById(element);
-    console.log(copyText);
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); /* For mobile devices */
-    navigator.clipboard.writeText(copyText.value);
   },
 
   myProfile: function () {
@@ -354,8 +367,6 @@ var UserService = {
     });
   },
 
-
-
   fillMunicipalities: function (list) {
     $.ajax({
       url: "api/public/municipalities",
@@ -367,12 +378,16 @@ var UserService = {
           $(list).append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
         };
 
-        $(list).selectize({
+        var $select = $(list).selectize({
           create: false,
           sortField: "text",
           placeholder: "Unesite Vašu opštinu"
         });
 
+        var selectize = $select[0].selectize;
+        selectize.setValue('1000',1);
+
+        //$('.selectize')[0].selectize.setValue('1000');
       },
 
       error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -380,75 +395,6 @@ var UserService = {
       }
     });
   },
-  validateRegisterForm: function () {
-    // TODO user email should be unique
-    $('#registerForm').validate({
-      submitHandler: function (form) {
-        var entity = Object.fromEntries((new FormData(form)).entries());
 
-        entity.municipality_id = $('select[class*="selectize"] option').val();
-        entity = JSON.stringify(entity);
-
-
-        $.ajax({
-          url: 'api/public/register',
-          type: 'POST',
-          data: entity,
-          contentType: "application/json",
-          dataType: "json",
-          success: function (response) {
-            localStorage.setItem("token", response.token);
-            $("#registerModal").modal('hide');
-            toastr.success("Uspješno registrovani!", "Informacija:");
-            UserService.showUserNavbar();
-
-          },
-          error: function (response) {
-
-            toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
-          }
-        });
-
-      }
-    });
-
-  },
-  validateLoginForm: function () {
-    $('#loginForm').validate({
-      submitHandler: function (form) {
-        var entity = Object.fromEntries((new FormData(form)).entries());
-
-        $.ajax({
-          url: 'api/public/login',
-          type: 'POST',
-          data: JSON.stringify(entity),
-          contentType: "application/json",
-          dataType: "json",
-          success: function (response) {
-
-
-            localStorage.setItem("token", response.token);
-            $("#loginModal").modal('hide');
-            toastr.success("Uspješno prijavljeni!", "Informacija:");
-            UserService.showUserNavbar();
-
-          },
-          error: function (response) {
-            toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
-          }
-        });
-
-      }
-    });
-
-  },
-  showUserNavbar: function () {
-    $("#guest-navbar").hide();
-    $("#user-navbar").show();
-  },
-  showGuestNavbar: function () {
-    $("#guest-navbar").show();
-    $("#user-navbar").hide();
-  },
 
 }

@@ -48,6 +48,10 @@ var PetService = {
     ($('#genderFemale').is(':checked')) ? pet.pet_gender = 1 : pet.pet_gender = 0;
     ($('#adoptedYes').is(':checked')) ? pet.adopted = 1 : pet.adopted = 0;
     
+    var payload = UserService.parseJWT(localStorage.getItem("token"))
+    pet.owner_id = payload.user_id;
+
+    console.log(JSON.stringify(pet));
     
     $.ajax({
       url: 'api/private/pets/'+ id,
@@ -60,6 +64,9 @@ var PetService = {
       dataType: "json",
       success: function(result) {
           UserService.showUserPage(); // perf optimization
+      },
+      error: function(response){
+      
       }
     });
 

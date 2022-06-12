@@ -59,7 +59,7 @@ var EditPetService = {
     $.get("api/public/pets/" + id, function (data) {
 
       SPApp.handleSectionVisibility("#edit-pet");
-      console.log(data);
+      //console.log(data);
       var html = `
             <div class="row justify-content-md-center">
               <h3>Uredi ljubimca:</h3>

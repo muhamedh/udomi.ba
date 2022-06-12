@@ -41,9 +41,8 @@ var AddPetHandler = {
         URL.revokeObjectURL(temp_outputs[i].src);
       }
     }
-    $("#previous-button").attr('hidden', false);
-    $("#next-button").attr('hidden', false);
-    $("#delete-current-button").attr('hidden', false);
+    $("#previous-add-button").attr('hidden', false);
+    $("#next-add-button").attr('hidden', false);
     $("#photo-wrapper").data("current_photo_id", 0);
     $("#photo-wrapper").data("number_of_photos", temp_photos.length);
   },
@@ -83,7 +82,7 @@ var AddPetHandler = {
   //TODO mozda implementovati
   onDelete : function(){
     var id = $("#photo-wrapper").data("current_photo_id");
-    console.log(id);
+    
   },
   addPet: function (entity, photos) {
     //console.log(photos);
@@ -95,7 +94,7 @@ var AddPetHandler = {
     delete entity.myFile;
     entity.photos = photos;
     
-    console.log(entity);
+    //console.log(entity);
     
     $.ajax({
       url: 'api/private/pets',
@@ -131,14 +130,10 @@ var AddPetHandler = {
                   </div>
 
                   <div class = "controls-wrapper">
-                    <div id = "previous-button" class="mt-3 float-start" style = "margin-right: 10px;">
+                    <div id = "previous-add-button" class="mt-3 float-start" style = "margin-right: 10px;">
                       <button class="btn btn-warning" onclick="AddPetHandler.onPrev()">Prethodna fotografija</button>
                     </div>
-                    <!-- //TODO potamaniti
-                    <div id = "delete-current-button" class="mt-3 float-start" style = "margin-right: 10px;">
-                      <button class="btn btn-warning" onclick="AddPetHandler.onDelete()">Izbriši fotografiju</button>
-                    </div> -->
-                    <div id = "next-button" class="mt-3 float-start" style = "margin-right: 10px;">
+                    <div id = "next-add-button" class="mt-3 float-start" style = "margin-right: 10px;">
                       <button class="btn btn-warning" onclick="AddPetHandler.onNext()">Naredna fotografija</button>
                     </div>
                   </div>
@@ -152,8 +147,7 @@ var AddPetHandler = {
                       <input value = "test" name = "petname" type="text" class="form-control required" id="petname" placeholder="Ime Vašeg ljubimca"></div>
                       <div>
                         <label class="form-label" for="pet_birthdate">Datum rođenja: </label>
-                        <!--TODO ne treba biti required tbh -->
-                        <input name="pet_birthdate" type="date" class="form-control " id = "pet_birthdate">
+                        <input name="pet_birthdate" type="date" class="form-control required" id = "pet_birthdate">
                       </div>
                       <div class="md-3" style="margin-top:10px">
                         <div class="form-check form-check-inline">
@@ -202,9 +196,8 @@ var AddPetHandler = {
             </div>`;
 
     $("#add-pet").html(html);
-    $("#previous-button").attr('hidden',true);
-    $("#next-button").attr('hidden',true);
-    $("#delete-current-button").attr('hidden',true);
+    $("#previous-add-button").attr('hidden',true);
+    $("#next-add-button").attr('hidden',true);
     
     $("#loadingButton").attr('hidden', true);
     AddPetHandler.getSpecies();

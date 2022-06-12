@@ -77,19 +77,21 @@ class PetsDao extends BaseDao{
            p.pets_description,
            p.pet_gender,
            p.adopted,
-           s.name,
-           GROUP_CONCAT(pp.url) AS photos
-    FROM pets p
-    JOIN species s ON p.species_id = s.species_id
-    JOIN pets_photos pp ON p.pets_id = pp.pet_id
-    WHERE p.status = 'ACTIVE'";
+           s.name AS 'species_name',
+           GROUP_CONCAT(pp.url) AS photos,
+           m.name
+FROM pets p
+  JOIN species s ON p.species_id = s.species_id
+  JOIN pets_photos pp ON p.pets_id = pp.pet_id
+  JOIN users u ON p.owner_id = u.user_id
+  JOIN municipalities m ON u.municipality_id = m.id
+WHERE p.status = 'ACTIVE' AND p.adopted = 0";
     if(isset($search)){
       $query .= " AND p.petname LIKE '%".$search."%' ";
     }
     $query .= "GROUP BY p.pets_id";
     
-    return $this->query_no_params($query);
-   
+    return $this->query_no_params($query); 
   }
 
   public function get_pet_by_id($pets_id){

@@ -120,13 +120,10 @@ Flight::route('POST /private/pets', function(){
   $user = Flight::get('user');
 
   if($user['user_id'] == $data['owner_id']){
-    //Flight::json
-    //Flight::json
     (Flight::petsService()->pet_pets_photos_add($data));
   }else{
     throw new Exception("This is hack you will be traced, be prepared :)");
   }
-
 
 });
 
@@ -165,13 +162,16 @@ Flight::route('POST /private/pets', function(){
 *     )
 * )
 */
+//TODO update swager dokumentaciju
 Flight::route('PUT /private/pets/@id', function($id){
   $user = Flight::get('user');
 
   $data = Flight::request()->data->getData();
+
   if(!isset($data['owner_id']) || $data['owner_id'] != $user['user_id']){
     throw new Exception("This is hack you will be traced, be prepared :)");
   }else{
+
     Flight::petsService()->update($id,$data,"pets_id");
     Flight::json(["message" => "updated"]);
   }
