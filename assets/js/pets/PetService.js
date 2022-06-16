@@ -3,7 +3,7 @@ var PetService = {
 
     $('#search-params').keypress(function(event){
       if(event.keyCode == 13){
-        console.log("from keypress : " + $('#search-params').val());
+        event.preventDefault();
         PetService.list($('#search-params').val());
       }
     
@@ -12,8 +12,8 @@ var PetService = {
   },
 
   list: function (param = null) {
-    console.log(param);
-    $.get("api/public/pets/" + (param != null ? "?search=" + param : ""), function (data) {
+    
+    $.get("api/public/pets" + (param != null ? "?search=" + param : ""), function (data) {
       SPApp.handleSectionVisibility("#pets-list");
       var photos;
       var html = "";
@@ -59,8 +59,6 @@ var PetService = {
     
     var payload = UserService.parseJWT(localStorage.getItem("token"))
     pet.owner_id = payload.user_id;
-
-    console.log(JSON.stringify(pet));
     
     $.ajax({
       url: 'api/private/pets/'+ id,

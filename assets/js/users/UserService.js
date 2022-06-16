@@ -268,7 +268,7 @@ var UserService = {
       },
       success: function (data) {
         SPApp.handleSectionVisibility("#edit-profile");
-        console.log(data);
+        
         var html = "";
 
         html += `
@@ -370,7 +370,7 @@ var UserService = {
   },
 
   fillMunicipalities: function (list, mun_id = null) {
-    console.log(mun_id);
+    
 
     $.ajax({
       url: "api/public/municipalities",
