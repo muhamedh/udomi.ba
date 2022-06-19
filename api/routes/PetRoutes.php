@@ -115,14 +115,8 @@ Flight::route('GET /public/pets/younger/@timestamp', function($timestamp){
 * )
 */
 Flight::route('POST /private/pets', function(){
-
   $data = Flight::request()->data->getData();
-  //$data = Flight::request();
   $user = Flight::get('user');
-  print_r($data);
-  print_r('---');
-  print_r($user);
-  
 
   if(array_key_exists('id', $data)){
 
@@ -132,10 +126,6 @@ Flight::route('POST /private/pets', function(){
       throw new Exception("This is hack you will be traced, be prepared :)");
     }
   }
-  
-
-  // TODO possible error if  owner_id
-
 });
 
 /**

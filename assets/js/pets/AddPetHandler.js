@@ -94,7 +94,7 @@ var AddPetHandler = {
     delete entity.myFile;
     entity.photos = photos;
     //console.log(payload);
-    //console.log(entity);
+    console.log(entity);
     
     $.ajax({
       url: 'api/private/pets',
@@ -129,12 +129,18 @@ var AddPetHandler = {
                     <!-- <img id = "petPicture" class="img-fluid" src="./assets/img/addimage.png" alt="Slika ljubimca koji ste postavili"> -->
                   </div>
 
-                  <div class = "controls-wrapper">
-                    <div id = "previous-add-button" class="mt-3 float-start" style = "margin-right: 10px;">
-                      <button class="btn btn-warning" onclick="AddPetHandler.onPrev()">Prethodna fotografija</button>
+                  <div class = "controls-wrapperd d-flex justify-content-center">
+                    <div id = "previous-add-button" class="mt-3" style = "margin-right: 10px;">
+                      <button class="btn btn-warning" onclick="AddPetHandler.onPrev()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                      </button>
                     </div>
-                    <div id = "next-add-button" class="mt-3 float-start" style = "margin-right: 10px;">
-                      <button class="btn btn-warning" onclick="AddPetHandler.onNext()">Naredna fotografija</button>
+                    <div id = "next-add-button" class="mt-3" style = "margin-right: 10px;">
+                      <button class="btn btn-warning" onclick="AddPetHandler.onNext()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -144,7 +150,7 @@ var AddPetHandler = {
                     <div class="md-3">
                       <label class="form-label" for="petname">Ime ljubimca: </label>
                       <!-- TODO izbrisati value -->
-                      <input value = "test" name = "petname" type="text" class="form-control required" id="petname" placeholder="Ime Vašeg ljubimca"></div>
+                      <input value = "" name = "petname" type="text" class="form-control required" id="petname" placeholder="Ime Vašeg ljubimca"></div>
                       <div>
                         <label class="form-label" for="pet_birthdate">Datum rođenja: </label>
                         <input name="pet_birthdate" type="date" class="form-control required" id = "pet_birthdate">

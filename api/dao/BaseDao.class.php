@@ -116,5 +116,7 @@ class BaseDao
     $stmt = $this->conn->prepare($query);
     $entity['id'] = $id;
     $stmt->execute($entity);
+    return ["message"=>"updated"];
+    
   }
 }

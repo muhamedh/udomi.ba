@@ -10,6 +10,8 @@ use Cloudinary\Cloudinary; //using the Cloudinary library for PHP
 
 $files = $_FILES['file'];
 $catch = array();
+//TODO delete global temp
+$temp = "";
 
 $allowedTypes = [
     'image/png' => 'png',
@@ -21,6 +23,18 @@ if (count($files['name']) > 5){
 if (!isset($_FILES["file"]) || $_FILES["file"]["size"] === 0) { //if the global var is not set -> return error message
     die("1");
 }
+
+$cloud_name = getenv('CLOUD_NAME');
+$api_key = getenv('API_KEY');
+$api_secret = getenv('API_SECRET');
+
+    $cloudinary = new Cloudinary([
+    'cloud' => [
+        'cloud_name' => $cloud_name,
+        'api_key'    => $api_key,
+        'api_secret' => $api_secret,
+    ],
+    ]);
 
 for($i = 0;$i < count($files['name']);$i++){
     $filepath = $files['tmp_name'][$i];
@@ -50,36 +64,18 @@ for($i = 0;$i < count($files['name']);$i++){
     unlink($filepath); // Delete the temp file
 
 
-$cloud_name = getenv('CLOUD_NAME');
-$api_key = getenv('API_KEY');
-$api_secret = getenv('API_SECRET');
-
-
-
-// TODO no need to create new Cloudnary object every time
-
-    $cloudinary = new Cloudinary([
-    'cloud' => [
-        'cloud_name' => $cloud_name,
-        'api_key'    => $api_key,
-        'api_secret' => $api_secret,
-    ],
-    ]);
-
 
     $resolved_path = "../assets/img/".$filename.".".$extension;
 
 
     $temp = $cloudinary->uploadApi()->upload($resolved_path); // perform the upload of the picture
-    $catch[$i] = $temp['secure_url'];
-
+    
+    $catch[$i]['url'] = $temp['secure_url'];
+    $catch[$i]['public_id'] = $temp['public_id'];
     //json_encode(array("secure_url" => $temp['secure_url']),JSON_UNESCAPED_SLASHES);
     
     // delete the temporary file on the server side
     unlink($newFilepath);
 }
 
-
 print_r(json_encode($catch, JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES)."\n");
-
-?>

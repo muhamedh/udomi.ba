@@ -15,9 +15,9 @@ class PetsPhotosDao extends BaseDao{
   public function add_photo_batch($photos, $pets_id){
 
 
-    $query = "INSERT INTO pets_photos (`pet_id`, `url`) VALUES";
+    $query = "INSERT INTO pets_photos (`pet_id`, `url`, `public_id`) VALUES";
     for($i = 0;$i < count($photos);$i++){
-      $query .= "(".$pets_id.", '".$photos[$i]."'),";
+      $query .= "(".$pets_id.", '".$photos[$i]['url']."', '".$photos[$i]['public_id']."'),";
     }
     $query = substr($query, 0, -1);
     $query .= ";";

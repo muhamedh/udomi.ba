@@ -7,7 +7,8 @@ var uploadPicture = {
            TODO: find a non depricated version*/
         event.preventDefault();
 
-        $("#saveAdd").attr("disabled", true);
+        //TODO vratiti u true
+        $("#saveAdd").attr("disabled", false);
 
         var myFiles = $('#addPhoto').prop('files');
         var formData = new FormData();

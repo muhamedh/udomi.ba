@@ -96,7 +96,7 @@ var ShowPetService = {
               <div id = "photo-gallery-wrapper">
                     
               </div>
-                  <div class = "controls-wrapper d-flex justify-content-center">
+                  <div class = "controls-wrapper d-flex justify-content-center" style="margin-bottom: 50px;">
                     <div id = "previous-button" class="mt-3 " style = "margin-right: 10px;">
                       <button class="btn btn-warning" onclick="ShowPetService.onPrevPic()">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
