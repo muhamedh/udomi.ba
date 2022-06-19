@@ -23,13 +23,9 @@ if (count($files['name']) > 5){
 if (!isset($_FILES["file"]) || $_FILES["file"]["size"] === 0) { //if the global var is not set -> return error message
     die("1");
 }
-
 $cloud_name = getenv('CLOUD_NAME');
 $api_key = getenv('API_KEY');
 $api_secret = getenv('API_SECRET');
-
-
-
     $cloudinary = new Cloudinary([
     'cloud' => [
         'cloud_name' => $cloud_name,

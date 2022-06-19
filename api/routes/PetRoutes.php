@@ -233,7 +233,7 @@ Flight::route('PUT /private/pets/delete/@id', function($id){
   
   }else{
   
-    $catch = Flight::petsService()->update($id,$data,"pets_id");
+    $catch = Flight::petsService()->update_del($id,$data,"pets_id");
     if($catch['message'] == 'ok'){
       Flight::json(["message" => "updated"]);
     }else{
@@ -243,4 +243,6 @@ Flight::route('PUT /private/pets/delete/@id', function($id){
   
   }
 });
+
+
 ?>

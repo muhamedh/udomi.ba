@@ -62,6 +62,15 @@ class PetService extends BaseService{
   public function update($id, $data, $pk_name){
     $catch = $this->dao->update($id, $data, $pk_name);
     if($catch['message'] == 'updated'){
+          return ['message' => 'error'];
+    }else{
+      return ['message' => 'error'];
+    }
+  }
+  
+  public function update_del($id, $data, $pk_name){
+    $catch = $this->dao->update($id, $data, $pk_name);
+    if($catch['message'] == 'updated'){
         $catch = Flight::petsPhotosService()->delete_photos_by_pets_id($id);
         if(!key_exists('message', $catch)){
           return ['message' => 'error'];
