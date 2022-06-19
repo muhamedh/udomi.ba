@@ -169,16 +169,7 @@ Flight::route('PUT /private/pets/@id', function($id){
 
   $data = Flight::request()->data->getData();
   $pet = Flight::petsService()->get_pet_by_id($id);
-  //TODO clean
-  /*
-  print_r('---');
-  print_r($data);
-  print_r("---");
-  print_r($user);
-  print_r("----");
-  print_r($pet);
-  die;
-*/
+
   if($pet['owner_id'] != $user['id']){
     throw new Exception("This is hack you will be traced, be prepared :)");
   }else{
@@ -242,8 +233,13 @@ Flight::route('PUT /private/pets/delete/@id', function($id){
   
   }else{
   
-    Flight::petsService()->update($id,$data,"pets_id");
-    Flight::json(["message" => "updated"]);
+    $catch = Flight::petsService()->update($id,$data,"pets_id");
+    if($catch['message'] == 'ok'){
+      Flight::json(["message" => "updated"]);
+    }else{
+      Flight::json(["message" => "error"]);
+    }
+    
   
   }
 });

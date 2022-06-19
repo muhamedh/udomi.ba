@@ -26,4 +26,12 @@ class PetsPhotosDao extends BaseDao{
     
   }
 
+  public function get_public_id_by_pets_id($pets_id){
+    return $this->query_with_params("SELECT public_id FROM pets_photos WHERE pet_id =:pets_id",['pets_id'=>$pets_id]);
+  }
+
+  public function delete_entries_by_pets_id($pets_id){
+    return $this->query_with_params("DELETE FROM pets_photos WHERE pet_id=:pets_id",['pets_id'=>$pets_id]);
+  }
+
 }

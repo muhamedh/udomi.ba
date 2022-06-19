@@ -93,8 +93,7 @@ var PetService = {
     $.ajax({
       url: 'api/private/pets/delete/'+ id,
       type: 'PUT',
-      // TODO change to inactive
-      data: '{ "status" : "ACTIVE"}',
+      data: '{ "status" : "INACTIVE"}',
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },

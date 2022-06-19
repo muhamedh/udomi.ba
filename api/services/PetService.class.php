@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 require_once __DIR__.'/BaseService.class.php';
 require_once __DIR__.'/../dao/PetsDao.class.php';
 
-use Cloudinary\Cloudinary;
+
 
 class PetService extends BaseService{
 
@@ -62,30 +62,14 @@ class PetService extends BaseService{
   public function update($id, $data, $pk_name){
     $catch = $this->dao->update($id, $data, $pk_name);
     if($catch['message'] == 'updated'){
-      print_r("let us delete photos");
-      /*
-        $cloud_name = getenv('CLOUD_NAME');
-        $api_key = getenv('API_KEY');
-        $api_secret = getenv('API_SECRET');
-      */
-    $cloud_name = "udomi-ba";
-    $api_key = "917991252989184";
-    $api_secret = "uAYOIb3UV2-MJiR4v5tFzUESb8I";
-
-    $cloudinary = new Cloudinary([
-    'cloud' => [
-        'cloud_name' => $cloud_name,
-        'api_key'    => $api_key,
-        'api_secret' => $api_secret,
-    ],
-    ]);
-
-    $catch_me = $cloudinary->uploadApi()->destroy("xhyxxljq3t1vzphvbcdn", $options=[]);
-    print_r($catch_me);
-
-      die;
+        $catch = Flight::petsPhotosService()->delete_photos_by_pets_id($id);
+        if(!key_exists('message', $catch)){
+          return ['message' => 'error'];
+        }else{
+          return ['message' => 'ok'];
+        }
     }else{
-      //TODO throw exception
+      return ['message' => 'error'];
     }
   }
 
