@@ -42,7 +42,10 @@ class PetService extends BaseService{
 
      $photos = $data['photos'];
      unset($data['photos']);
-
+     if(array_key_exists('id',$data)){
+      $data['owner_id'] = $data['id'];
+      unset($data['id']);
+     }
      $catch = ($this->dao->add($data));
     
      

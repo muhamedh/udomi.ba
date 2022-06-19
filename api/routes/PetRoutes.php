@@ -117,13 +117,24 @@ Flight::route('GET /public/pets/younger/@timestamp', function($timestamp){
 Flight::route('POST /private/pets', function(){
 
   $data = Flight::request()->data->getData();
+  //$data = Flight::request();
   $user = Flight::get('user');
+  print_r($data);
+  print_r('---');
+  print_r($user);
+  
 
-  if($user['user_id'] == $data['owner_id']){
-    (Flight::petsService()->pet_pets_photos_add($data));
-  }else{
-    throw new Exception("This is hack you will be traced, be prepared :)");
+  if(array_key_exists('id', $data)){
+
+    if($data['id'] == $user['id']){
+      (Flight::petsService()->pet_pets_photos_add($data));
+    }else{
+      throw new Exception("This is hack you will be traced, be prepared :)");
+    }
   }
+  
+
+  // TODO possible error if  owner_id
 
 });
 
@@ -167,8 +178,18 @@ Flight::route('PUT /private/pets/@id', function($id){
   $user = Flight::get('user');
 
   $data = Flight::request()->data->getData();
-
-  if(!isset($data['owner_id']) || $data['owner_id'] != $user['user_id']){
+  $pet = Flight::petsService()->get_pet_by_id($id);
+  //TODO clean
+  /*
+  print_r('---');
+  print_r($data);
+  print_r("---");
+  print_r($user);
+  print_r("----");
+  print_r($pet);
+  die;
+*/
+  if($pet['owner_id'] != $user['id']){
     throw new Exception("This is hack you will be traced, be prepared :)");
   }else{
 
@@ -225,7 +246,7 @@ Flight::route('PUT /private/pets/delete/@id', function($id){
   $pet_to_update = Flight::petsService()->get_by_id($id, "pets_id");
   $data = Flight::request()->data->getData();
 
-  if($pet_to_update['owner_id'] != $user['user_id']){
+  if($pet_to_update['owner_id'] != $user['id']){
   
     throw new Exception("This is hack you will be traced, be prepared :)");
   

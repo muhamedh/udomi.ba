@@ -6,7 +6,7 @@ var ShowPetService = {
 
       for( let i = 0; i < photos.length;i++){
         
-        $("#photo-gallery-wrapper").append('<img id = "petGalleryPictureY" class="img-fluid" src="" alt="Slika ljubimca koju ste postavili"></img>');
+        $("#photo-gallery-wrapper").append('<img id = "petGalleryPictureY" class="img-fluid rounded" src="" alt="Slika ljubimca koju ste postavili"></img>');
         $("#petGalleryPictureY").attr("id", ''.concat("petGalleryPicture", i));
         $(''.concat("#petGalleryPicture",i)).attr("src", photos[i]);
         if(i > 0){
@@ -88,7 +88,7 @@ var ShowPetService = {
 
       var html = "";
         html += `
-        <section>
+        <section class = "shadow p-3 mb-5" style = "margin:10px">
           <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
               <div class="col-md-6">
@@ -96,12 +96,19 @@ var ShowPetService = {
               <div id = "photo-gallery-wrapper">
                     
               </div>
-                  <div class = "controls-wrapper">
-                    <div id = "previous-button" class="mt-3 float-start" style = "margin-right: 10px;">
-                      <button class="btn btn-warning" onclick="ShowPetService.onPrevPic()">Prethodna fotografija</button>
+                  <div class = "controls-wrapper d-flex justify-content-center">
+                    <div id = "previous-button" class="mt-3 " style = "margin-right: 10px;">
+                      <button class="btn btn-warning" onclick="ShowPetService.onPrevPic()">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                      </button>
                     </div>
-                    <div id = "next-button" class="mt-3 float-start" style = "margin-right: 10px;">
-                      <button class="btn btn-warning" onclick="ShowPetService.onNextPic()">Naredna fotografija</button>
+                    <div id = "next-button" class="mt-3 " style = "margin-right: 10px;">
+                      <button class="btn btn-warning" onclick="ShowPetService.onNextPic()">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                       </svg>
+                      </button>
                     </div>
                   </div>
               </div>
@@ -127,7 +134,6 @@ var ShowPetService = {
         </section>
         `;
       
-      document.getElementById("loading-spinner").style.display = "none";
       $("#individual-pet").html(html);
       ShowPetService.imageGallery(selected_pet[0].photos.split(','));
     }

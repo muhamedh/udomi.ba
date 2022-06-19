@@ -90,10 +90,10 @@ var AddPetHandler = {
     entity.species_id = $('select[class*="selectize"] option').val();
 
     var payload = UserService.parseJWT(localStorage.getItem("token"));
-    entity.owner_id = payload.user_id;
+    entity.id = payload.id;
     delete entity.myFile;
     entity.photos = photos;
-    
+    //console.log(payload);
     //console.log(entity);
     
     $.ajax({

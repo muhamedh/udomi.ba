@@ -20,35 +20,27 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
       <div class="container-fluid">
         <a class="navbar-brand clickable" onclick="PetService.list();event.preventDefault();">udomi.ba</a>
-        <button 
-          class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active clickable" aria-current="page"
-                 
-                 onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
+              <a class="nav-link active clickable" aria-current="page" onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
             </li>
           </ul>
           <form class="d-flex">
-            <input class="form-control me-2" type="Search" placeholder="Pronađi ljubimca po imenu" id = "search-params" aria-label="Search">
-            
+            <input class="form-control me-2" type="Search" placeholder="Pronađi ljubimca po imenu" id="search-params" aria-label="Search" style="margin-top:5px;">
           </form>
-          <button id="search-button" class="btn btn-warning btn-sm" type="Submit" value="Submit" style="margin-right:10px;" onclick="PetService.list($('#search-params').val())">Pretraži</button>
-          <div id="guest-navbar">
-            <button class="btn btn-outline-light btn-sm" style="margin-right: 10px !important;" data-bs-toggle="modal"
-              data-bs-target="#loginModal">Prijavi se</button>
-            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#registerModal"
-              onclick="UserService.fillMunicipalities('#municipalityList')">Registruj se</button>
+          <button id="search-button" class="btn btn-warning btn-sm button-spacing" type="Submit" value="Submit" onclick="PetService.list($('#search-params').val())">Pretraži</button>
+          <div id="guest-navbar" class = "custom-navbar">
+            <button class="btn btn-outline-light btn-sm button-spacing" data-bs-toggle="modal" data-bs-target="#loginModal">Prijavi se</button>
+            <button class="btn btn-outline-light btn-sm button-spacing" data-bs-toggle="modal" data-bs-target="#registerModal" onclick="UserService.fillMunicipalities('#municipalityList')">Registruj se</button>
           </div>
-          <div id="user-navbar" style="display:none;">
-            <button class="btn btn-outline-light btn-sm" style="margin-right: 10px !important; margin-top:5px;"
-              onclick="UserService.showUserPage()">Moji ljubimci</button>
-            <button class="btn btn-outline-light btn-sm" onclick="UserService.myProfile()" style="margin-top:5px;">Moj Profil</button>
-            <button class="btn btn-outline-light btn-sm" onclick="UserService.logOut()" style = "margin-top:5px;">Odjavite se</button>
+          <div id="user-navbar" class = "custom-navbar" >
+            <button class="btn btn-outline-light btn-sm button-spacing" onclick="UserService.showUserPage()">Moji ljubimci</button>
+            <button class="btn btn-outline-light btn-sm button-spacing" onclick="UserService.myProfile()">Moj Profil</button>
+            <button class="btn btn-outline-light btn-sm button-spacing" onclick="UserService.logOut()">Odjavite se</button>
           </div>
         </div>
       </div>
@@ -220,7 +212,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id = "petname-on-contact">Ljubimac</h5>
+        <h5 class="modal-title" id="petname-on-contact">Ljubimac</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="owner-wrapper">
@@ -237,4 +229,5 @@
     </div>
   </div>
 </div>
+
 </html>

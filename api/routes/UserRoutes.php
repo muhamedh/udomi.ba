@@ -61,7 +61,7 @@ Flight::route('GET /private/users', function () {
 Flight::route('GET /private/users/@user_id', function ($user_id) {
   $user = Flight::get('user');
 
-  if($user['user_id'] == $user_id){
+  if($user['id'] == $user_id){
     Flight::json(Flight::usersService()->get_restricted_user($user_id));
   }else{
     throw new Exception("This is hack you will be traced, be prepared :)");
@@ -123,7 +123,11 @@ Flight::route('POST /public/login', function () {
 
   if(isset($user['user_id'])){
     if($user['password'] == md5($login['password'])){
+      // TODO critical bug maker
+      $user['id'] = $user['user_id'];
+      unset($user['user_id']);
       unset($user['password']);
+
       $jwt = JWT::encode($user, Config::JWT_SECRET(), 'HS256');
       Flight::json(['token' => $jwt]);
     }else{
@@ -168,7 +172,9 @@ Flight::route('POST /public/register', function () {
   
   $catch = Flight::usersService()->add($data);
   unset($catch['password']);
-  
+
+
+
   $jwt = JWT::encode($catch, Config::JWT_SECRET(), 'HS256');
   Flight::json(['token' => $jwt]);
 
@@ -241,7 +247,7 @@ Flight::route('POST /private/users', function () {
 Flight::route('PUT /private/users/@id', function ($id) {
   $user = Flight::get('user');
 
-  if($user['user_id'] == $id){
+  if($user['id'] == $id){
     
     $data = Flight::request()->data->getData();
     unset($data['password']);
@@ -274,8 +280,8 @@ Flight::route('DELETE /private/users/', function () {
   if(!isset($user_to_delete)){
     throw new Exception("This is hack you will be traced, be prepared :)");
   }
-
-  Flight::usersService()->delete($user_to_delete['user_id'],"user_id");
+  //TODO on delete cascade;my
+  Flight::usersService()->delete($user_to_delete['id'],"user_id");
   Flight::json(["message" => "deleted"]);
 });
 
