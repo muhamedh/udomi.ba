@@ -193,14 +193,14 @@ var UserService = {
         html1 += `
           <p class="col-sm-2 col-form-label">Email</p>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="owner-mail-input" value="` + data[0].user_mail + `">
+              <input type="text" class="form-control" id="owner-mail-input" value="` + data[0].user_mail + `" readonly="readonly">
               <button type="button" class="btn btn-warning" onclick="UserService.copy('owner-mail-input')" style = "margin-top:10px">Kopiraj email</button>
             </div>
         `;
         html2 += `
           <p class="col-sm-2 col-form-label">Telefon</p>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="owner-phone-input" value="` + data[0].phone_number + `">
+              <input type="text" class="form-control" id="owner-phone-input" value="` + data[0].phone_number + `" readonly="readonly">
               <button type="button" class="btn btn-warning" onclick="UserService.copy('owner-phone-input')" style = "margin-top:10px">Kopiraj broj telefona</button>
             </div>
           `;
@@ -230,7 +230,8 @@ var UserService = {
 
         var html = "";
         html += `
-        <ul class="inline">
+        <div class="card text-center shadow rounded">
+        <ul class="inline mt-3" >
           <li class="fs-3 fw-bold list-inline-item">Korisničko ime: </li>
           <li class="fs-3 list-inline-item">`+ data[0].username + `</li>
         </ul>
@@ -246,10 +247,12 @@ var UserService = {
           <li class="fs-3 fw-bold list-inline-item">Lokacija: </li>
           <li class="fs-3 list-inline-item">` + data[0].name + `</li>
         </ul>
-        <div class = "d-grid gap-2 d-md-block" style = "padding:10px">
-        <button id = "edit-account-button" class="btn btn-warning " onclick="UserService.edit()">Uredite račun</button>
-        <button id = "delete-account-button" class="btn btn-danger " onclick="UserService.deleteUser()">Izbriši nalog</button>
-        </div>`;
+        <div class = "d-grid gap-2 d-md-block mb-3 " style = "padding:10px">
+          <button id = "edit-account-button" class="btn btn-warning " onclick="UserService.edit()">Uredite račun</button>
+          <button id = "delete-account-button" class="btn btn-danger " onclick="UserService.deleteUser()">Izbriši nalog</button>
+        </div>
+        </div>
+        `;
 
         $("#my-profile").html(html);
       },
@@ -274,10 +277,11 @@ var UserService = {
         var html = "";
 
         html += `
-      <div class="col-md-6">
+        <div class="card text-center shadow rounded">
+      <div class="col-md-6 p-3">
           <form method="post">
             <div class="container">
-              <div class="row">
+              <div class="row text-center">
                 <div class="col">
                   <label class="form-label" for="inputUsername">Korisničko ime </label>
                 </div>
@@ -329,7 +333,7 @@ var UserService = {
           <button class="btn btn-success flex-shrink-0 " id="saveButton"
             onclick="UserService.update(` + payload.id + `)">Spasi promjene</button>
         </div>
-      
+      </div>
       `;
         
         $("#edit-profile").html(html);
