@@ -331,7 +331,7 @@ var UserService = {
             </div>
             <div class="p-3">
           </form>
-          <button class="btn btn-success flex-shrink-0 " id="saveButton"
+          <button class="btn btn-success flex-shrink-0 me-2" id="saveButton"
             onclick="UserService.update(` + payload.id + `)">Spasi promjene</button>
             <button class="btn btn-danger flex-shrink-0 " id="cancelButton"
             onclick="UserService.myProfile()">Odustani</button>
