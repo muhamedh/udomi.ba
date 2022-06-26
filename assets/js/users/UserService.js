@@ -217,7 +217,7 @@ var UserService = {
 
   myProfile: function () {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
-    console.log(payload);
+    
 
     $.ajax({
       url: "api/private/users/" + payload.id,
@@ -227,6 +227,7 @@ var UserService = {
       },
       success: function (data) {
         SPApp.handleSectionVisibility("#my-profile");
+        console.log("prizvan sam")
 
         var html = "";
         html += `
@@ -264,7 +265,7 @@ var UserService = {
 
   edit: function () {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
-    console.log(payload);
+    
     $.ajax({
       url: "api/private/users/" + payload.id,
       type: "GET",
@@ -278,9 +279,9 @@ var UserService = {
 
         html += `
         <div class="card text-center shadow rounded">
-      <div class="col-md-6 p-3">
+      <div class=" text-center p-3">
           <form method="post">
-            <div class="container">
+            <div class="container p-3">
               <div class="row text-center">
                 <div class="col">
                   <label class="form-label" for="inputUsername">Korisničko ime </label>
@@ -328,10 +329,12 @@ var UserService = {
               </div>
 
             </div>
-            <div class="d-grid gap-2 d-md-block" style="margin-top:10px">
+            <div class="p-3">
           </form>
           <button class="btn btn-success flex-shrink-0 " id="saveButton"
             onclick="UserService.update(` + payload.id + `)">Spasi promjene</button>
+            <button class="btn btn-danger flex-shrink-0 " id="cancelButton"
+            onclick="UserService.myProfile()">Odustani</button>
         </div>
       </div>
       `;
