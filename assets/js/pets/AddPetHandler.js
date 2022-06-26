@@ -145,7 +145,7 @@ var AddPetHandler = {
                   </div>
                 </div>
               
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-6 col-sm-12 bg-white">
                   <form id = "addPetForm" method="post">
                     <div class="md-3">
                       <label class="form-label" for="petname">Ime ljubimca: </label>
