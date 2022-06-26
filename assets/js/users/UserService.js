@@ -128,9 +128,9 @@ var UserService = {
         
         
         var html = `
-        <div class = "d-grid gap-2 d-md-block" style = "padding:10px">
-        <button id = "add-pet-button" class="btn btn-warning " onclick="AddPetHandler.init()">Dodaj ljubimca</button>
-        <button id = "delete-account-button" class="btn btn-danger " onclick="UserService.deleteUser()">Izbriši nalog</button>
+        <div class = "card mx-auto shadow w-auto gap-2 d-md-block p-3">
+          <button id = "add-pet-button" class="btn btn-warning mx-2 my-2" onclick="AddPetHandler.init()">Dodaj ljubimca!</button>
+          <button id = "delete-account-button" class="btn btn-danger mx-2 my-2" onclick="UserService.deleteUser()">Izbriši nalog</button>
         </div>
         `;
         html += '<div class = "row row-cols-1 row-cols-md-3 g-4">'
@@ -227,31 +227,31 @@ var UserService = {
       },
       success: function (data) {
         SPApp.handleSectionVisibility("#my-profile");
-        console.log("prizvan sam")
+        
 
         var html = "";
         html += `
-        <div class="card text-center shadow rounded">
-        <ul class="inline mt-3" >
-          <li class="fs-3 fw-bold list-inline-item">Korisničko ime: </li>
-          <li class="fs-3 list-inline-item">`+ data[0].username + `</li>
-        </ul>
-        <ul class="inline">
-          <li class="fs-3 fw-bold list-inline-item">Email adresa: </li>
-          <li class="fs-3 list-inline-item">`+ data[0].user_mail + `</li>
-        </ul>
-        <ul class="inline">
-          <li class="fs-3 fw-bold list-inline-item">Broj telefona: </li>
-          <li class="fs-3 list-inline-item">` + data[0].phone_number + `</li>
-        </ul>
-        <ul class="inline">
-          <li class="fs-3 fw-bold list-inline-item">Lokacija: </li>
-          <li class="fs-3 list-inline-item">` + data[0].name + `</li>
-        </ul>
-        <div class = "d-grid gap-2 d-md-block mb-3 " style = "padding:10px">
-          <button id = "edit-account-button" class="btn btn-warning " onclick="UserService.edit()">Uredite račun</button>
-          <button id = "delete-account-button" class="btn btn-danger " onclick="UserService.deleteUser()">Izbriši nalog</button>
-        </div>
+        <div class="card text-left shadow rounded mx-auto w-50 py-3">
+          <ul class="inline mt-3" >
+            <li class="fs-3 fw-bold list-inline-item">Korisničko ime: </li>
+            <li class="fs-3 list-inline-item">`+ data[0].username + `</li>
+          </ul>
+          <ul class="inline">
+            <li class="fs-3 fw-bold list-inline-item">Email adresa: </li>
+            <li class="fs-3 list-inline-item">`+ data[0].user_mail + `</li>
+          </ul>
+          <ul class="inline">
+            <li class="fs-3 fw-bold list-inline-item">Broj telefona: </li>
+            <li class="fs-3 list-inline-item">` + data[0].phone_number + `</li>
+          </ul>
+          <ul class="inline">
+            <li class="fs-3 fw-bold list-inline-item">Lokacija: </li>
+            <li class="fs-3 list-inline-item">` + data[0].name + `</li>
+          </ul>
+          <div class = "text-center d-grid gap-2 d-md-block mb-3 " style = "padding:10px">
+            <button id = "edit-account-button" class="btn btn-warning " onclick="UserService.edit()">Uredite račun</button>
+            <button id = "delete-account-button" class="btn btn-danger " onclick="UserService.deleteUser()">Izbriši nalog</button>
+          </div>
         </div>
         `;
 
@@ -278,7 +278,7 @@ var UserService = {
         var html = "";
 
         html += `
-        <div class="card text-center shadow rounded">
+        <div class="card text-center shadow rounded w-auto mx-auto">
       <div class=" text-center p-3">
           <form method="post">
             <div class="container p-3">
