@@ -128,7 +128,7 @@ var UserService = {
         
         
         var html = `
-        <div class = "card mx-auto shadow w-auto gap-2 d-md-block p-3">
+        <div class = "card mx-auto shadow w-auto gap-2 d-md-block p-3 mt-3">
           <button id = "add-pet-button" class="btn btn-warning mx-2 my-2" onclick="AddPetHandler.init()">Dodaj ljubimca!</button>
           <button id = "delete-account-button" class="btn btn-danger mx-2 my-2" onclick="UserService.deleteUser()">Izbriši nalog</button>
         </div>
