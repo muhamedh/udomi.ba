@@ -143,8 +143,8 @@ var UserService = {
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title fw-bold">` + data[i].petname + `</h5>
                 <p class="card-text">` + data[i].pets_description + `</p>
-                <div style="margin-top:auto" class = "d-grip gap-2">
-                  <button  class="btn btn-warning" onclick="PetService.editPet(` + data[i].pets_id + `)" >Uredi ljubimca</button>
+                <div style="margin-top:auto" class = "d-grip gap-2 text-center">
+                  <button  class="btn btn-warning my-3 mx-3" onclick="PetService.editPet(` + data[i].pets_id + `)" >Uredi ljubimca</button>
                   <button  class="btn btn-danger" type="button" onclick="PetService.deletePet(` + data[i].pets_id + `)" >Izbriši ljubimca</button>
                 </div>
                 </div>
