@@ -68,7 +68,7 @@ var EditPetService = {
       SPApp.handleSectionVisibility("#edit-pet");
       //console.log(data);
       var html = `
-      <section style = "padding:15px;">
+      <section class="bg-white" style = "padding:15px;">
       <div class="row justify-content-md-center">
         <div class = "col">
         <h3 class ="display-10 fw-bolder">Uredi ljubimca:</h3>

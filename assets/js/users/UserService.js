@@ -128,9 +128,9 @@ var UserService = {
         
         
         var html = `
-        <div class = "d-grid gap-2 d-md-block" style = "padding:10px">
-        <button id = "add-pet-button" class="btn btn-warning " onclick="AddPetHandler.init()">Dodaj ljubimca</button>
-        <button id = "delete-account-button" class="btn btn-danger " onclick="UserService.deleteUser()">Izbriši nalog</button>
+        <div class = "card mx-auto shadow w-auto gap-2 d-md-block p-3 mt-3">
+          <button id = "add-pet-button" class="btn btn-warning mx-2 my-2" onclick="AddPetHandler.init()">Dodaj ljubimca!</button>
+          <button id = "delete-account-button" class="btn btn-danger mx-2 my-2" onclick="UserService.deleteUser()">Izbriši nalog</button>
         </div>
         `;
         html += '<div class = "row row-cols-1 row-cols-md-3 g-4">'
@@ -193,14 +193,14 @@ var UserService = {
         html1 += `
           <p class="col-sm-2 col-form-label">Email</p>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="owner-mail-input" value="` + data[0].user_mail + `">
+              <input type="text" class="form-control" id="owner-mail-input" value="` + data[0].user_mail + `" readonly="readonly">
               <button type="button" class="btn btn-warning" onclick="UserService.copy('owner-mail-input')" style = "margin-top:10px">Kopiraj email</button>
             </div>
         `;
         html2 += `
           <p class="col-sm-2 col-form-label">Telefon</p>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="owner-phone-input" value="` + data[0].phone_number + `">
+              <input type="text" class="form-control" id="owner-phone-input" value="` + data[0].phone_number + `" readonly="readonly">
               <button type="button" class="btn btn-warning" onclick="UserService.copy('owner-phone-input')" style = "margin-top:10px">Kopiraj broj telefona</button>
             </div>
           `;
@@ -217,7 +217,7 @@ var UserService = {
 
   myProfile: function () {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
-    console.log(payload);
+    
 
     $.ajax({
       url: "api/private/users/" + payload.id,
@@ -227,29 +227,33 @@ var UserService = {
       },
       success: function (data) {
         SPApp.handleSectionVisibility("#my-profile");
+        
 
         var html = "";
         html += `
-        <ul class="inline">
-          <li class="fs-3 fw-bold list-inline-item">Korisničko ime: </li>
-          <li class="fs-3 list-inline-item">`+ data[0].username + `</li>
-        </ul>
-        <ul class="inline">
-          <li class="fs-3 fw-bold list-inline-item">Email adresa: </li>
-          <li class="fs-3 list-inline-item">`+ data[0].user_mail + `</li>
-        </ul>
-        <ul class="inline">
-          <li class="fs-3 fw-bold list-inline-item">Broj telefona: </li>
-          <li class="fs-3 list-inline-item">` + data[0].phone_number + `</li>
-        </ul>
-        <ul class="inline">
-          <li class="fs-3 fw-bold list-inline-item">Lokacija: </li>
-          <li class="fs-3 list-inline-item">` + data[0].name + `</li>
-        </ul>
-        <div class = "d-grid gap-2 d-md-block" style = "padding:10px">
-        <button id = "edit-account-button" class="btn btn-warning " onclick="UserService.edit()">Uredite račun</button>
-        <button id = "delete-account-button" class="btn btn-danger " onclick="UserService.deleteUser()">Izbriši nalog</button>
-        </div>`;
+        <div class="card text-left shadow rounded mx-auto w-50 py-3">
+          <ul class="inline mt-3" >
+            <li class="fs-3 fw-bold list-inline-item">Korisničko ime: </li>
+            <li class="fs-3 list-inline-item">`+ data[0].username + `</li>
+          </ul>
+          <ul class="inline">
+            <li class="fs-3 fw-bold list-inline-item">Email adresa: </li>
+            <li class="fs-3 list-inline-item">`+ data[0].user_mail + `</li>
+          </ul>
+          <ul class="inline">
+            <li class="fs-3 fw-bold list-inline-item">Broj telefona: </li>
+            <li class="fs-3 list-inline-item">` + data[0].phone_number + `</li>
+          </ul>
+          <ul class="inline">
+            <li class="fs-3 fw-bold list-inline-item">Lokacija: </li>
+            <li class="fs-3 list-inline-item">` + data[0].name + `</li>
+          </ul>
+          <div class = "text-center d-grid gap-2 d-md-block mb-3 " style = "padding:10px">
+            <button id = "edit-account-button" class="btn btn-warning " onclick="UserService.edit()">Uredite račun</button>
+            <button id = "delete-account-button" class="btn btn-danger " onclick="UserService.deleteUser()">Izbriši nalog</button>
+          </div>
+        </div>
+        `;
 
         $("#my-profile").html(html);
       },
@@ -261,7 +265,7 @@ var UserService = {
 
   edit: function () {
     var payload = UserService.parseJWT(localStorage.getItem("token"));
-    console.log(payload);
+    
     $.ajax({
       url: "api/private/users/" + payload.id,
       type: "GET",
@@ -274,10 +278,11 @@ var UserService = {
         var html = "";
 
         html += `
-      <div class="col-md-6">
+        <div class="card text-center shadow rounded w-auto mx-auto">
+      <div class=" text-center p-3">
           <form method="post">
-            <div class="container">
-              <div class="row">
+            <div class="container p-3">
+              <div class="row text-center">
                 <div class="col">
                   <label class="form-label" for="inputUsername">Korisničko ime </label>
                 </div>
@@ -324,12 +329,14 @@ var UserService = {
               </div>
 
             </div>
-            <div class="d-grid gap-2 d-md-block" style="margin-top:10px">
+            <div class="p-3">
           </form>
-          <button class="btn btn-success flex-shrink-0 " id="saveButton"
+          <button class="btn btn-success flex-shrink-0 me-2" id="saveButton"
             onclick="UserService.update(` + payload.id + `)">Spasi promjene</button>
+            <button class="btn btn-danger flex-shrink-0 " id="cancelButton"
+            onclick="UserService.myProfile()">Odustani</button>
         </div>
-      
+      </div>
       `;
         
         $("#edit-profile").html(html);

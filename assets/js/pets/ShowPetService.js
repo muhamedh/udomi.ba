@@ -88,7 +88,7 @@ var ShowPetService = {
 
       var html = "";
         html += `
-        <section class = "shadow p-3 mb-5" style = "margin:10px">
+        <section class = "shadow p-3 mb-5 bg-white" style = "margin:10px">
           <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
               <div class="col-md-6">

@@ -120,9 +120,9 @@ var AddPetHandler = {
     SPApp.handleSectionVisibility("#add-pet");
 
     var html = `
-              <div class="container">
+              <div class="container shadow rounded bg-white">
               
-              <div class="row justify-content-md-center">
+              <div class="row justify-content-md-center my-3">
                 
                 <div class="col-md-6 col-sm-12" id="photo">
                   <div id = "photo-wrapper">
@@ -145,7 +145,7 @@ var AddPetHandler = {
                   </div>
                 </div>
               
-                <div class="col-md-6 col-sm-12">
+                <div class="  col-md-6 col-sm-12 bg-white">
                   <form id = "addPetForm" method="post">
                     <div class="md-3">
                       <label class="form-label" for="petname">Ime ljubimca: </label>

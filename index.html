@@ -5,6 +5,7 @@
   <meta name="google-site-verification" content="6NM7amkT0oYf8r8iLDVQfAhkXAC_4bo9C7_DC98bD5M" />
   <meta charset="utf-8">
   <title>udomi.ba</title>
+  <link rel="icon" type="image/x-icon" href="./assets/img/dogologo.ico">
   <!-- Import the necessary CSS files -->
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="./assets/css/toastr.css" rel="stylesheet">
@@ -14,68 +15,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
-  <!-- Navigation bar -->
-  <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
-      <div class="container-fluid">
-        <a class="navbar-brand clickable" onclick="PetService.list();event.preventDefault();">udomi.ba</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-              <a class="nav-link active clickable" aria-current="page" onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
-            </li>
-          </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="Search" placeholder="Pronađi ljubimca po imenu" id="search-params" aria-label="Search" style="margin-top:5px;">
-          </form>
-          <button id="search-button" class="btn btn-warning btn-sm button-spacing" type="Submit" value="Submit" onclick="PetService.list($('#search-params').val())">Pretraži</button>
-          <div id="guest-navbar" class = "custom-navbar">
-            <button class="btn btn-outline-light btn-sm button-spacing" data-bs-toggle="modal" data-bs-target="#loginModal">Prijavi se</button>
-            <button class="btn btn-outline-light btn-sm button-spacing" data-bs-toggle="modal" data-bs-target="#registerModal" onclick="UserService.fillMunicipalities('#municipalityList')">Registruj se</button>
-          </div>
-          <div id="user-navbar" class = "custom-navbar" >
-            <button class="btn btn-outline-light btn-sm button-spacing" onclick="UserService.showUserPage()">Moji ljubimci</button>
-            <button class="btn btn-outline-light btn-sm button-spacing" onclick="UserService.myProfile()">Moj Profil</button>
-            <button class="btn btn-outline-light btn-sm button-spacing" onclick="UserService.logOut()">Odjavite se</button>
+<body  class="bg-image" style="background-image: url('assets/img/paw3.jpg');">
+  <div ></div>
+    <!-- Navigation bar -->
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-success">
+        <div class="container-fluid">
+          <a class="navbar-brand clickable" onclick="PetService.list();event.preventDefault();">udomi.ba</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <a class="nav-link active clickable" aria-current="page"
+                  onclick="PetService.list();event.preventDefault();">Naslovna stranica</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="Search" placeholder="Pronađi ljubimca po imenu" id="search-params"
+                aria-label="Search" style="margin-top:5px;">
+            </form>
+            <button id="search-button" class="btn btn-warning btn-sm button-spacing" type="Submit" value="Submit"
+              onclick="PetService.list($('#search-params').val())">Pretraži</button>
+            <div id="guest-navbar" class="custom-navbar">
+              <button class="btn btn-outline-light btn-sm button-spacing" data-bs-toggle="modal"
+                data-bs-target="#loginModal">Prijavi se</button>
+              <button class="btn btn-outline-light btn-sm button-spacing" data-bs-toggle="modal"
+                data-bs-target="#registerModal" onclick="UserService.fillMunicipalities('#municipalityList')">Registruj
+                se</button>
+            </div>
+            <div id="user-navbar" class="custom-navbar">
+              <button class="btn btn-outline-light btn-sm button-spacing" onclick="UserService.showUserPage()">Moji
+                ljubimci</button>
+              <button class="btn btn-outline-light btn-sm button-spacing" onclick="UserService.myProfile()">Moj
+                Profil</button>
+              <button class="btn btn-outline-light btn-sm button-spacing" onclick="UserService.logOut()">Odjavite
+                se</button>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
-  </header>
+      </nav>
+    </header>
 
-  <!--main content SPApp-->
-  <main>
+    <!--main content SPApp-->
+    <main>
+      <div class="container" style="margin-top: 80px; margin-bottom: 60px;">
 
-    <div class="container" style="margin-top: 100px;">
+        <div class="text-center" id="loading-spinner"></div>
 
-      <div class="text-center" id="loading-spinner"></div>
+        <!--div for all pets-->
+        <div id="pets-list" class="row row-cols-1 row-cols-md-3 g-4"></div>
 
-      <!--div for all pets-->
-      <div id="pets-list" class="row row-cols-1 row-cols-md-3 g-4"></div>
+        <!--div for individual pet-->
+        <div id="individual-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
 
-      <!--div for individual pet-->
-      <div id="individual-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
+        <!--div for edit pet-->
+        <div id="edit-pet" class="row gx-4 gx-lg-5 align-items-center shadow rounded" ></div>
 
-      <!--div for edit pet-->
-      <div id="edit-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
+        <!--div for add pet-->
+        <div id="add-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
 
-      <!--div for add pet-->
-      <div id="add-pet" class="row gx-4 gx-lg-5 align-items-center"></div>
+        <!--div for user page-->
+        <div id="user-page" class="row gx-4 gx-lg-5 align-items-center" style="margin-top:-20px;"></div>
 
-      <!--div for user page-->
-      <div id="user-page" class="row gx-4 gx-lg-5 align-items-center"></div>
+        <!--div for profile page-->
+        <div id="my-profile" style = "height:100% !important;" class="row gx-4 gx-lg-5 align-items-center"></div>
 
-      <!--div for profile page-->
-      <div id="my-profile" class="row gx-4 gx-lg-5 align-items-center"></div>
-
-      <!--div for editing profile-->
-      <div id="edit-profile" class="row gx-4 gx-lg-5 align-items-center column"></div>
-    </div>
-  </main>
+        <!--div for editing profile-->
+        <div id="edit-profile" class="row gx-4 gx-lg-5 align-items-center column"></div>
+      
+    </main>
+  </div>
 </body>
 
 <!-- Import all the needed JS libraries -->
