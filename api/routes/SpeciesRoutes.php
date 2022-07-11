@@ -39,7 +39,7 @@ Flight::route('GET /public/species/pets/@pets_id', function ($pets_id) {
 /**
 * @OA\Post(
 *     path="/private/species",
-*     description="Add a new pet to the system",
+*     description="Add a new species to the system",
 *     tags={"species"},
 *     security={{"ApiKeyAuth": {}}},
 *     @OA\RequestBody(description="Basic species info", required=true,
@@ -50,7 +50,7 @@ Flight::route('GET /public/species/pets/@pets_id', function ($pets_id) {
 *     )),
 *     @OA\Response(
 *         response=200,
-*         description="Pets object with primary key added"
+*         description="Species object with primary key added"
 *     ),
 *     @OA\Response(
 *         response=404,
