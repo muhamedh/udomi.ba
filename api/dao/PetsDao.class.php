@@ -61,6 +61,7 @@ class PetsDao extends BaseDao{
     JOIN pets_photos pp ON p.pets_id = pp.pet_id
     WHERE p.status = 'ACTIVE' AND p.owner_id = :owner_id
     GROUP BY (p.pets_id)
+    ORDER BY p.pets_id DESC
     ";
     return $this->query_with_params($query, ['owner_id' => $owner_id]);
 
@@ -89,7 +90,8 @@ WHERE p.status = 'ACTIVE' AND p.adopted = 0";
     if(isset($search)){
       $query .= " AND p.petname LIKE '%".$search."%' ";
     }
-    $query .= "GROUP BY p.pets_id";
+    $query .= "GROUP BY p.pets_id
+    ORDER BY p.pets_id DESC";
     
     return $this->query_no_params($query); 
   }
