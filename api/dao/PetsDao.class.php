@@ -88,7 +88,7 @@ FROM pets p
   JOIN municipalities m ON u.municipality_id = m.id
 WHERE p.status = 'ACTIVE' AND p.adopted = 0";
     if(isset($search)){
-      $query .= " AND p.petname LIKE '%".$search."%' ";
+      $query .= " AND p.petname LIKE '%".$search."%' OR p.pets_description LIKE '%".$search."%'";
     }
     $query .= "GROUP BY p.pets_id
     ORDER BY p.pets_id DESC";
