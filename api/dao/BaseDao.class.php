@@ -56,7 +56,7 @@ class BaseDao
    */
   public function get_all()
   {
-    $stmt = $this->conn->prepare("SELECT * FROM " . $this->table_name);
+    $stmt = $this->conn->prepare("SELECT * FROM " . $this->table_name . "ORDER BY DESC");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
