@@ -7,6 +7,7 @@ var AddPetHandler = {
   validatePetForm: function () {
     
     $('#addPetForm').validate({
+
       submitHandler: function (form) {
         //$('#submit-add-button').attr("disabled", true);
         var entity = Object.fromEntries((new FormData(form)).entries());
@@ -97,6 +98,7 @@ var AddPetHandler = {
     delete entity.myFile;
     entity.photos = photos;
     //console.log(payload);
+    $('#submit-add-button').attr("disabled", true);
     console.log(entity);
     
     $.ajax({
@@ -109,11 +111,11 @@ var AddPetHandler = {
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function (response) {
-        
+        $('#submit-add-button').attr("disabled", false);
         toastr.success("Ljubimac uspješno dodan.", "Informacija:");
       },
       error: function (response) {
-        
+        $('#submit-add-button').attr("disabled", false);
         toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
       }
     });
