@@ -5,11 +5,13 @@ var AddPetHandler = {
   },
 
   validatePetForm: function () {
-    $('#submit-add-button').attr("disabled", true);
+    
     $('#addPetForm').validate({
       submitHandler: function (form) {
+        //$('#submit-add-button').attr("disabled", true);
         var entity = Object.fromEntries((new FormData(form)).entries());
         uploadPicture.handleUpload(entity);
+        //$('#submit-add-button').attr("disabled", false);
       }
     });
   },
