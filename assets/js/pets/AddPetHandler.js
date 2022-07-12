@@ -9,10 +9,10 @@ var AddPetHandler = {
     $('#addPetForm').validate({
 
       submitHandler: function (form) {
-        //$('#submit-add-button').attr("disabled", true);
+        $('#submit-add-button').prop("disabled", true);
         var entity = Object.fromEntries((new FormData(form)).entries());
         uploadPicture.handleUpload(entity);
-        //$('#submit-add-button').attr("disabled", false);
+        $('#submit-add-button').prop("disabled", false);
       }
     });
   },
