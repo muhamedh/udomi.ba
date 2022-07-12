@@ -54,9 +54,9 @@ class BaseDao
   /**
    * Method used to read all objects from database
    */
-  public function get_all()
+  public function get_all($pk_name)
   {
-    $stmt = $this->conn->prepare("SELECT * FROM " . $this->table_name . "ORDER BY DESC");
+    $stmt = $this->conn->prepare("SELECT * FROM " . $this->table_name . "ORDER BY" . $pk_name . "DESC");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
