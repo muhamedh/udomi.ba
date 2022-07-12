@@ -6,9 +6,10 @@ var uploadPicture = {
         /* Stop form from submitting normally   
            TODO: find a non depricated version*/
         event.preventDefault();
+        $('#submit-add-button').prop("disabled", true);
 
         //TODO vratiti u true
-        $("#saveAdd").attr("disabled", false);
+        
 
         var myFiles = $('#addPhoto').prop('files');
         var formData = new FormData();
@@ -45,14 +46,15 @@ var uploadPicture = {
             }else {
                 AddPetHandler.addPet(entity,  jQuery.parseJSON(response));
             }
-
-            $("#saveAdd").attr("disabled", false);
+            $('#submit-add-button').prop("disabled", false);
+            //$("#saveAdd").attr("disabled", false);
             
         });
         // on failure of ajax call
         ajaxRequest.fail(function () {
             toastr.error("Molim Vas pokušajte ponovno.", "Greška!");
-            $("#saveAdd").attr("disabled", false);
+            $('#submit-add-button').prop("disabled", false);
+            //$("#saveAdd").attr("disabled", false);
         });
         
     }   
