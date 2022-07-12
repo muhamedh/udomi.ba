@@ -5,6 +5,7 @@ var AddPetHandler = {
   },
 
   validatePetForm: function () {
+    $('#submit-add-button').attr("disabled", true);
     $('#addPetForm').validate({
       submitHandler: function (form) {
         var entity = Object.fromEntries((new FormData(form)).entries());
@@ -192,7 +193,7 @@ var AddPetHandler = {
                         
                         </div>
                         <div class="md-3" style="margin-top:10px; margin-bottom:10px;">
-                          <button type = "Submit" value = "Submit" class="submit btn btn-success flex-shrink-0" id="saveAdd" onclick="AddPetHandler.validatePetForm()">Dodaj ljubimca!</button>
+                          <button id="submit-add-button" type = "Submit" value = "Submit" class="submit btn btn-success flex-shrink-0" id="saveAdd" onclick="AddPetHandler.validatePetForm()">Dodaj ljubimca!</button>
                         </div>
                         </form>
                       </div>
